@@ -1,9 +1,9 @@
 import express from 'express'
+import { initApp } from './initializers/initApp'
 
 const app = express()
 
-app.get('/', (_req, res) => res.send('Hello World!'))
+initApp(app)
 
 const port = process.env.PORT ?? 8080
-
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`))
+app.listen(port, () => console.log(`Listening at http://localhost:${port}/`))
