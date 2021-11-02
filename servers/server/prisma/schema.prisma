@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Game {
+    id          String   @id @default(uuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    positions   String[] // Default not supported
+    set         Set      @relation(fields: [setId], references: [id])
+    setId       String
+    whiteUser   User     @relation("gamesAsWhite", fields: [whiteUserId], references: [id])
+    whiteUserId String
+    blackUser   User     @relation("gamesAsBlack", fields: [blackUserId], references: [id])
+    blackUserId String
+}
+
+model Set {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    games     Game[]
+    bots      Bot[]
+}
+
+model User {
+    id           String   @id @default(uuid())
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    email        String   @unique
+    passwordHash String
+    bot          Bot[]
+    gamesAsWhite Game[]   @relation("gamesAsWhite")
+    gamesAsBlack Game[]   @relation("gamesAsBlack")
+}
+
+model Bot {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    endpoint  String
+    type      String
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    sets      Set[]
+}
