@@ -8,4 +8,8 @@ export class UserController {
 		const user = await UserService.create(email, password)
 		res.json(user)
 	}
+
+	static current = async (req: Request, res: Response) => {
+		res.json(req.user)
+	}
 }
