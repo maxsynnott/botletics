@@ -3,9 +3,19 @@ import session from 'express-session'
 import { config } from '../config/config'
 import { PrismaSessionStore } from '@quixo3/prisma-session-store'
 import { db } from '../clients/db'
+import cors from 'cors'
 
 export const initMiddleware = (app: Express) => {
 	app.use(express.json())
+	app.use(
+		cors({
+			origin:
+				config.nodeEnv === 'production'
+					? 'prodUrl'
+					: 'http://localhost:3000',
+			credentials: true,
+		}),
+	)
 	app.use(
 		session({
 			secret: config.session.secret,

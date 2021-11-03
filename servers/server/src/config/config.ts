@@ -7,6 +7,7 @@ const getRequiredEnvVariable = (name: string): string => {
 }
 
 export const config = {
+	nodeEnv: process.env['NODE_ENV'],
 	session: {
 		secret: getRequiredEnvVariable('SESSION_SECRET'),
 	},
