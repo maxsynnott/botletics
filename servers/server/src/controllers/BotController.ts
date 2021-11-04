@@ -3,9 +3,7 @@ import { BotService } from '../services/BotService'
 
 export class BotController {
 	static index = async (req: Request, res: Response) => {
-		if (!req.user) throw new Error()
-
-		const bots = await BotService.getAllNotOwnedBy(req.user.id)
+		const bots = await BotService.getAll()
 		res.status(200).json(bots)
 	}
 
@@ -26,5 +24,12 @@ export class BotController {
 		const bot = await BotService.create({ userId, type, endpoint, name })
 
 		res.status(201).json(bot)
+	}
+
+	static usersIndex = async (req: Request, res: Response) => {
+		const { userId } = req.params
+
+		const bots = await BotService.getAllByUserId(userId)
+		res.status(200).json(bots)
 	}
 }

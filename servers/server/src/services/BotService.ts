@@ -23,8 +23,8 @@ export class BotService {
 		return bot
 	}
 
-	static getAllNotOwnedBy = async (userId: string) => {
-		const bots = await db.bot.findMany({ where: { NOT: { userId } } })
+	static getAll = async () => {
+		const bots = await db.bot.findMany()
 		return bots
 	}
 
@@ -50,5 +50,10 @@ export class BotService {
 			default:
 				throw new Error('Unexpected status code')
 		}
+	}
+
+	static getAllByUserId = async (userId: string) => {
+		const bots = await db.bot.findMany({ where: { userId } })
+		return bots
 	}
 }

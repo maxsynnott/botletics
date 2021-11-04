@@ -4,6 +4,12 @@ import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
 export const botsRouter = Router()
 
+botsRouter.get(
+	'/users/:userId/bots',
+	ensureAuthenticated,
+	BotController.usersIndex,
+)
+
 botsRouter.get('/bots', ensureAuthenticated, BotController.index)
 botsRouter.get('/bots/:id', ensureAuthenticated, BotController.show)
 
