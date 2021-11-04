@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { BotService } from '../services/BotService'
+import { BotType } from '../types/types'
 
 export class BotController {
 	static index = async (req: Request, res: Response) => {
@@ -28,8 +29,13 @@ export class BotController {
 
 	static usersIndex = async (req: Request, res: Response) => {
 		const { userId } = req.params
+		const { type } = req.query
 
-		const bots = await BotService.getAllByUserId(userId)
+		const bots = await BotService.getAllByUserId(
+			userId,
+			// TODO: Include botType validation
+			type as BotType | undefined,
+		)
 		res.status(200).json(bots)
 	}
 }

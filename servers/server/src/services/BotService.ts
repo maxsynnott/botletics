@@ -1,6 +1,4 @@
-import { Game } from '.prisma/client'
 import axios from 'axios'
-import { Chess } from 'chess.js'
 import { db } from '../clients/db'
 import { BotType } from '../types/types'
 
@@ -52,8 +50,9 @@ export class BotService {
 		}
 	}
 
-	static getAllByUserId = async (userId: string) => {
-		const bots = await db.bot.findMany({ where: { userId } })
+	static getAllByUserId = async (userId: string, type?: BotType) => {
+		const where = { userId, ...(type && { type }) }
+		const bots = await db.bot.findMany({ where })
 		return bots
 	}
 }
