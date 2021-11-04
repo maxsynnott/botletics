@@ -6,6 +6,19 @@ export const getBots = async () => {
 	switch (status) {
 		case 200:
 			return data
+
+		default:
+			throw new Error()
+	}
+}
+
+export const getBot = async (id: string) => {
+	const { status, data } = await axios.get(`/bots/${id}`)
+
+	switch (status) {
+		case 200:
+			return data
+
 		default:
 			throw new Error()
 	}

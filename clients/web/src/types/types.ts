@@ -17,4 +17,5 @@ export interface Bot {
 	endpoint: string
 	type: string
 	userId: string
+	name: string
 }

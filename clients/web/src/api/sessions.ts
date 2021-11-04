@@ -7,6 +7,7 @@ export const postSession = async (credentials: Credentials) => {
 	switch (status) {
 		case 201:
 			return data
+
 		default:
 			throw new Error()
 	}

@@ -8,6 +8,7 @@ export const getCurrentUser = async () => {
 	switch (status) {
 		case 200:
 			return data
+
 		default:
 			throw new Error()
 	}
@@ -22,6 +23,7 @@ export const postUser = async (credentials: Credentials) => {
 	switch (status) {
 		case 201:
 			return data
+
 		default:
 			throw new Error()
 	}
