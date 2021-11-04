@@ -8,6 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { SignUpPage } from './pages/SignUpPage'
 import { BotPage } from './pages/BotPage'
 import { BotsNewPage } from './pages/BotsNewPage'
+import { SetPage } from './pages/SetPage'
 
 const queryClient = new QueryClient()
 
@@ -28,6 +29,10 @@ export const App = () => {
 
 					<ProtectedRoute path="/bots/:id" exact>
 						<BotPage />
+					</ProtectedRoute>
+
+					<ProtectedRoute path="/sets/:id" exact>
+						<SetPage />
 					</ProtectedRoute>
 
 					<Route path="/signin" exact>

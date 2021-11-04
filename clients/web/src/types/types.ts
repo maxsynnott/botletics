@@ -22,4 +22,19 @@ export interface Bot {
 	name: string
 }
 
+export interface Game {
+	positions: string[]
+	whiteBot: Bot
+	blackBot: Bot
+}
+
+export interface Set {
+	id: string
+	createdAt: string
+	updatedAt: string
+	games: Game[]
+	bots: Bot[]
+}
+
 export type PostBotBody = Pick<Bot, 'endpoint' | 'name' | 'type'>
+export type PostSetBody = { botIds: string[] }
