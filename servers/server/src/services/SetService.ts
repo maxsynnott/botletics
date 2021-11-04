@@ -1,5 +1,6 @@
 import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
+import { GameService } from './GameService'
 
 interface CreateArgs {
 	botIds: string[]
@@ -7,13 +8,27 @@ interface CreateArgs {
 }
 
 export class SetService {
+	static start = async (id: string) => {
+		const games = await db.game.findMany({ where: { setId: id } })
+
+		await Promise.all(
+			games.map(({ id: gameId }) => GameService.start(gameId)),
+		)
+
+		const set = await db.set.findUnique({ where: { id } })
+		return set
+	}
+
 	static getSets = async () => {
 		const sets = await db.set.findMany()
 		return sets
 	}
 
 	static getSetById = async (id: string) => {
-		const set = await db.set.findUnique({ where: { id } })
+		const set = await db.set.findUnique({
+			where: { id },
+			include: { games: true, bots: true },
+		})
 		return set
 	}
 
@@ -31,7 +46,6 @@ export class SetService {
 		})
 
 		const set = await db.set.create({
-			include: { games: true },
 			data: {
 				bots: { connect: botIds.map((id) => ({ id })) },
 				games: { createMany: { data: gamesToCreate } },
