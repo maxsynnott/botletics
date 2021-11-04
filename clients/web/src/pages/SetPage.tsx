@@ -1,6 +1,7 @@
-import { Button } from '@mui/material'
+import { Button, Container } from '@mui/material'
 import { useQueryClient } from 'react-query'
 import { useParams } from 'react-router'
+import { GameGrid } from '../components/GameGrid'
 import { useStartSet } from '../hooks/mutations/useStartSet'
 import { useSet } from '../hooks/queries/useSet'
 
@@ -23,9 +24,9 @@ export const SetPage = () => {
 	}
 
 	return (
-		<>
+		<Container maxWidth="sm">
 			<Button onClick={handleStart}>Start</Button>
-			<pre>{JSON.stringify(set, null, 4)}</pre>
-		</>
+			{set?.games && <GameGrid games={set?.games} />}
+		</Container>
 	)
 }

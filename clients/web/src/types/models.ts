@@ -14,7 +14,7 @@ export interface Bot extends DefaultAttributes {
 }
 
 export interface Game extends DefaultAttributes {
-	positions: string[]
+	pgn: string
 	whiteBotId: string
 	blackBotId: string
 }
