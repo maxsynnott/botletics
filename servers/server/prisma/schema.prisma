@@ -46,6 +46,7 @@ model Bot {
     updatedAt         DateTime @updatedAt
     endpoint          String
     type              String
+    name              String
     user              User     @relation(fields: [userId], references: [id])
     userId            String
     sets              Set[]
