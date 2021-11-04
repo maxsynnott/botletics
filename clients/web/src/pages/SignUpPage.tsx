@@ -4,23 +4,32 @@ import { useQueryClient } from 'react-query'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useCreateSession } from '../hooks/mutations/useCreateSession'
+import { useCreateUser } from '../hooks/mutations/useCreateUser'
 
-export const SignInPage: FC = () => {
+export const SignUpPage: FC = () => {
 	const queryClient = useQueryClient()
 	const history = useHistory()
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
+	const { mutate: createUser } = useCreateUser()
 	const { mutate: createSession } = useCreateSession()
 
 	const handleSubmit = () => {
-		createSession(
+		createUser(
 			{ email, password },
 			{
 				onSuccess: () => {
-					queryClient.invalidateQueries(['users'])
-					history.push('/')
+					createSession(
+						{ email, password },
+						{
+							onSuccess: () => {
+								queryClient.invalidateQueries(['users'])
+								history.push('/')
+							},
+						},
+					)
 				},
 			},
 		)
@@ -29,8 +38,8 @@ export const SignInPage: FC = () => {
 	return (
 		<Container maxWidth="sm">
 			<Stack spacing={1}>
-				<Typography variant="h1">Sign in</Typography>
-				<Link to="/signup">Sign up instead</Link>
+				<Typography variant="h1">Sign up</Typography>
+				<Link to="/signin">Sign in instead</Link>
 
 				<TextField
 					label="Email"

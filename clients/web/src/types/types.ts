@@ -5,7 +5,16 @@ export interface Credentials {
 
 export interface User {
 	id: string
-	createdAt: Date
-	updatedAt: Date
+	createdAt: string
+	updatedAt: string
 	email: string
+}
+
+export interface Bot {
+	id: string
+	createdAt: string
+	updatedAt: string
+	endpoint: string
+	type: string
+	userId: string
 }

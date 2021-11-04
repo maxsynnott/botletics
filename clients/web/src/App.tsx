@@ -5,6 +5,7 @@ import { SignInPage } from './pages/SignInPage'
 import { BotsPage } from './pages/BotsPage'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { SignUpPage } from './pages/SignUpPage'
 
 const queryClient = new QueryClient()
 
@@ -21,6 +22,10 @@ export const App = () => {
 
 					<Route path="/signin" exact>
 						<SignInPage />
+					</Route>
+
+					<Route path="/signup" exact>
+						<SignUpPage />
 					</Route>
 
 					<Route path="/">
