@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { axios } from '../clients/axios'
-import { Credentials, User } from '../types/types'
+import { User } from '../types/models'
+import { Credentials } from '../types/types'
 
 export const getCurrentUser = async () => {
 	const { status, data } = await axios.get('/users/current')

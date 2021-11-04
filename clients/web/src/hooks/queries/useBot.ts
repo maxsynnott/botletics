@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getBot } from '../../api/bots'
-import { Bot } from '../../types/types'
+import { Bot } from '../../types/models'
 
 export const useBot = (
 	id: string,

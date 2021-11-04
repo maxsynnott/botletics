@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getSet } from '../../api/sets'
-import { Bot } from '../../types/types'
+import { Bot } from '../../types/models'
 
 export const useSet = (
 	id: string,

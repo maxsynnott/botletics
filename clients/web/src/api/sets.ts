@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { axios } from '../clients/axios'
-import { PostSetBody } from '../types/types'
-import { Set } from '../types/types'
+import { PostSetBody } from '../types/bodies'
+import { Set } from '../types/models'
 
 export const postSet = async (body: PostSetBody) => {
 	const { status, data } = await axios.post<PostSetBody, AxiosResponse<Set>>(

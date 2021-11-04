@@ -1,5 +1,5 @@
 import { axios } from '../clients/axios'
-import { PostBotBody } from '../types/types'
+import { PostBotBody } from '../types/bodies'
 
 export const getBots = async () => {
 	const { status, data } = await axios.get('/bots')

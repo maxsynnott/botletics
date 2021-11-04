@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { FC } from 'react'
 import { useHistory } from 'react-router'
-import { Bot } from '../types/types'
+import { Bot } from '../types/models'
 import { BotStackItem } from './BotStackItem'
 
 interface Props {
