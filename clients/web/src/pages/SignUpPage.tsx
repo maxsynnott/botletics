@@ -25,7 +25,7 @@ export const SignUpPage: FC = () => {
 						{ email, password },
 						{
 							onSuccess: () => {
-								queryClient.invalidateQueries(['users'])
+								queryClient.invalidateQueries('users')
 								history.push('/')
 							},
 						},

@@ -1,10 +1,10 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getSet } from '../../api/sets'
-import { Bot } from '../../types/models'
+import { Set } from '../../types/models'
 
 export const useSet = (
 	id: string,
-	options?: UseQueryOptions<Bot, Error, Bot, string[]>,
+	options?: UseQueryOptions<Set, Error, Set, string[]>,
 ) => {
-	return useQuery(['bots', id], () => getSet(id), options)
+	return useQuery(['sets', id], () => getSet(id), options)
 }

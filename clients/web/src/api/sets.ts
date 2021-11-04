@@ -29,3 +29,15 @@ export const getSet = async (id: string) => {
 			throw new Error()
 	}
 }
+
+export const startSet = async (id: string) => {
+	const { status, data } = await axios.post(`/sets/${id}/start`)
+
+	switch (status) {
+		case 200:
+			return data
+
+		default:
+			throw new Error()
+	}
+}

@@ -19,7 +19,7 @@ export const SignInPage: FC = () => {
 			{ email, password },
 			{
 				onSuccess: () => {
-					queryClient.invalidateQueries(['users'])
+					queryClient.invalidateQueries('users')
 					history.push('/')
 				},
 			},
