@@ -4,5 +4,7 @@ import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
 export const setsRouter = Router()
 
+setsRouter.get('/sets/:id', ensureAuthenticated, SetController.show)
 setsRouter.get('/sets', ensureAuthenticated, SetController.index)
+
 setsRouter.post('/sets', ensureAuthenticated, SetController.create)

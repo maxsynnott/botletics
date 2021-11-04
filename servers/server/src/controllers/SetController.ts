@@ -7,6 +7,13 @@ export class SetController {
 		res.status(200).json(sets)
 	}
 
+	static show = async (req: Request, res: Response) => {
+		const { id } = req.params
+
+		const set = await SetService.getSetById(id)
+		res.status(200).json(set)
+	}
+
 	static create = async (req: Request, res: Response) => {
 		// TODO: Ensure that current user owns the bot
 		const { botIds } = req.body

@@ -12,6 +12,11 @@ export class SetService {
 		return sets
 	}
 
+	static getSetById = async (id: string) => {
+		const set = await db.set.findUnique({ where: { id } })
+		return set
+	}
+
 	static create = async ({ botIds, numOfGames }: CreateArgs) => {
 		const gamesToCreate = Array.from({ length: numOfGames }, () => {
 			const [whiteBotId, blackBotId] = shuffle(botIds)
