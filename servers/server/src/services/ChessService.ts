@@ -1,6 +1,7 @@
 import { Game } from '.prisma/client'
 import { Chess, ChessInstance } from 'chess.js'
 import { db } from '../clients/db'
+import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { getChessGameResult } from '../helpers/getChessGameResult'
 import { BotService } from './BotService'
 
@@ -54,7 +55,7 @@ export class ChessService {
 				data: { pgn: chess.pgn() },
 			})
 		} else {
-			throw new Error('Illegal move')
+			throw new InvalidBotResponse('Illegal move')
 		}
 	}
 }

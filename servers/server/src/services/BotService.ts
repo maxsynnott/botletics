@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { db } from '../clients/db'
+import { HttpException } from '../exceptions/HttpException'
+import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
+import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
 import { BotType } from '../types/types'
 
 interface CreateArgs {
@@ -28,12 +31,13 @@ export class BotService {
 
 	static getOneById = async (id: string) => {
 		const bot = await db.bot.findUnique({ where: { id } })
+		if (!bot) throw new ResourceNotFoundException()
 		return bot
 	}
 
 	static getMove = async ({ botId, gameId, fen }: GetMoveArgs) => {
 		const bot = await db.bot.findUnique({ where: { id: botId } })
-		if (!bot) throw new Error('Bot not found')
+		if (!bot) throw new ResourceNotFoundException()
 
 		const { data, status } = await axios.post(bot.endpoint, {
 			type: 'chess',
@@ -46,7 +50,7 @@ export class BotService {
 				const move = data.move
 				return move
 			default:
-				throw new Error('Unexpected status code')
+				throw new InvalidBotResponse('Unexpected status code')
 		}
 	}
 
