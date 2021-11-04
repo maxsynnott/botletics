@@ -7,6 +7,6 @@ export class GameController {
 		const { id } = req.params
 
 		const updatedGame = await GameService.start(id)
-		res.json(updatedGame)
+		res.status(200).json(updatedGame)
 	}
 }

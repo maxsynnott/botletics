@@ -4,7 +4,7 @@ import { SetService } from '../services/setService'
 export class SetController {
 	static index = async (req: Request, res: Response) => {
 		const sets = await SetService.getSets()
-		res.json(sets)
+		res.status(200).json(sets)
 	}
 
 	static create = async (req: Request, res: Response) => {
@@ -14,6 +14,6 @@ export class SetController {
 		const numOfGames = 9
 		const set = await SetService.create({ botIds, numOfGames })
 
-		res.json(set)
+		res.status(201).json(set)
 	}
 }

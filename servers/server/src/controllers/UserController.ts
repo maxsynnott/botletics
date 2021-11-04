@@ -6,10 +6,10 @@ export class UserController {
 		const { email, password } = req.body
 
 		const user = await UserService.create(email, password)
-		res.json(user)
+		res.status(201).json(user)
 	}
 
 	static current = async (req: Request, res: Response) => {
-		res.json(req.user)
+		res.status(200).json(req.user)
 	}
 }

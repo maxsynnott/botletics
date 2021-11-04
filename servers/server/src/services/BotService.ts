@@ -22,8 +22,8 @@ export class BotService {
 		return bot
 	}
 
-	static getAll = async () => {
-		const bots = await db.bot.findMany()
+	static getAllNotOwnedBy = async (userId: string) => {
+		const bots = await db.bot.findMany({ where: { NOT: { userId } } })
 		return bots
 	}
 
