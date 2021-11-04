@@ -1,13 +1,13 @@
 import { Game } from '.prisma/client'
 import { Chess, ChessInstance } from 'chess.js'
 import { db } from '../clients/db'
+import { getChessGameResult } from '../helpers/getChessGameResult'
 import { BotService } from './BotService'
 
 interface RunTurnArgs {
 	chess: ChessInstance
 	botId: string
 	gameId: string
-	positions: string[]
 }
 
 export class ChessService {
@@ -15,31 +15,33 @@ export class ChessService {
 		id: gameId,
 		whiteBotId,
 		blackBotId,
-		positions,
-	}: Game) => {
-		const chess = new Chess(positions.at(-1))
-
-		let updatedGame
+		pgn,
+	}: Game): Promise<void> => {
+		const chess = new Chess()
+		if (pgn) chess.load_pgn(pgn)
 
 		while (!chess.game_over()) {
 			const botIdToPlay = chess.turn() === 'w' ? whiteBotId : blackBotId
-			updatedGame = await this.runTurn({
+			await this.runTurn({
 				chess,
 				botId: botIdToPlay,
 				gameId,
-				positions,
 			})
 		}
 
-		return updatedGame
+		chess.header('Result', getChessGameResult(chess))
+
+		await db.game.update({
+			where: { id: gameId },
+			data: { pgn: chess.pgn() },
+		})
 	}
 
 	private static runTurn = async ({
 		chess,
 		botId,
 		gameId,
-		positions,
-	}: RunTurnArgs) => {
+	}: RunTurnArgs): Promise<void> => {
 		const move = await BotService.getMove({
 			botId,
 			gameId,
@@ -47,10 +49,9 @@ export class ChessService {
 		})
 
 		if (chess.move(move)) {
-			positions.push(chess.fen())
-			return db.game.update({
+			await db.game.update({
 				where: { id: gameId },
-				data: { positions },
+				data: { pgn: chess.pgn() },
 			})
 		} else {
 			throw new Error('Illegal move')

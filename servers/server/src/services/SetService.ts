@@ -1,3 +1,4 @@
+import { Set } from '.prisma/client'
 import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
 import { GameService } from './GameService'
@@ -8,15 +9,12 @@ interface CreateArgs {
 }
 
 export class SetService {
-	static start = async (id: string) => {
+	static start = async (id: string): Promise<void> => {
 		const games = await db.game.findMany({ where: { setId: id } })
 
 		await Promise.all(
 			games.map(({ id: gameId }) => GameService.start(gameId)),
 		)
-
-		const set = await db.set.findUnique({ where: { id } })
-		return set
 	}
 
 	static getSets = async () => {
@@ -39,9 +37,6 @@ export class SetService {
 			return {
 				whiteBotId,
 				blackBotId,
-				positions: [
-					'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-				],
 			}
 		})
 

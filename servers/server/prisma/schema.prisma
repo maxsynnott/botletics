@@ -14,7 +14,7 @@ model Game {
     id         String   @id @default(uuid())
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
-    positions  String[] // Default not supported
+    pgn        String?
     set        Set      @relation(fields: [setId], references: [id])
     setId      String
     whiteBot   Bot      @relation("chessGamesAsWhite", fields: [whiteBotId], references: [id])

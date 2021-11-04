@@ -11,8 +11,9 @@ export class SetController {
 		// TODO: Ensure user is authorized to start game
 		const { id } = req.params
 
-		const updatedSet = await SetService.start(id)
-		res.status(200).json(updatedSet)
+		await SetService.start(id)
+		const set = await SetService.getSetById(id)
+		res.status(200).json(set)
 	}
 
 	static show = async (req: Request, res: Response) => {
