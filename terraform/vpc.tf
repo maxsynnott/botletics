@@ -7,11 +7,6 @@ resource "aws_vpc" "botletics" {
   }
 }
 
-resource "aws_subnet" "public" {
-  vpc_id     = aws_vpc.botletics.id
-  cidr_block = cidrsubnet(aws_vpc.botletics.cidr_block, 3, 1)
-}
-
 resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = aws_vpc.botletics.id
 }
@@ -43,6 +38,23 @@ resource "aws_security_group_rule" "all_all_out" {
   ]
 }
 
+resource "aws_subnet" "public" {
+  vpc_id     = aws_vpc.botletics.id
+  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = "public"
+  }
+}
+
+resource "aws_subnet" "private" {
+  vpc_id     = aws_vpc.botletics.id
+  cidr_block = "10.0.2.0/24"
+
+  tags = {
+    Name = "private"
+  }
+}
 resource "aws_route_table" "botletics" {
   vpc_id = aws_vpc.botletics.id
 
