@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { HttpException } from '../exceptions/HttpException'
 
+// Error handlers need to accept all 4 params otherwise won't work
 export const errorHandler = (
 	error: HttpException,
 	_req: Request,

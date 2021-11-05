@@ -1,8 +1,19 @@
-import { Router } from 'express'
 import { UserController } from '../controllers/UserController'
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
+import { createRouter } from '../helpers/createRouter'
+import { Route } from '../types/types'
 
-export const usersRouter = Router()
+const routes: Route[] = [
+	{
+		method: 'get',
+		path: '/users/current',
+		handlers: [UserController.current],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'post',
+		path: '/users',
+		handlers: [UserController.create],
+	},
+]
 
-usersRouter.get('/users/current', ensureAuthenticated, UserController.current)
-usersRouter.post('/users', UserController.create)
+export const usersRouter = createRouter(routes)

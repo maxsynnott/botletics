@@ -1,16 +1,32 @@
-import { Router } from 'express'
 import { BotController } from '../controllers/BotController'
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
+import { createRouter } from '../helpers/createRouter'
+import { Route } from '../types/types'
 
-export const botsRouter = Router()
+const routes: Route[] = [
+	{
+		method: 'get',
+		path: '/users/:userId/bots',
+		handlers: [BotController.usersIndex],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'get',
+		path: '/bots',
+		handlers: [BotController.index],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'get',
+		path: '/bots/:id',
+		handlers: [BotController.show],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'post',
+		path: '/bots',
+		handlers: [BotController.create],
+		ensureAuthenticated: true,
+	},
+]
 
-botsRouter.get(
-	'/users/:userId/bots',
-	ensureAuthenticated,
-	BotController.usersIndex,
-)
-
-botsRouter.get('/bots', ensureAuthenticated, BotController.index)
-botsRouter.get('/bots/:id', ensureAuthenticated, BotController.show)
-
-botsRouter.post('/bots', ensureAuthenticated, BotController.create)
+export const botsRouter = createRouter(routes)

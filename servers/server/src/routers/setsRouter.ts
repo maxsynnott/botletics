@@ -1,11 +1,32 @@
-import { Router } from 'express'
 import { SetController } from '../controllers/SetController'
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
+import { createRouter } from '../helpers/createRouter'
+import { Route } from '../types/types'
 
-export const setsRouter = Router()
+const routes: Route[] = [
+	{
+		method: 'get',
+		path: '/sets/:id',
+		handlers: [SetController.show],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'get',
+		path: '/sets',
+		handlers: [SetController.index],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'post',
+		path: '/sets',
+		handlers: [SetController.create],
+		ensureAuthenticated: true,
+	},
+	{
+		method: 'post',
+		path: '/sets/:id/start',
+		handlers: [SetController.start],
+		ensureAuthenticated: true,
+	},
+]
 
-setsRouter.get('/sets/:id', ensureAuthenticated, SetController.show)
-setsRouter.get('/sets', ensureAuthenticated, SetController.index)
-
-setsRouter.post('/sets/:id/start', ensureAuthenticated, SetController.start)
-setsRouter.post('/sets', ensureAuthenticated, SetController.create)
+export const setsRouter = createRouter(routes)
