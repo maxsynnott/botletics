@@ -16,7 +16,7 @@ resource "aws_security_group" "ec2" {
   vpc_id = aws_vpc.botletics.id
 }
 
-resource "aws_security_group_rule" "all_ssh_in" {
+resource "aws_security_group_rule" "allow_ssh_in" {
   security_group_id = aws_security_group.ec2.id
   type              = "ingress"
   protocol          = "tcp"
@@ -27,12 +27,28 @@ resource "aws_security_group_rule" "all_ssh_in" {
   ]
 }
 
-resource "aws_security_group_rule" "all_all_out" {
+resource "aws_security_group_rule" "allow_all_out" {
   security_group_id = aws_security_group.ec2.id
   type              = "egress"
   protocol          = "-1"
   from_port         = 0
   to_port           = 0
+  cidr_blocks = [
+    "0.0.0.0/0"
+  ]
+}
+
+resource "aws_security_group" "rds" {
+  name   = "botletics-rds"
+  vpc_id = aws_vpc.botletics.id
+}
+
+resource "aws_security_group_rule" "allow_inbound_connections" {
+  security_group_id = aws_security_group.rds.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 5432
+  to_port           = 5432
   cidr_blocks = [
     "0.0.0.0/0"
   ]
@@ -47,14 +63,36 @@ resource "aws_subnet" "public" {
   }
 }
 
-resource "aws_subnet" "private" {
-  vpc_id     = aws_vpc.botletics.id
-  cidr_block = "10.0.2.0/24"
+resource "aws_subnet" "private_1" {
+  vpc_id            = aws_vpc.botletics.id
+  cidr_block        = "10.0.4.0/24"
+  availability_zone = "ap-southeast-1a"
 
   tags = {
-    Name = "private"
+    Name = "private-1"
   }
 }
+
+resource "aws_subnet" "private_2" {
+  vpc_id            = aws_vpc.botletics.id
+  cidr_block        = "10.0.5.0/24"
+  availability_zone = "ap-southeast-1b"
+
+  tags = {
+    Name = "private-2"
+  }
+}
+
+resource "aws_subnet" "private_3" {
+  vpc_id            = aws_vpc.botletics.id
+  cidr_block        = "10.0.6.0/24"
+  availability_zone = "ap-southeast-1c"
+
+  tags = {
+    Name = "private-3"
+  }
+}
+
 resource "aws_route_table" "botletics" {
   vpc_id = aws_vpc.botletics.id
 

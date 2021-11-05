@@ -22,6 +22,10 @@ resource "aws_ecs_task_definition" "botletics" {
         {
           name  = "SESSION_SECRET"
           value = local.config.session_secret
+        },
+        {
+          name  = "DATABASE_URL"
+          value = local.postgres_connection_url
         }
       ]
     }
