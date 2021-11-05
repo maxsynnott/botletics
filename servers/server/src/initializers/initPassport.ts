@@ -1,4 +1,4 @@
-import { User } from '.prisma/client'
+import { User } from '@prisma/client'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { db } from '../clients/db'

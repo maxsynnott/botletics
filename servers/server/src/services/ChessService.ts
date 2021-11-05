@@ -1,4 +1,4 @@
-import { Game } from '.prisma/client'
+import { Game } from '@prisma/client'
 import { Chess, ChessInstance } from 'chess.js'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'

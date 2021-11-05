@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { requestHandler } from '../helpers/requestHandler'
-import { SetService } from '../services/setService'
+import { SetService } from '../services/SetService'
 
 export class SetController {
 	static index = requestHandler(async (req: Request, res: Response) => {
