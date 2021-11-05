@@ -1,3 +1,3 @@
 resource "aws_secretsmanager_secret" "config" {
-  name = "config"
+  name = "production-config"
 }
