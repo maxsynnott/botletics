@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "botletics_server" {
   container_definitions = jsonencode([
     {
       name      = "botletics-server"
-      image     = "${aws_ecr_repository.botletics_server.repository_url}:latest"
+      image     = local.server_image_uri
       essential = true
       portMappings = [
         {

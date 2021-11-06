@@ -55,7 +55,9 @@ jobs:
   # TODO: Include some form of human review
   terraform:
     name: Terraform
-    needs: pushMigratorToECR
+    needs:
+      - pushMigratorToECR
+      - pushServerToECR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -106,7 +108,6 @@ jobs:
   # TODO: Only build and push if code has changed
   pushServerToECR:
     name: Push server to ECR
-    needs: migrate
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: botletics-server-production
