@@ -1,0 +1,6 @@
+FROM node:14
+WORKDIR /app
+COPY prisma ./prisma
+COPY package*.json ./
+RUN npm ci
+CMD ["npm", "run", "migrate:production"]
