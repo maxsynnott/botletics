@@ -6,5 +6,5 @@ export const handler = async () => {
 		'migrate',
 		'deploy',
 	])
-	console.log(stdout)
+	return stdout
 }
