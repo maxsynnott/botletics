@@ -25,31 +25,13 @@ resource "aws_ecs_task_definition" "botletics_server" {
         },
         {
           name  = "DATABASE_URL"
-          value = local.postgres_connection_url
+          value = local.database_url
         }
       ]
     }
   ])
-}
 
-resource "aws_ecs_task_definition" "botletics_migrator" {
-  family                   = "botletics-migrator"
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["EC2"]
-  container_definitions = jsonencode([
-    {
-      name      = "botletics-migrator-1"
-      image     = "${aws_ecr_repository.botletics_migrator.repository_url}:latest"
-      essential = true
-      memory    = 128
-      environment = [
-        {
-          name  = "DATABASE_URL"
-          value = local.postgres_connection_url
-        }
-      ]
-    }
-  ])
+  memory = 512
 }
 
 resource "aws_ecs_service" "botletics" {

@@ -43,9 +43,25 @@ resource "aws_security_group" "rds" {
   vpc_id = aws_vpc.botletics.id
 }
 
-resource "aws_security_group_rule" "allow_inbound_connections" {
+resource "aws_security_group_rule" "allow_postgres_in" {
   security_group_id = aws_security_group.rds.id
   type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 5432
+  to_port           = 5432
+  cidr_blocks = [
+    "0.0.0.0/0"
+  ]
+}
+
+resource "aws_security_group" "migrator" {
+  name   = "botletics-migrator"
+  vpc_id = aws_vpc.botletics.id
+}
+
+resource "aws_security_group_rule" "allow_postgres_out" {
+  security_group_id = aws_security_group.migrator.id
+  type              = "egress"
   protocol          = "tcp"
   from_port         = 5432
   to_port           = 5432

@@ -1,4 +1,6 @@
-resource "aws_instance" "botletics" {
+// TODO: REPLACE WITH AUTOSCALING GROUP
+
+resource "aws_instance" "botletics_1" {
   ami                         = data.aws_ami.ecs.id
   instance_type               = "t3.micro"
   key_name                    = aws_key_pair.dev.key_name
