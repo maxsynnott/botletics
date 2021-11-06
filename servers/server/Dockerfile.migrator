@@ -1,3 +1,6 @@
+# * This feels unideal. Would prefer migrator to be separate from server
+# ? Maybe prisma migrations should live elsewhere? S3?
+
 FROM node:14 AS builder
 WORKDIR /app
 COPY migrator/package*.json ./

@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "botletics_server" {
           hostPort      = 8080
         }
       ]
-      memory = 512
+      memory = 768
       environment = [
         {
           name  = "SESSION_SECRET"
@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "botletics_server" {
     }
   ])
 
-  memory = 512
+  memory = 768
 }
 
 resource "aws_ecs_service" "botletics" {

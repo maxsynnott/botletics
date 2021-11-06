@@ -1,20 +1,38 @@
-// TODO: REPLACE WITH AUTOSCALING GROUP
+// TODO: Attach intelligent policies
+resource "aws_autoscaling_group" "botletics" {
+  name                 = "botletics"
+  launch_configuration = aws_launch_configuration.botletics.name
+  termination_policies = ["OldestInstance"]
+  vpc_zone_identifier  = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
 
-resource "aws_instance" "botletics_1" {
-  ami                         = data.aws_ami.ecs.id
+  min_size         = 1
+  max_size         = 3
+  desired_capacity = 1
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_launch_configuration" "botletics" {
+  name_prefix = "botletics-"
+
+  image_id                    = data.aws_ami.ecs.id
   instance_type               = "t3.micro"
   key_name                    = aws_key_pair.dev.key_name
-  vpc_security_group_ids      = [aws_security_group.ec2.id]
-  subnet_id                   = aws_subnet.public_1.id
+  security_groups             = [aws_security_group.ec2.id]
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.ecs-ec2.name
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   user_data = <<EOS
 #!/bin/bash
 echo "ECS_CLUSTER=${aws_ecs_cluster.botletics.name}" >> /etc/ecs/ecs.config
 EOS
 }
-
 
 resource "aws_key_pair" "dev" {
   key_name   = "id_rsa"
