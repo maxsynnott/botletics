@@ -11,7 +11,6 @@ WORKDIR /app
 COPY --from=builder /app/prisma/schema.prisma ./prisma/schema.prisma
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/build ./src
-ENV ENVIRONMENT=production
 RUN npm ci --only=production
 
 CMD ["npm", "run", "start:production"]

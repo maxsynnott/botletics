@@ -26,6 +26,10 @@ resource "aws_ecs_task_definition" "botletics_server" {
         {
           name  = "DATABASE_URL"
           value = local.database_url
+        },
+        {
+          name  = "ENVIRONMENT"
+          value = "production"
         }
       ]
     }
