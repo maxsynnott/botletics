@@ -161,6 +161,7 @@ jobs:
         run: |
           npm ci
           npm run build
+
       - name: Push production build to s3
         working-directory: ./clients/web
         run: aws s3 sync ./build/ s3://botletics-spa
