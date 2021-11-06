@@ -23,13 +23,31 @@ resource "aws_lb_target_group" "botletics" {
   }
 }
 
-resource "aws_lb_listener" "botletics" {
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.botletics.arn
+  protocol          = "HTTPS"
+  port              = 443
+  certificate_arn   = aws_acm_certificate_validation.api_botletics.certificate_arn
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.botletics.arn
+  }
+}
+
+resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.botletics.arn
   protocol          = "HTTP"
   port              = 80
 
   default_action {
-    target_group_arn = aws_lb_target_group.botletics.arn
-    type             = "forward"
+    type = "redirect"
+
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
