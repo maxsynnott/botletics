@@ -7,6 +7,7 @@ import cors from 'cors'
 
 export const initMiddleware = (app: Express) => {
 	app.use(express.json())
+	app.use(express.urlencoded())
 	app.use(
 		cors({
 			origin:

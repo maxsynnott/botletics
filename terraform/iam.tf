@@ -31,5 +31,16 @@ resource "aws_iam_role_policy_attachment" "basic_execution" {
 
 data "aws_iam_policy" "lambda_vpc_access_basic_execution_policy" {
   name = "AWSLambdaVPCAccessExecutionRole"
+}
 
+data "aws_iam_policy_document" "spa_bucket_policy" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["arn:aws:s3:::${var.spa_s3_bucket_name}/*"]
+    effect    = "Allow"
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+  }
 }
