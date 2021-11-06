@@ -1,6 +1,6 @@
 import { Express } from 'express'
 import { botsRouter } from '../routers/botsRouter'
-import { pingsRouter } from '../routers/pingsRouter'
+import { healthCheckRouter } from '../routers/healthCheckRouter'
 import { sessionsRouter } from '../routers/sessionsRouter'
 import { setsRouter } from '../routers/setsRouter'
 import { usersRouter } from '../routers/usersRouter'
@@ -10,7 +10,7 @@ const routers = [
 	sessionsRouter,
 	usersRouter,
 	botsRouter,
-	pingsRouter,
+	healthCheckRouter,
 ]
 
 export const initRoutes = (app: Express) => {
