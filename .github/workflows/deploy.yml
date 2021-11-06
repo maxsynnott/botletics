@@ -63,7 +63,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Setup Terraform
@@ -85,9 +85,24 @@ jobs:
         working-directory: ./terraform
         run: terraform apply -auto-approve
 
+  migrate:
+    name: Migrate
+    needs: terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Migrate
+        run: aws lambda invoke --function-name botletics-migrator /dev/stdout
+
   pushServerToECR:
     name: Push server to ECR
-    needs: terraform
+    needs: migrate
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: botletics-server-production
