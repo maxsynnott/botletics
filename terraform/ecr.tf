@@ -51,3 +51,8 @@ resource "aws_ecr_lifecycle_policy" "migrator" {
 }
 EOF
 }
+
+data "aws_ecr_image" "botletics_migrator" {
+  repository_name = aws_ecr_repository.botletics_migrator.name
+  image_tag       = "latest"
+}
