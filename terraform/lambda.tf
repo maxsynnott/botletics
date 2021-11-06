@@ -12,7 +12,7 @@ resource "aws_lambda_function" "botletics_migrator" {
   }
 
   vpc_config {
-    subnet_ids         = [aws_subnet.public.id]
+    subnet_ids         = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
     security_group_ids = [aws_security_group.migrator.id]
   }
 }

@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "botletics_server" {
   requires_compatibilities = ["EC2"]
   container_definitions = jsonencode([
     {
-      name      = "botletics-server-1"
+      name      = "botletics-server"
       image     = "${aws_ecr_repository.botletics_server.repository_url}:latest"
       essential = true
       portMappings = [
@@ -41,7 +41,13 @@ resource "aws_ecs_service" "botletics" {
   desired_count   = 1
 
   network_configuration {
-    subnets         = [aws_subnet.public.id]
+    subnets         = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
     security_groups = [aws_security_group.ec2.id]
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.botletics.arn
+    container_name   = "botletics-server"
+    container_port   = 8080
   }
 }

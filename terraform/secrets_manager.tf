@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "config" {
-  name = "production-config"
+  name = "config-prod"
 }
 
 data "aws_secretsmanager_secret_version" "config" {
