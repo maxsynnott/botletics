@@ -1,21 +1,26 @@
 // TODO: Attach intelligent policies
 resource "aws_autoscaling_group" "botletics" {
   name                 = "botletics"
-  launch_configuration = aws_launch_configuration.botletics.name
+  launch_configuration = var.launch_configuration_name
   termination_policies = ["OldestInstance"]
   vpc_zone_identifier  = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
 
-  min_size         = 1
-  max_size         = 3
-  desired_capacity = 1
+  min_size = 0
+  max_size = 3
 
   lifecycle {
     create_before_destroy = true
   }
+
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = ""
+    propagate_at_launch = true
+  }
 }
 
 resource "aws_launch_configuration" "botletics" {
-  name_prefix = "botletics-"
+  name = var.launch_configuration_name
 
   image_id                    = data.aws_ami.ecs.id
   instance_type               = "t3.micro"
@@ -30,7 +35,7 @@ resource "aws_launch_configuration" "botletics" {
 
   user_data = <<EOS
 #!/bin/bash
-echo "ECS_CLUSTER=${aws_ecs_cluster.botletics.name}" >> /etc/ecs/ecs.config
+echo "ECS_CLUSTER=${var.ecs_cluster_name}" >> /etc/ecs/ecs.config
 EOS
 }
 
