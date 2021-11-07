@@ -25,6 +25,12 @@ resource "aws_ecr_lifecycle_policy" "server" {
 EOF
 }
 
+data "aws_ecr_image" "botletics_migrator" {
+  repository_name = aws_ecr_repository.botletics_migrator.name
+  image_tag       = "latest"
+}
+
+
 resource "aws_ecr_repository" "botletics_migrator" {
   name = "botletics-db-migrator"
 }
@@ -52,12 +58,39 @@ resource "aws_ecr_lifecycle_policy" "migrator" {
 EOF
 }
 
-data "aws_ecr_image" "botletics_migrator" {
-  repository_name = aws_ecr_repository.botletics_migrator.name
+data "aws_ecr_image" "botletics_server" {
+  repository_name = aws_ecr_repository.botletics_server.name
   image_tag       = "latest"
 }
 
-data "aws_ecr_image" "botletics_server" {
-  repository_name = aws_ecr_repository.botletics_server.name
+resource "aws_ecr_repository" "random_bot" {
+  name = "random-bot"
+}
+
+resource "aws_ecr_lifecycle_policy" "random_bot" {
+  repository = aws_ecr_repository.random_bot.name
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Only keep one untagged image",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "imageCountMoreThan",
+                "countNumber": 1
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
+data "aws_ecr_image" "random_bot" {
+  repository_name = aws_ecr_repository.random_bot.name
   image_tag       = "latest"
 }

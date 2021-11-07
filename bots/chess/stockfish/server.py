@@ -1,3 +1,5 @@
+# ! This is temp code. Judgement is strictly prohibited
+
 from stockfish import Stockfish
 from flask import Flask, request
 import os
@@ -19,7 +21,5 @@ def formatMove(move):
 	if (len(move) == 5):
 		formatted_move["promotion"] = move[4]
 	return formatted_move
-
-	
 
 app.run(host="0.0.0.0", port=10001)
