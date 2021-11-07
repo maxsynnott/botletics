@@ -12,7 +12,7 @@ export const initMiddleware = (app: Express) => {
 		cors({
 			origin:
 				config.environment === 'production'
-					? 'https://botletics.live'
+					? ['https://botletics.live', 'https://www.botletics.live']
 					: 'http://localhost:3000',
 			credentials: true,
 		}),
