@@ -2,9 +2,7 @@ import { Chess } from 'chess.js'
 import random from 'just-random'
 
 interface Event {
-	payload: {
-		fen: string
-	}
+	body: string
 }
 
 interface Response {
@@ -12,10 +10,8 @@ interface Response {
 }
 
 export const handler = async (event: Event): Promise<Response> => {
-	console.log({ event })
-	const {
-		payload: { fen },
-	} = event
+	console.log(event)
+	const fen = JSON.parse(event.body).payload.fen
 	const chess = new Chess(fen)
 	const possibleMoves = chess.moves()
 	const move = random(possibleMoves)
