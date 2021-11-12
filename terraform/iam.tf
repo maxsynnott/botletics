@@ -7,7 +7,6 @@ data "aws_iam_role" "ecs_instance_role" {
   name = "ecsInstanceRole"
 }
 
-
 resource "aws_iam_role" "lambda" {
   name               = "lambda"
   assume_role_policy = data.aws_iam_policy_document.lambda.json

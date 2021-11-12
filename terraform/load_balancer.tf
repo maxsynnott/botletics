@@ -6,6 +6,18 @@ resource "aws_lb" "botletics" {
   subnets            = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
 }
 
+resource "aws_lb_target_group" "random_bot" {
+  name        = "random-bot"
+  target_type = "lambda"
+  vpc_id      = aws_vpc.botletics.id
+}
+
+resource "aws_lb_target_group_attachment" "random_bot" {
+  depends_on       = [aws_lambda_permission.lb_random_bot]
+  target_group_arn = aws_lb_target_group.random_bot.arn
+  target_id        = aws_lambda_function.random_bot.arn
+}
+
 resource "aws_lb_target_group" "botletics" {
   name        = "botletics"
   protocol    = "HTTP"
@@ -20,6 +32,22 @@ resource "aws_lb_target_group" "botletics" {
     unhealthy_threshold = 3
     interval            = 30
     timeout             = 10
+  }
+}
+
+resource "aws_lb_listener_rule" "lambda" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 1
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.random_bot.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/bots/chess/random"]
+    }
   }
 }
 

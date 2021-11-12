@@ -35,3 +35,11 @@ resource "aws_lambda_function" "random_bot" {
     security_group_ids = [aws_security_group.migrator.id]
   }
 }
+
+resource "aws_lambda_permission" "lb_random_bot" {
+  statement_id  = "AllowExecutionFromlb"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.random_bot.arn
+  principal     = "elasticloadbalancing.amazonaws.com"
+  source_arn    = aws_lb_target_group.random_bot.arn
+}
