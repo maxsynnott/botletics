@@ -13,7 +13,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"chess.js": "^0.12.0",
-		"just-random": "^2.2.1",
+		"just-random": "^2.2.2",
 		"typescript": "^4.4.4"
 	},
 	"devDependencies": {
