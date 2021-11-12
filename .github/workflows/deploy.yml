@@ -14,6 +14,7 @@ defaults:
     shell: bash
 
 jobs:
+  # TODO: Only build and push if code has changed
   pushRandomBotToECR:
     name: Push random bot to ECR
     runs-on: ubuntu-latest
@@ -182,6 +183,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+  # TODO: Only build and push if code has changed
   pushSPAToS3:
     name: Push SPA to S3
     runs-on: ubuntu-latest
