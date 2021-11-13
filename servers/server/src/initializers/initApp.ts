@@ -13,4 +13,7 @@ const initializers = [
 
 export const initApp = (app: Express) => {
 	initializers.forEach((initializer) => initializer(app))
+
+	const port = process.env.PORT ?? 8080
+	app.listen(port, () => console.log(`Listening on port ${port}`))
 }

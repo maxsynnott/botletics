@@ -4,6 +4,7 @@ import { config } from '../config/config'
 import { PrismaSessionStore } from '@quixo3/prisma-session-store'
 import { db } from '../clients/db'
 import cors from 'cors'
+import morgan from 'morgan'
 
 export const initMiddleware = (app: Express) => {
 	app.use(express.json())
@@ -31,4 +32,5 @@ export const initMiddleware = (app: Express) => {
 			}),
 		}),
 	)
+	app.use(morgan('combined'))
 }

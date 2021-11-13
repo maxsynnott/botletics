@@ -8,6 +8,7 @@ export const errorHandler = (
 	res: Response,
 	_next: NextFunction,
 ) => {
+	console.error(error)
 	const { message, name } = error
 	// TODO: Implemnent correctly typed method of handling this
 	// Just in case an ordinary Error slips through
