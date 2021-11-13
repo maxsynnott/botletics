@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { db } from '../clients/db'
-import { HttpException } from '../exceptions/HttpException'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
 import { BotType } from '../types/types'

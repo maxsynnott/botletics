@@ -4,6 +4,11 @@ resource "aws_lb" "botletics" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.load_balancer.id]
   subnets            = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
+
+  access_logs {
+    bucket  = aws_s3_bucket.lb_logs.bucket
+    enabled = true
+  }
 }
 
 resource "aws_lb_target_group" "random_bot" {
@@ -21,7 +26,7 @@ resource "aws_lb_target_group_attachment" "random_bot" {
 resource "aws_lb_target_group" "botletics" {
   name        = "botletics"
   protocol    = "HTTP"
-  target_type = "ip"
+  target_type = "instance"
   port        = 8080
   vpc_id      = aws_vpc.botletics.id
 

@@ -17,3 +17,8 @@ variable "launch_configuration_name" {
   type    = string
   default = "botletics-launch-configuration"
 }
+
+variable "lb_logs_bucket_name" {
+  type    = string
+  default = "botletics-api-lb-logs"
+}

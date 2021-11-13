@@ -32,5 +32,6 @@ export const initMiddleware = (app: Express) => {
 			}),
 		}),
 	)
-	app.use(morgan('combined'))
+	const logFormat = config.environment === 'production' ? 'combined' : 'dev'
+	app.use(morgan(logFormat))
 }

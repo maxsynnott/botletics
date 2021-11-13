@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "botletics" {
 
 resource "aws_ecs_task_definition" "botletics_server" {
   family                   = "botletics-server"
-  network_mode             = "awsvpc"
+  network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
   container_definitions = jsonencode([
     {
@@ -45,11 +45,6 @@ resource "aws_ecs_service" "botletics" {
   task_definition            = aws_ecs_task_definition.botletics_server.arn
   desired_count              = 1
   deployment_maximum_percent = 300
-
-  network_configuration {
-    subnets         = [aws_subnet.public_1.id, aws_subnet.public_2.id, aws_subnet.public_3.id]
-    security_groups = [aws_security_group.ec2.id]
-  }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.botletics.arn
