@@ -22,7 +22,7 @@ resource "aws_lambda_function" "random_bot" {
   role          = aws_iam_role.lambda.arn
   package_type  = "Image"
   image_uri     = local.random_bot_image_uri
-  timeout       = 60
+  timeout       = 10
 
   environment {
     variables = {

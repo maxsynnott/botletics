@@ -21,7 +21,8 @@ interface Response {
 
 export const handler = async (event: Event): Promise<Response> => {
 	console.log(event)
-	const fen = JSON.parse(event.body).payload.fen
+	const body = JSON.parse(event.body)
+	const fen = body.payload.fen
 	const chess = new Chess(fen)
 	const possibleMoves = chess.moves()
 	const move = random(possibleMoves)

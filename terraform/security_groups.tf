@@ -93,7 +93,7 @@ resource "aws_security_group_rule" "migrator_allow_postgres_out" {
 }
 
 resource "aws_security_group" "load_balancer" {
-  name   = "load_balancer"
+  name   = "load-balancer"
   vpc_id = aws_vpc.botletics.id
 }
 
