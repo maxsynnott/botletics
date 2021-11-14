@@ -1,4 +1,5 @@
-import { Route } from 'react-router'
+import { Route } from 'react-router-dom'
+import { Layout } from '../layouts/Layout'
 import { BotPage } from '../pages/BotPage'
 import { BotsNewPage } from '../pages/BotsNewPage'
 import { BotsPage } from '../pages/BotsPage'
@@ -10,7 +11,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 
 export const Routes = () => {
 	return (
-		<>
+		<Layout>
 			<ProtectedRoute path="/bots" exact>
 				<BotsPage />
 			</ProtectedRoute>
@@ -35,9 +36,9 @@ export const Routes = () => {
 				<SignUpPage />
 			</Route>
 
-			<Route path="/">
+			<Route path="/" exact>
 				<HomePage />
 			</Route>
-		</>
+		</Layout>
 	)
 }

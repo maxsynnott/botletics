@@ -37,7 +37,7 @@ export const startSet = async (id: string) => {
 	const { status, data } = await axios.post(`/sets/${id}/start`)
 
 	switch (status) {
-		case 200:
+		case 202:
 			return data
 
 		default:

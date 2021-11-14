@@ -13,14 +13,9 @@ export const SetPage = () => {
 	const { id } = useParams<Params>()
 	const { data: set } = useSet(id)
 	const { mutate: startSet } = useStartSet()
-	const queryClient = useQueryClient()
 
 	const handleStart = () => {
-		startSet(id, {
-			onSuccess: () => {
-				queryClient.invalidateQueries('sets')
-			},
-		})
+		startSet(id)
 	}
 
 	return (
