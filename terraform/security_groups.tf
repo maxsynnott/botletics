@@ -119,3 +119,19 @@ resource "aws_security_group_rule" "load_balancer_allow_all_out" {
     "0.0.0.0/0"
   ]
 }
+
+resource "aws_security_group" "redis" {
+  name   = "redis"
+  vpc_id = aws_vpc.botletics.id
+}
+
+resource "aws_security_group_rule" "rds_allow_redis_in" {
+  security_group_id = aws_security_group.redis.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 6379
+  to_port           = 6379
+  cidr_blocks = [
+    "0.0.0.0/0"
+  ]
+}
