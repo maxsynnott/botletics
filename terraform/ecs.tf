@@ -31,6 +31,10 @@ resource "aws_ecs_task_definition" "botletics_server" {
         {
           name  = "ENVIRONMENT"
           value = "production"
+        },
+        {
+          name  = "REDIS_HOST"
+          value = local.redis_host
         }
       ]
     }

@@ -11,4 +11,7 @@ export const config = {
 	session: {
 		secret: getRequiredEnvVariable('SESSION_SECRET'),
 	},
+	redis: {
+		host: getRequiredEnvVariable('REDIS_HOST'),
+	},
 }

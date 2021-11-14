@@ -12,8 +12,7 @@ export class SetController {
 		const { id } = req.params
 
 		await SetService.start(id)
-		const set = await SetService.getSetById(id)
-		res.status(200).json(set)
+		res.sendStatus(202)
 	}
 
 	static show = async (req: Request, res: Response) => {

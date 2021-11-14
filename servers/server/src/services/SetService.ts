@@ -1,6 +1,6 @@
 import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
-import { GameService } from './GameService'
+import { runGameQueue } from '../queues/runGameQueue'
 
 interface CreateArgs {
 	botIds: string[]
@@ -12,7 +12,9 @@ export class SetService {
 		const games = await db.game.findMany({ where: { setId: id } })
 
 		await Promise.all(
-			games.map(({ id: gameId }) => GameService.start(gameId)),
+			games.map(({ id: gameId }) =>
+				runGameQueue.add('runGame', { gameId }),
+			),
 		)
 	}
 
