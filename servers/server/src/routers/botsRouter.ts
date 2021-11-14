@@ -1,5 +1,6 @@
 import { BotController } from '../controllers/BotController'
 import { createRouter } from '../helpers/createRouter'
+import { postBotsSchema } from '../schemas/postBotsSchema'
 import { Route } from '../types/types'
 
 const routes: Route[] = [
@@ -26,6 +27,7 @@ const routes: Route[] = [
 		path: '/bots',
 		handlers: [BotController.create],
 		ensureAuthenticated: true,
+		validationSchema: postBotsSchema,
 	},
 ]
 

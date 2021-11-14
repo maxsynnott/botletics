@@ -1,5 +1,6 @@
 import { UserController } from '../controllers/UserController'
 import { createRouter } from '../helpers/createRouter'
+import { postUsersSchema } from '../schemas/postUsersSchema'
 import { Route } from '../types/types'
 
 const routes: Route[] = [
@@ -13,6 +14,7 @@ const routes: Route[] = [
 		method: 'post',
 		path: '/users',
 		handlers: [UserController.create],
+		validationSchema: postUsersSchema,
 	},
 ]
 

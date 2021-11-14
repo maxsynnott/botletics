@@ -1,5 +1,6 @@
 import { SetController } from '../controllers/SetController'
 import { createRouter } from '../helpers/createRouter'
+import { postSetsSchema } from '../schemas/postSetsSchema'
 import { Route } from '../types/types'
 
 const routes: Route[] = [
@@ -20,6 +21,7 @@ const routes: Route[] = [
 		path: '/sets',
 		handlers: [SetController.create],
 		ensureAuthenticated: true,
+		validationSchema: postSetsSchema,
 	},
 	{
 		method: 'post',

@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { Schema } from 'joi'
 
 export type BotType = 'chess'
 
@@ -9,4 +10,5 @@ export interface Route {
 	path: string
 	handlers: RequestHandler[]
 	ensureAuthenticated?: boolean
+	validationSchema?: Schema
 }
