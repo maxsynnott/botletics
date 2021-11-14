@@ -8,11 +8,6 @@ const routes: Route[] = [
 		path: '/healthcheck',
 		handlers: [HealthCheckController.healthCheck],
 	},
-	{
-		method: 'get',
-		path: '/healthcheck/outgoing',
-		handlers: [HealthCheckController.outgoing],
-	},
 ]
 
 export const healthCheckRouter = createRouter(routes)

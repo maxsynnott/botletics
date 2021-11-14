@@ -1,16 +1,27 @@
-import axios from 'axios'
 import { Request, Response } from 'express'
+import dns from 'dns'
 
 export class HealthCheckController {
-	static healthCheck = (req: Request, res: Response) => {
-		res.status(200).json({ status: 'Healthy' })
-	}
+	static healthCheck = async (req: Request, res: Response) => {
+		const statuses: Record<string, 'Healthy' | 'Unhealthy'> = {}
+		try {
+			await dns.promises.resolve('google.com')
+			statuses.internetConnectivity = 'Healthy'
+		} catch (e) {
+			statuses.internetConnectivity = 'Unhealthy'
+		}
 
-	static outgoing = async (req: Request, res: Response) => {
-		const response = await axios.get('https://api.trending-github.com/')
-		res.status(response.status).json({
-			status: response.status + ' ' + response.statusText,
-			response,
+		const status = Object.values(statuses).every(
+			(status) => status === 'Healthy',
+		)
+			? 'Healthy'
+			: 'Unhealthy'
+
+		const statusCode = status === 'Healthy' ? 200 : 500
+
+		res.status(statusCode).json({
+			status,
+			statuses,
 		})
 	}
 }
