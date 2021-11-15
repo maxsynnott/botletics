@@ -1,11 +1,9 @@
-import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import {
 	DataGrid,
 	GridColDef,
 	GridRowModel,
 	GridRowParams,
-	GridRowProps,
 	GridSortDirection,
 } from '@mui/x-data-grid'
 import moment from 'moment'
