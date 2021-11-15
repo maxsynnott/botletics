@@ -1,9 +1,12 @@
-import { Game } from '@prisma/client'
+import { Bot, Game } from '@prisma/client'
 import { Chess, ChessInstance } from 'chess.js'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { getChessGameResult } from '../helpers/getChessGameResult'
 import { BotService } from './BotService'
+import { GameService } from './GameService'
+import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
+import random from 'just-random'
 
 interface RunTurnArgs {
 	chess: ChessInstance
@@ -12,28 +15,34 @@ interface RunTurnArgs {
 }
 
 export class ChessService {
-	static run = async ({
-		id: gameId,
-		whiteBotId,
-		blackBotId,
-		pgn,
-	}: Game): Promise<void> => {
-		const chess = new Chess()
-		if (pgn) chess.load_pgn(pgn)
+	static runGame = async (id: string): Promise<void> => {
+		// TODO: Fix
+		const game = (await GameService.getOneById(id, {
+			include: { activeBot: true, passiveBot: true },
+		})) as (Game & { activeBot: Bot; passiveBot: Bot }) | null
+		if (!game) throw new ResourceNotFoundException('Game not found')
 
+		const whiteBotType = random(['active', 'passive'])
+		const [whiteBotId, blackBotId] =
+			whiteBotType === 'active'
+				? [game.activeBotId, game.passiveBotId]
+				: [game.passiveBotId, game.activeBotId]
+
+		const chess = new Chess()
 		while (!chess.game_over()) {
 			const botIdToPlay = chess.turn() === 'w' ? whiteBotId : blackBotId
 			await this.runTurn({
 				chess,
 				botId: botIdToPlay,
-				gameId,
+				gameId: game.id,
 			})
 		}
 
-		chess.header('Result', getChessGameResult(chess))
+		chess.header('whiteBotType', whiteBotType)
+		chess.header('result', getChessGameResult(chess))
 
 		await db.game.update({
-			where: { id: gameId },
+			where: { id: game.id },
 			data: { pgn: chess.pgn() },
 		})
 	}

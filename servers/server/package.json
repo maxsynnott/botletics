@@ -43,7 +43,7 @@
 		"express": "^4.17.1",
 		"express-session": "^1.17.2",
 		"joi": "^17.4.2",
-		"just-shuffle": "^3.2.1",
+		"just-random": "^3.0.1",
 		"morgan": "^1.10.0",
 		"passport": "^0.5.0",
 		"passport-local": "^1.0.0"

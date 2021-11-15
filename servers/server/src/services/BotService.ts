@@ -1,9 +1,11 @@
-import { Prisma } from '@prisma/client'
+import { Bot, Prisma } from '@prisma/client'
 import axios from 'axios'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
 import { BotType } from '../types/types'
+import random from 'just-random'
+import { HttpException } from '../exceptions/HttpException'
 
 interface CreateArgs {
 	userId: string
@@ -56,5 +58,13 @@ export class BotService {
 		const findManyArgs = { where: { userId }, ...args }
 		const bots = await db.bot.findMany(findManyArgs)
 		return bots
+	}
+
+	static getOpponent = async ({ userId }: Bot) => {
+		const bots = await db.bot.findMany({
+			where: { NOT: { userId } },
+		})
+		if (bots.length === 0) throw new HttpException('No opponent found')
+		return random(bots) as Bot
 	}
 }

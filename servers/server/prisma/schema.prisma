@@ -11,24 +11,14 @@ datasource db {
 }
 
 model Game {
-    id         String   @id @default(uuid())
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
-    pgn        String?
-    set        Set      @relation(fields: [setId], references: [id])
-    setId      String
-    whiteBot   Bot      @relation("chessGamesAsWhite", fields: [whiteBotId], references: [id])
-    whiteBotId String
-    blackBot   Bot      @relation("chessGamesAsBlack", fields: [blackBotId], references: [id])
-    blackBotId String
-}
-
-model Set {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    games     Game[]
-    bots      Bot[]
+    id           String   @id @default(uuid())
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    pgn          String?
+    activeBot    Bot      @relation("activeGames", fields: [activeBotId], references: [id])
+    activeBotId  String
+    passiveBot   Bot      @relation("passiveGames", fields: [passiveBotId], references: [id])
+    passiveBotId String
 }
 
 model User {
@@ -41,17 +31,18 @@ model User {
 }
 
 model Bot {
-    id                String   @id @default(uuid())
-    createdAt         DateTime @default(now())
-    updatedAt         DateTime @updatedAt
-    endpoint          String
-    type              String
-    name              String
-    user              User     @relation(fields: [userId], references: [id])
-    userId            String
-    sets              Set[]
-    gamesAsWhite      Game[]   @relation("chessGamesAsWhite")
-    chessGamesAsBlack Game[]   @relation("chessGamesAsBlack")
+    id           String   @id @default(uuid())
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    endpoint     String
+    type         String
+    name         String
+    user         User     @relation(fields: [userId], references: [id])
+    userId       String
+    elo          Int      @default(1000)
+    activeGames  Game[]   @relation("activeGames")
+    passiveGames Game[]   @relation("passiveGames")
+
 }
 
 model Session {
