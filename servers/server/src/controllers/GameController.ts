@@ -1,5 +1,6 @@
 import { Bot, Game } from '@prisma/client'
 import { Request, Response } from 'express'
+import { ConflictException } from '../exceptions/ConflictException'
 import { ForbiddenException } from '../exceptions/ForbiddenException'
 import { HttpException } from '../exceptions/HttpException'
 import { BotService } from '../services/BotService'
@@ -7,8 +8,6 @@ import { GameService } from '../services/GameService'
 
 export class GameController {
 	static createRandom = async (req: Request, res: Response) => {
-		console.log(0)
-
 		const userId = req.user?.id
 		if (!userId) throw new HttpException('Current user not found')
 		const { botId } = req.body
@@ -18,9 +17,7 @@ export class GameController {
 				"Cannot create game for another user's bot",
 			)
 		}
-		console.log(1)
 		const randomGame = await GameService.createRandom(bot)
-		console.log(2)
 
 		res.status(201).json(randomGame)
 	}
@@ -38,6 +35,7 @@ export class GameController {
 				"Cannot start game for another user's bot",
 			)
 		}
+		if (game.pgn) throw new ConflictException('Game already started')
 
 		await GameService.start(game)
 		res.sendStatus(202)

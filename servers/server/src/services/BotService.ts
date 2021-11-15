@@ -26,8 +26,13 @@ export class BotService {
 		return bot
 	}
 
-	static getOneById = async (id: string) => {
-		const bot = await db.bot.findUnique({ where: { id } })
+	// TODO: Improve typing to know what was included
+	static getOneById = async (
+		id: string,
+		optionalArgs?: Partial<Prisma.BotFindUniqueArgs>,
+	) => {
+		const findUniqueArgs = { where: { id }, ...optionalArgs }
+		const bot = await db.bot.findUnique(findUniqueArgs)
 		if (!bot) throw new ResourceNotFoundException()
 		return bot
 	}

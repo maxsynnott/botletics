@@ -4,7 +4,6 @@ import { BotPage } from '../pages/BotPage'
 import { BotsNewPage } from '../pages/BotsNewPage'
 import { BotsPage } from '../pages/BotsPage'
 import { HomePage } from '../pages/HomePage'
-import { SetPage } from '../pages/SetPage'
 import { SignInPage } from '../pages/SignInPage'
 import { SignUpPage } from '../pages/SignUpPage'
 import { ProtectedRoute } from './ProtectedRoute'
@@ -22,10 +21,6 @@ export const Routes = () => {
 
 			<ProtectedRoute path="/bots/:id" exact>
 				<BotPage />
-			</ProtectedRoute>
-
-			<ProtectedRoute path="/sets/:id" exact>
-				<SetPage />
 			</ProtectedRoute>
 
 			<Route path="/signin" exact>

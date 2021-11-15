@@ -1,10 +1,9 @@
 import { AxiosResponse } from 'axios'
-import { Set, Bot, Game } from './models'
+import { Bot, Game } from './models'
 
 type Response<ResponseData> = AxiosResponse<ResponseData>
 
-type PostSetResponseData = Set
-export type PostSetResponse = AxiosResponse<PostSetResponseData>
-
-export type GetSetResponseData = Set & { bots: Bot[]; games: Game[] }
-export type GetSetResponse = Response<GetSetResponseData>
+export type PostRandomGameResponse = Response<Game>
+export type GetBotResponse = Response<
+	Bot & { activeGames: Game[]; passiveGames: Game[] }
+>

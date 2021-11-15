@@ -1,5 +1,6 @@
 import { axios } from '../clients/axios'
 import { PostBotBody } from '../types/bodies'
+import { GetBotResponse } from '../types/responses'
 
 export const getBots = async () => {
 	const { status, data } = await axios.get('/bots')
@@ -14,19 +15,9 @@ export const getBots = async () => {
 }
 
 export const getBot = async (id: string) => {
-	const { status, data } = await axios.get(`/bots/${id}`)
-
-	switch (status) {
-		case 200:
-			return data
-
-		default:
-			throw new Error()
-	}
-}
-
-export const getUserBots = async (userId: string) => {
-	const { status, data } = await axios.get(`/users/${userId}/bots`)
+	const { status, data } = await axios.get<null, GetBotResponse>(
+		`/bots/${id}`,
+	)
 
 	switch (status) {
 		case 200:

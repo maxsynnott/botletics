@@ -7,6 +7,7 @@ import { BotService } from './BotService'
 import { GameService } from './GameService'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
 import random from 'just-random'
+import { HttpException } from '../exceptions/HttpException'
 
 interface RunTurnArgs {
 	chess: ChessInstance
@@ -21,6 +22,7 @@ export class ChessService {
 			include: { activeBot: true, passiveBot: true },
 		})) as (Game & { activeBot: Bot; passiveBot: Bot }) | null
 		if (!game) throw new ResourceNotFoundException('Game not found')
+		if (game.pgn) throw new HttpException('Game already started')
 
 		const whiteBotType = random(['active', 'passive'])
 		const [whiteBotId, blackBotId] =
@@ -31,11 +33,20 @@ export class ChessService {
 		const chess = new Chess()
 		while (!chess.game_over()) {
 			const botIdToPlay = chess.turn() === 'w' ? whiteBotId : blackBotId
-			await this.runTurn({
-				chess,
+			const move = await BotService.getMove({
 				botId: botIdToPlay,
 				gameId: game.id,
+				fen: chess.fen(),
 			})
+
+			if (chess.move(move)) {
+				await db.game.update({
+					where: { id: game.id },
+					data: { pgn: chess.pgn() },
+				})
+			} else {
+				throw new InvalidBotResponse('Illegal move')
+			}
 		}
 
 		chess.header('whiteBotType', whiteBotType)
@@ -45,26 +56,5 @@ export class ChessService {
 			where: { id: game.id },
 			data: { pgn: chess.pgn() },
 		})
-	}
-
-	private static runTurn = async ({
-		chess,
-		botId,
-		gameId,
-	}: RunTurnArgs): Promise<void> => {
-		const move = await BotService.getMove({
-			botId,
-			gameId,
-			fen: chess.fen(),
-		})
-
-		if (chess.move(move)) {
-			await db.game.update({
-				where: { id: gameId },
-				data: { pgn: chess.pgn() },
-			})
-		} else {
-			throw new InvalidBotResponse('Illegal move')
-		}
 	}
 }

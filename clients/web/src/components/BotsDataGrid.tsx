@@ -3,7 +3,9 @@ import { makeStyles } from '@mui/styles'
 import {
 	DataGrid,
 	GridColDef,
+	GridRowModel,
 	GridRowParams,
+	GridRowProps,
 	GridSortDirection,
 } from '@mui/x-data-grid'
 import moment from 'moment'
@@ -16,13 +18,15 @@ const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 const columns: GridColDef[] = [
 	{ field: 'name', headerName: 'Name', flex: 1 },
 	{ field: 'endpoint', headerName: 'Endpoint', flex: 1 },
-	{
-		field: 'createdAt',
-		headerName: 'Created at',
-		flex: 1,
-		valueFormatter: ({ value }) => moment(value as string).calendar(),
-	},
+	{ field: 'createdAt', headerName: 'Created at', flex: 1 },
 ]
+
+const botToRow = ({ id, name, endpoint, createdAt }: Bot): GridRowModel => ({
+	id,
+	name,
+	endpoint,
+	createdAt: moment(createdAt).calendar(),
+})
 
 interface Props {
 	bots: Bot[]
@@ -39,13 +43,15 @@ export const BotsDataGrid: FC<Props> = ({ bots }) => {
 	const getRowClassName = () => classes.row
 	const sortingOrder: GridSortDirection[] = ['asc', 'desc']
 
+	const rows = bots.map(botToRow)
+
 	return (
 		<DataGrid
 			disableSelectionOnClick
 			autoHeight
 			autoPageSize
 			columns={columns}
-			rows={bots}
+			rows={rows}
 			onRowClick={onRowClick}
 			getRowClassName={getRowClassName}
 			sortingOrder={sortingOrder}

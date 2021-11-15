@@ -15,11 +15,9 @@ export interface Bot extends DefaultAttributes {
 
 export interface Game extends DefaultAttributes {
 	pgn: string
-	whiteBotId: string
-	blackBotId: string
+	activeBotId: string
+	passiveBotId: string
 }
-
-export interface Set extends DefaultAttributes {}
 
 export interface User extends DefaultAttributes {
 	email: string

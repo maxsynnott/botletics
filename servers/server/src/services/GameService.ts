@@ -1,13 +1,11 @@
 import { Bot, Game } from '.prisma/client'
 import { Prisma } from '@prisma/client'
 import { db } from '../clients/db'
-import { ConflictException } from '../exceptions/ConflictException'
 import { runGameQueue } from '../queues/runGameQueue'
 import { BotService } from './BotService'
 
 export class GameService {
 	static start = async (game: Game) => {
-		if (game.pgn) throw new ConflictException('Game already started')
 		await runGameQueue.add('runGame', { gameId: game.id })
 	}
 

@@ -9,7 +9,7 @@ const RESULT_MAP: Record<string, ChessResult> = {
 }
 
 export const getChessGameResult = (chess: ChessInstance): ChessResult => {
-	const { Result: result } = chess.header()
+	const { result } = chess.header()
 
 	if (result && RESULT_MAP[result]) {
 		return RESULT_MAP[result]
