@@ -3,6 +3,7 @@ import { Layout } from '../layouts/Layout'
 import { BotPage } from '../pages/BotPage'
 import { BotsNewPage } from '../pages/BotsNewPage'
 import { BotsPage } from '../pages/BotsPage'
+import { GamePage } from '../pages/GamePage'
 import { HomePage } from '../pages/HomePage'
 import { SignInPage } from '../pages/SignInPage'
 import { SignUpPage } from '../pages/SignUpPage'
@@ -21,6 +22,10 @@ export const Routes = () => {
 
 			<ProtectedRoute path="/bots/:id" exact>
 				<BotPage />
+			</ProtectedRoute>
+
+			<ProtectedRoute path="/games/:id" exact>
+				<GamePage />
 			</ProtectedRoute>
 
 			<Route path="/signin" exact>

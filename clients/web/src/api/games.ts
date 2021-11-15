@@ -28,3 +28,15 @@ export const postRandomGame = async (body: PostRandomGameBody) => {
 			throw new Error()
 	}
 }
+
+export const startGame = async (id: string) => {
+	const { status, data } = await axios.post(`/games/${id}/start`)
+
+	switch (status) {
+		case 202:
+			return data
+
+		default:
+			throw new Error()
+	}
+}

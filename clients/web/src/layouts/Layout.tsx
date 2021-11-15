@@ -6,7 +6,7 @@ export const Layout: FC = ({ children }) => {
 	return (
 		<Box sx={{ display: 'flex', height: '100%' }}>
 			<Sidebar />
-			<Box sx={{ flexGrow: 1 }}>{children}</Box>
+			<Box sx={{ flexGrow: 1, overflow: 'auto' }}>{children}</Box>
 		</Box>
 	)
 }
