@@ -1,7 +1,7 @@
-import { Container, Typography } from '@mui/material'
+import { Box } from '@mui/system'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { BotStack } from '../components/BotStack'
+import { BotsDataGrid } from '../components/BotsDataGrid'
 import { useBots } from '../hooks/queries/useBots'
 
 export const BotsPage: FC = () => {
@@ -9,9 +9,9 @@ export const BotsPage: FC = () => {
 	if (!bots) return null
 
 	return (
-		<Container maxWidth="sm">
+		<Box>
 			<Link to="/bots/new">Create bot</Link>
-			<BotStack bots={bots} />
-		</Container>
+			<BotsDataGrid bots={bots} />
+		</Box>
 	)
 }
