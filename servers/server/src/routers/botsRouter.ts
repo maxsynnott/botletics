@@ -6,12 +6,6 @@ import { Route } from '../types/types'
 const routes: Route[] = [
 	{
 		method: 'get',
-		path: '/users/:userId/bots',
-		handlers: [BotController.usersIndex],
-		ensureAuthenticated: true,
-	},
-	{
-		method: 'get',
 		path: '/bots',
 		handlers: [BotController.index],
 		ensureAuthenticated: true,

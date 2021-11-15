@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import {
 	DataGrid,
@@ -30,6 +31,9 @@ interface Props {
 export const BotsDataGrid: FC<Props> = ({ bots }) => {
 	const history = useHistory()
 	const classes = useStyles()
+
+	// TODO: Replace null
+	if (!bots.length) return null
 
 	const onRowClick = ({ id }: GridRowParams) => history.push(`/bots/${id}`)
 	const getRowClassName = () => classes.row

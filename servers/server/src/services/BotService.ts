@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import axios from 'axios'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
@@ -21,11 +22,6 @@ export class BotService {
 	static create = async (data: CreateArgs) => {
 		const bot = await db.bot.create({ data })
 		return bot
-	}
-
-	static getAll = async () => {
-		const bots = await db.bot.findMany()
-		return bots
 	}
 
 	static getOneById = async (id: string) => {
@@ -53,9 +49,12 @@ export class BotService {
 		}
 	}
 
-	static getAllByUserId = async (userId: string, type?: BotType) => {
-		const where = { userId, ...(type && { type }) }
-		const bots = await db.bot.findMany({ where })
+	static getAllByUserId = async (
+		userId: string,
+		args?: Prisma.BotFindManyArgs,
+	) => {
+		const findManyArgs = { where: { userId }, ...args }
+		const bots = await db.bot.findMany(findManyArgs)
 		return bots
 	}
 }
