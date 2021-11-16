@@ -1,8 +1,9 @@
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { Chess } from 'chess.js'
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { ChessBoard } from '../components/ChessBoard'
+import { Chessboard } from '../components/Chessboard'
 import { useStartGame } from '../hooks/mutations/useStartGame'
 import { useGame } from '../hooks/queries/useGame'
 
@@ -20,9 +21,11 @@ export const GamePage: FC = () => {
 		startGame(id)
 	}
 
+	const chess = new Chess()
+
 	return (
 		<Box>
-			<ChessBoard history={game.history} />
+			<Chessboard chess={chess} />
 			<Typography whiteSpace="pre">
 				{JSON.stringify(game, null, 4)}
 			</Typography>
