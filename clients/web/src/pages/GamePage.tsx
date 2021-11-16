@@ -24,9 +24,6 @@ export const GamePage: FC = () => {
 	return (
 		<Box>
 			<Chessboard history={game.history} />
-			<Typography whiteSpace="pre">
-				{JSON.stringify(game, null, 4)}
-			</Typography>
 			<Button onClick={handleStartGame}>Start game</Button>
 		</Box>
 	)

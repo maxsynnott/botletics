@@ -11,6 +11,7 @@ export interface Bot extends DefaultAttributes {
 	type: BotType
 	userId: string
 	name: string
+	elo: number
 }
 
 export interface Game extends DefaultAttributes {
