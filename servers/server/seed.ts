@@ -11,12 +11,12 @@ const userAttributes = [
 	{
 		email: 'user1@gmail.com',
 		passwordHash: hashPassword('123456'),
-		bots: { create: stockfishBotAttributes(1000) },
+		bots: { create: stockfishBotAttributes(2000) },
 	},
 	{
 		email: 'user2@gmail.com',
 		passwordHash: hashPassword('123456'),
-		bots: { create: stockfishBotAttributes(1000) },
+		bots: { create: stockfishBotAttributes(2000) },
 	},
 ]
 

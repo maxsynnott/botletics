@@ -21,11 +21,9 @@ export const GamePage: FC = () => {
 		startGame(id)
 	}
 
-	const chess = new Chess()
-
 	return (
 		<Box>
-			<Chessboard chess={chess} />
+			<Chessboard history={game.history} />
 			<Typography whiteSpace="pre">
 				{JSON.stringify(game, null, 4)}
 			</Typography>

@@ -11,7 +11,7 @@ export const boardToPositionedPieces = (board: (Piece | null)[][]) => {
 			if (piece) {
 				positionedPieces.push({
 					piece,
-					square: `${String.fromCharCode(97 + x)}${y + 1}` as Square,
+					square: `${String.fromCharCode(97 + x)}${8 - y}` as Square,
 				})
 			}
 		}
