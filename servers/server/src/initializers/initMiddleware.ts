@@ -1,10 +1,12 @@
 import express, { Express } from 'express'
 import session from 'express-session'
 import { config } from '../config/config'
-import { PrismaSessionStore } from '@quixo3/prisma-session-store'
-import { db } from '../clients/db'
 import cors from 'cors'
 import morgan from 'morgan'
+import connectRedis from 'connect-redis'
+import { redis } from '../clients/redis'
+
+const RedisStore = connectRedis(session)
 
 export const initMiddleware = (app: Express) => {
 	app.use(express.json())
@@ -26,10 +28,7 @@ export const initMiddleware = (app: Express) => {
 			cookie: {
 				maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
 			},
-			store: new PrismaSessionStore(db, {
-				checkPeriod: 60 * 1000,
-				dbRecordIdIsSessionId: true,
-			}),
+			store: new RedisStore({ client: redis }),
 		}),
 	)
 	const logFormat = config.environment === 'production' ? 'combined' : 'dev'

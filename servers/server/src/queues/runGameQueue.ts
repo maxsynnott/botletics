@@ -1,9 +1,6 @@
 import { Queue, Worker, Job } from 'bullmq'
-import IORedis from 'ioredis'
-import { config } from '../config/config'
+import { redis as connection } from '../clients/redis'
 import { ChessService } from '../services/ChessService'
-
-const connection = new IORedis({ host: config.redis.host })
 
 const name = 'runGameQueue'
 
