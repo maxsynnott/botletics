@@ -10,13 +10,13 @@ import { useHistory } from 'react-router-dom'
 import { Game } from '../types/models'
 
 const columns: GridColDef[] = [
-	{ field: 'pgn', headerName: 'PGN', flex: 1 },
+	{ field: 'history', headerName: 'Moves', flex: 1 },
 	{ field: 'passiveBotId', headerName: 'Opponent id', flex: 1 },
 ]
 
-const gameToRow = ({ id, pgn, passiveBotId }: Game): GridRowModel => ({
+const gameToRow = ({ id, history, passiveBotId }: Game): GridRowModel => ({
 	id,
-	pgn,
+	history,
 	passiveBotId,
 })
 

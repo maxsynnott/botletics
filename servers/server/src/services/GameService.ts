@@ -1,5 +1,6 @@
 import { Bot, Game } from '.prisma/client'
 import { Prisma } from '@prisma/client'
+import random from 'just-random'
 import { db } from '../clients/db'
 import { runGameQueue } from '../queues/runGameQueue'
 import { BotService } from './BotService'
@@ -11,8 +12,10 @@ export class GameService {
 
 	static createRandom = async (bot: Bot) => {
 		const opponent = await BotService.getOpponent(bot)
+		const whiteBotType = random(['active', 'passive'])
 		const game = await db.game.create({
 			data: {
+				whiteBotType,
 				activeBot: { connect: { id: bot.id } },
 				passiveBot: { connect: { id: opponent.id } },
 			},

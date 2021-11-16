@@ -14,7 +14,7 @@ export interface Bot extends DefaultAttributes {
 }
 
 export interface Game extends DefaultAttributes {
-	pgn: string
+	history: string[]
 	activeBotId: string
 	passiveBotId: string
 }

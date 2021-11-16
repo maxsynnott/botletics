@@ -35,7 +35,8 @@ export class GameController {
 				"Cannot start game for another user's bot",
 			)
 		}
-		if (game.pgn) throw new ConflictException('Game already started')
+		if (game.history.length)
+			throw new ConflictException('Game already started')
 
 		await GameService.start(game)
 		res.sendStatus(202)

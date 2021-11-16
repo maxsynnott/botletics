@@ -14,7 +14,8 @@ model Game {
     id           String   @id @default(uuid())
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
-    pgn          String?
+    history      String[]
+    whiteBotType String
     activeBot    Bot      @relation("activeGames", fields: [activeBotId], references: [id])
     activeBotId  String
     passiveBot   Bot      @relation("passiveGames", fields: [passiveBotId], references: [id])
@@ -27,7 +28,7 @@ model User {
     updatedAt    DateTime @updatedAt
     email        String   @unique
     passwordHash String
-    bot          Bot[]
+    bots         Bot[]
 }
 
 model Bot {
