@@ -7,6 +7,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
 		"console": "ts-node console.ts",
+		"seed": "ts-node seed.ts",
 		"build": "rm -rf build && tsc",
 		"start:production": "node src/index.js",
 		"migrate:production": "npx prisma migrate deploy"
