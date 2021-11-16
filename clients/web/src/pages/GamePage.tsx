@@ -2,6 +2,7 @@ import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
+import { ChessBoard } from '../components/ChessBoard'
 import { useStartGame } from '../hooks/mutations/useStartGame'
 import { useGame } from '../hooks/queries/useGame'
 
@@ -21,6 +22,7 @@ export const GamePage: FC = () => {
 
 	return (
 		<Box>
+			<ChessBoard history={game.history} />
 			<Typography whiteSpace="pre">
 				{JSON.stringify(game, null, 4)}
 			</Typography>
