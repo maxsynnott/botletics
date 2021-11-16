@@ -22,7 +22,7 @@ resource "aws_autoscaling_group" "botletics" {
 resource "aws_launch_configuration" "botletics" {
   name = var.launch_configuration_name
 
-  image_id                    = data.aws_ami.ecs.id
+  image_id                    = "ami-0ba6253ca21ccd831"
   instance_type               = "t3.micro"
   key_name                    = aws_key_pair.dev.key_name
   security_groups             = [aws_security_group.ec2.id]
