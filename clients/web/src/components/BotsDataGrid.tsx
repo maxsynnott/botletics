@@ -18,6 +18,7 @@ const columns: GridColDef[] = [
 	{ field: 'elo', headerName: 'Elo', flex: 1 },
 	{ field: 'endpoint', headerName: 'Endpoint', flex: 1 },
 	{ field: 'createdAt', headerName: 'Created at', flex: 1 },
+	{ field: 'health', headerName: 'Health', flex: 1 },
 ]
 
 const botToRow = ({
@@ -26,12 +27,14 @@ const botToRow = ({
 	endpoint,
 	createdAt,
 	elo,
+	status,
 }: Bot): GridRowModel => ({
 	id,
 	name,
 	endpoint,
 	createdAt: moment(createdAt).calendar(),
 	elo,
+	health: status === 'healthy' ? 'Healthy' : 'Unhealthy',
 })
 
 interface Props {

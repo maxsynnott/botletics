@@ -1,4 +1,4 @@
-import { BotType } from './types'
+import { BotStatus, BotType } from './types'
 
 interface DefaultAttributes {
 	id: string
@@ -12,6 +12,7 @@ export interface Bot extends DefaultAttributes {
 	userId: string
 	name: string
 	elo: number
+	status: BotStatus
 }
 
 export interface Game extends DefaultAttributes {

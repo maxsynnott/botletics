@@ -43,7 +43,7 @@ model Bot {
     elo          Int      @default(1000)
     activeGames  Game[]   @relation("activeGames")
     passiveGames Game[]   @relation("passiveGames")
-
+    status       String   @default("unhealthy")
 }
 
 model Session {
