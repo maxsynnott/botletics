@@ -14,4 +14,9 @@ export const config = {
 	redis: {
 		host: getRequiredEnvVariable('REDIS_HOST'),
 	},
+	cronJobs: {
+		scheduleGames: {
+			cronString: '*/5 * * * *',
+		},
+	},
 }

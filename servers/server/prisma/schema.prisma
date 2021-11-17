@@ -44,6 +44,7 @@ model Bot {
     activeGames  Game[]   @relation("activeGames")
     passiveGames Game[]   @relation("passiveGames")
     status       String   @default("unhealthy")
+    fallback     Boolean  @default(false)
 }
 
 model Session {

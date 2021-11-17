@@ -84,8 +84,28 @@ export class BotService {
 		})
 	}
 
-	static getAll = async () => {
-		const bots = await db.bot.findMany()
+	static runHealthChecks = async () => {
+		const bots = await this.getAll()
+		await Promise.all(bots.map((bot) => this.runHealthCheck(bot)))
+	}
+
+	static getAllHealthy = async () => {
+		const bots = await db.bot.findMany({
+			where: { status: 'healthy', fallback: false },
+			orderBy: { elo: 'desc' },
+		})
 		return bots
+	}
+
+	static getAll = async () => {
+		const bots = await db.bot.findMany({
+			where: { fallback: false },
+		})
+		return bots
+	}
+
+	static getFallbackBot = async () => {
+		const bot = await db.bot.findFirst({ where: { fallback: true } })
+		return bot
 	}
 }

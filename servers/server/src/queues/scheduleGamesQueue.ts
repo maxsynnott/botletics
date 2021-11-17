@@ -1,18 +1,18 @@
 import { Queue, QueueScheduler, Worker } from 'bullmq'
 import { redis as connection } from '../clients/redis'
-import { BotService } from '../services/BotService'
+import { GameService } from '../services/GameService'
 
-export const name = 'runHealthChecks'
+export const name = 'scheduleGames'
 
 new QueueScheduler(name, { connection })
-export const runHealthChecksQueue = new Queue(name, {
+export const scheduleGamesQueue = new Queue(name, {
 	connection,
 })
 
 const processJob = async () => {
 	try {
 		console.log('Running job: ' + name)
-		await BotService.runHealthChecks()
+		await GameService.scheduleGames()
 	} catch (e) {
 		console.error(e)
 	}
