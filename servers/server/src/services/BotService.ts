@@ -22,7 +22,10 @@ interface GetMoveArgs {
 
 export class BotService {
 	static create = async (data: CreateArgs) => {
-		const bot = await db.bot.create({ data })
+		const bot = await db.bot.create({
+			// Trims final / from endpoint
+			data: { ...data, endpoint: data.endpoint.replace(/\/$/, '') },
+		})
 		return bot
 	}
 
@@ -71,5 +74,18 @@ export class BotService {
 		})
 		if (bots.length === 0) throw new HttpException('No opponent found')
 		return random(bots) as Bot
+	}
+
+	static runHealthCheck = async ({ id, endpoint }: Bot) => {
+		const { status } = await axios.get(`${endpoint}/healthcheck`)
+		await db.bot.update({
+			where: { id },
+			data: { status: status === 200 ? 'healthy' : 'unhealthy' },
+		})
+	}
+
+	static getAll = async () => {
+		const bots = await db.bot.findMany()
+		return bots
 	}
 }
