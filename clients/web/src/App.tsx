@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from './components/ErrorFallback'
 import { Routes } from './components/Routes'
+import { CurrentUserProvider } from './contexts/CurrentUserContext'
 
 const queryClient = new QueryClient()
 
@@ -11,11 +12,13 @@ export const App = () => {
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
 			<QueryClientProvider client={queryClient}>
-				<BrowserRouter>
-					<CssBaseline />
+				<CurrentUserProvider>
+					<BrowserRouter>
+						<CssBaseline />
 
-					<Routes />
-				</BrowserRouter>
+						<Routes />
+					</BrowserRouter>
+				</CurrentUserProvider>
 			</QueryClientProvider>
 		</ErrorBoundary>
 	)

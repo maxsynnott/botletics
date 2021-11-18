@@ -7,7 +7,6 @@ import {
 } from '@mui/x-data-grid'
 import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Bot, Game } from '@models'
 import { GameWithBots } from '@modelsWith'
 
 const columns: GridColDef[] = [

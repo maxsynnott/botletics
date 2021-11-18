@@ -6,7 +6,7 @@ export const ProtectedRoute = ({
 	children,
 	...restOfProps
 }: Omit<RouteProps, 'component'>) => {
-	const { data: currentUser, isLoading } = useCurrentUser({ retry: false })
+	const { currentUser, isLoading } = useCurrentUser()
 	if (isLoading) return <LoadingPage />
 
 	return (

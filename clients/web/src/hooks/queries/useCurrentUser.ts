@@ -1,9 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query'
-import { getCurrentUser } from '../../api/users'
-import { User } from '@models'
+import { useContext } from 'react'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
-export const useCurrentUser = (
-	options?: UseQueryOptions<User, Error, User, string[]>,
-) => {
-	return useQuery(['users', 'current'], getCurrentUser, options)
-}
+export const useCurrentUser = () => useContext(CurrentUserContext)
