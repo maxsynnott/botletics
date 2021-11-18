@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Layout } from '../layouts/Layout'
 import { BotPage } from '../pages/BotPage'
@@ -12,6 +12,10 @@ import { ProtectedRoute } from './ProtectedRoute'
 
 export const Routes = () => {
 	const [title, setTitle] = useState('Botletics')
+	useEffect(() => {
+		document.title =
+			title === 'Botletics' ? 'Botletics' : `Botletics • ${title}`
+	}, [title])
 
 	return (
 		<Layout title={title}>
