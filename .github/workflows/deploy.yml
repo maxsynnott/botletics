@@ -202,6 +202,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Generate server types
+        working-directory: ./servers/server
+        run: npx prisma generate
+
       - name: Compile production build
         working-directory: ./clients/web
         run: |

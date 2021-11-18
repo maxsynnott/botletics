@@ -8,9 +8,10 @@ import {
 import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Bot, Game } from '@models'
+import { GameWithBots } from '@modelsWith'
 
 const columns: GridColDef[] = [
-	{ field: 'numOfMoves', headerName: 'Moves', flex: 1 },
+	{ field: 'numOfMoves', headerName: '# moves', flex: 1 },
 	{ field: 'whiteBotName', headerName: 'White bot', flex: 1 },
 	{ field: 'blackBotName', headerName: 'Black bot', flex: 1 },
 ]
@@ -20,7 +21,7 @@ const gameToRow = ({
 	history,
 	whiteBot,
 	blackBot,
-}: Game & { whiteBot: Bot; blackBot: Bot }): GridRowModel => ({
+}: GameWithBots): GridRowModel => ({
 	id,
 	numOfMoves: history.length,
 	whiteBotName: whiteBot.name,
@@ -30,7 +31,7 @@ const gameToRow = ({
 const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 
 interface Props {
-	games: (Game & { whiteBot: Bot; blackBot: Bot })[]
+	games: GameWithBots[]
 }
 
 export const GamesDataGrid: FC<Props> = ({ games }) => {

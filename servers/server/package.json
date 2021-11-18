@@ -16,7 +16,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@prisma/client": "^3.4.2",
+		"@prisma/client": "^3.5.0",
 		"axios": "^0.24.0",
 		"bcrypt": "^5.0.1",
 		"bullmq": "^1.52.1",
@@ -46,7 +46,7 @@
 		"@types/node": "^16.11.6",
 		"@types/passport": "^1.0.7",
 		"@types/passport-local": "^1.0.34",
-		"prisma": "^3.4.2",
+		"prisma": "^3.5.0",
 		"ts-node": "^10.4.0",
 		"ts-node-dev": "^1.1.8",
 		"typescript": "^4.4.4"
