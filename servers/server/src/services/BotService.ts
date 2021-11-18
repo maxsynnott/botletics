@@ -74,11 +74,16 @@ export class BotService {
 	}
 
 	static runHealthCheck = async ({ id, endpoint }: Bot) => {
-		// TODO: Handle axios throwing error
-		const { status } = await axios.get(`${endpoint}/healthcheck`)
+		let updateStatusValue
+		try {
+			const { status } = await axios.get(`${endpoint}/healthcheck`)
+			if (status === 200) updateStatusValue = 'healthy'
+		} catch (e) {
+			updateStatusValue = 'unhealthy'
+		}
 		await db.bot.update({
 			where: { id },
-			data: { status: status === 200 ? 'healthy' : 'unhealthy' },
+			data: { status: updateStatusValue },
 		})
 	}
 
