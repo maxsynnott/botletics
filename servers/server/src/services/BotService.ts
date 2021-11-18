@@ -3,13 +3,11 @@ import axios from 'axios'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
-import { BotType } from '../types/types'
 import random from 'just-random'
 import { HttpException } from '../exceptions/HttpException'
 
 interface CreateArgs {
 	userId: string
-	type: BotType
 	endpoint: string
 	name: string
 }

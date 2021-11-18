@@ -41,11 +41,10 @@ export class BotController {
 
 		const { id: userId } = req.user
 
-		const { type, endpoint, name } = req.body
+		const { endpoint, name } = req.body
 
 		const bot = await BotService.create({
 			userId,
-			type,
 			endpoint,
 			name,
 		})

@@ -4,7 +4,6 @@ import { hashPassword } from './src/helpers/hashPassword'
 const stockfishBotAttributes = {
 	name: 'Stockfish',
 	endpoint: 'http://localhost:10001',
-	type: 'chess',
 }
 
 const userAttributes = [

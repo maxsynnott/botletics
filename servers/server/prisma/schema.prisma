@@ -35,7 +35,6 @@ model Bot {
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
     endpoint     String
-    type         String
     name         String
     user         User     @relation(fields: [userId], references: [id])
     userId       String
