@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getBot } from '../../api/bots'
-import { Bot } from '../../types/models'
+import { Bot } from '../@prisma/client'
 import { GetBotResponse } from '../../types/responses'
 
 export const useBot = (

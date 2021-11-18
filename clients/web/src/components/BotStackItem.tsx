@@ -1,7 +1,7 @@
 import { Card, CardActionArea, CardContent, Typography } from '@mui/material'
 import { FC } from 'react'
 import { useHistory } from 'react-router'
-import { Bot } from '../types/models'
+import { Bot } from '@prisma/client'
 
 interface Props {
 	bot: Bot

@@ -9,7 +9,7 @@ import {
 import moment from 'moment'
 import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Bot } from '../types/models'
+import { Bot } from '@prisma/client'
 
 const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 

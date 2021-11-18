@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { Bot, Game } from './models'
+import { Bot, Game } from '@prisma/client'
 
 type Response<ResponseData> = AxiosResponse<ResponseData>
 

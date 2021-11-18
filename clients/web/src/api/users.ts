@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 import { axios } from '../clients/axios'
-import { User } from '../types/models'
+import { User } from '@prisma/client'
 import { Credentials } from '../types/types'
 
 export const getCurrentUser = async () => {

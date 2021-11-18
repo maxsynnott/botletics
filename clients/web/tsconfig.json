@@ -16,7 +16,12 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"paths": {
+			"@prisma/client": [
+				"../../servers/server/node_modules/@prisma/client"
+			]
+		}
 	},
 	"skipLibCheck": true,
 	"include": ["./src"]
