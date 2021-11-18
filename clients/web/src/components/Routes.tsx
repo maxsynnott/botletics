@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Layout } from '../layouts/Layout'
 import { BotPage } from '../pages/BotPage'
@@ -10,35 +11,37 @@ import { SignUpPage } from '../pages/SignUpPage'
 import { ProtectedRoute } from './ProtectedRoute'
 
 export const Routes = () => {
+	const [title, setTitle] = useState('Botletics')
+
 	return (
-		<Layout>
+		<Layout title={title}>
 			<Switch>
 				<ProtectedRoute path="/bots" exact>
-					<BotsPage />
+					<BotsPage setTitle={setTitle} />
 				</ProtectedRoute>
 
 				<ProtectedRoute path="/bots/new" exact>
-					<BotsNewPage />
+					<BotsNewPage setTitle={setTitle} />
 				</ProtectedRoute>
 
 				<ProtectedRoute path="/bots/:id" exact>
-					<BotPage />
+					<BotPage setTitle={setTitle} />
 				</ProtectedRoute>
 
 				<ProtectedRoute path="/games/:id" exact>
-					<GamePage />
+					<GamePage setTitle={setTitle} />
 				</ProtectedRoute>
 
 				<Route path="/signin" exact>
-					<SignInPage />
+					<SignInPage setTitle={setTitle} />
 				</Route>
 
 				<Route path="/signup" exact>
-					<SignUpPage />
+					<SignUpPage setTitle={setTitle} />
 				</Route>
 
 				<Route path="/" exact>
-					<HomePage />
+					<HomePage setTitle={setTitle} />
 				</Route>
 			</Switch>
 		</Layout>

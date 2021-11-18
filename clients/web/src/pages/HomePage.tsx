@@ -1,6 +1,12 @@
 import { Typography } from '@mui/material'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
-export const HomePage: FC = () => {
+interface Props {
+	setTitle: (title: string) => void
+}
+
+export const HomePage: FC<Props> = ({ setTitle }) => {
+	useEffect(() => setTitle('Botletics'), [])
+
 	return <Typography>Home</Typography>
 }

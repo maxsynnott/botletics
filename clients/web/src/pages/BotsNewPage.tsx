@@ -1,10 +1,16 @@
 import { Button, Container, Stack, TextField } from '@mui/material'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { useHistory } from 'react-router'
 import { useCreateBot } from '../hooks/mutations/useCreateBot'
 
-export const BotsNewPage: FC = () => {
+interface Props {
+	setTitle: (title: string) => void
+}
+
+export const BotsNewPage: FC<Props> = ({ setTitle }) => {
+	useEffect(() => setTitle('Create bot'), [])
+
 	const [name, setName] = useState('')
 	const [endpoint, setEndpoint] = useState('')
 

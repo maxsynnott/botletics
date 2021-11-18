@@ -4,7 +4,11 @@ import { FC, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 
-export const Layout: FC = ({ children }) => {
+interface Props {
+	title: string
+}
+
+export const Layout: FC<Props> = ({ title, children }) => {
 	const largeScreen = useMediaQuery('(min-width:992px)')
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -13,6 +17,7 @@ export const Layout: FC = ({ children }) => {
 	return (
 		<Box>
 			<Header
+				title={title}
 				largeScreen={largeScreen}
 				toggleSidebarOpen={toggleSidebarOpen}
 			/>

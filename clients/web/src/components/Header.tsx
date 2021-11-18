@@ -1,13 +1,18 @@
-import { AppBar, Toolbar, IconButton } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Typography } from '@mui/material'
 import { FC } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 
 interface Props {
 	largeScreen: boolean
 	toggleSidebarOpen: () => void
+	title: string
 }
 
-export const Header: FC<Props> = ({ largeScreen, toggleSidebarOpen }) => {
+export const Header: FC<Props> = ({
+	largeScreen,
+	toggleSidebarOpen,
+	title,
+}) => {
 	return (
 		<AppBar
 			position="sticky"
@@ -15,13 +20,12 @@ export const Header: FC<Props> = ({ largeScreen, toggleSidebarOpen }) => {
 		>
 			<Toolbar>
 				{!largeScreen && (
-					<IconButton
-						sx={{ color: 'white' }}
-						onClick={toggleSidebarOpen}
-					>
+					<IconButton color="inherit" onClick={toggleSidebarOpen}>
 						<MenuIcon />
 					</IconButton>
 				)}
+
+				<Typography variant="h5">{title}</Typography>
 			</Toolbar>
 		</AppBar>
 	)

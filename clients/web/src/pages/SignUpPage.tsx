@@ -1,12 +1,18 @@
 import { Stack, TextField, Button, Container, Typography } from '@mui/material'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useCreateSession } from '../hooks/mutations/useCreateSession'
 import { useCreateUser } from '../hooks/mutations/useCreateUser'
 
-export const SignUpPage: FC = () => {
+interface Props {
+	setTitle: (title: string) => void
+}
+
+export const SignUpPage: FC<Props> = ({ setTitle }) => {
+	useEffect(() => setTitle('Sign up'), [])
+
 	const queryClient = useQueryClient()
 	const history = useHistory()
 
