@@ -10,7 +10,6 @@ import { calculateNewElo } from '../helpers/calculateNewElo'
 
 export class ChessService {
 	static runGame = async (id: string): Promise<void> => {
-		// TODO: Fix
 		const game = await GameService.getOneByIdWithBots(id)
 		if (!game) throw new ResourceNotFoundException('Game not found')
 		if (game.history.length) throw new HttpException('Game already started')

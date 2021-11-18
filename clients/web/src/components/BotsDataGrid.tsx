@@ -45,9 +45,6 @@ export const BotsDataGrid: FC<Props> = ({ bots }) => {
 	const history = useHistory()
 	const classes = useStyles()
 
-	// TODO: Replace null
-	if (!bots.length) return null
-
 	const onRowClick = ({ id }: GridRowParams) => history.push(`/bots/${id}`)
 	const getRowClassName = () => classes.row
 	const sortingOrder: GridSortDirection[] = ['asc', 'desc']

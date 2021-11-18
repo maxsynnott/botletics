@@ -38,9 +38,6 @@ export const GamesDataGrid: FC<Props> = ({ games }) => {
 	const classes = useStyles()
 	const history = useHistory()
 
-	// TODO: Replace null
-	if (!games.length) return null
-
 	const rows = games.map(gameToRow)
 	const onRowClick = ({ id }: GridRowParams) => history.push(`/games/${id}`)
 	const getRowClassName = () => classes.row

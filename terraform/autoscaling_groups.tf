@@ -1,4 +1,3 @@
-// TODO: Attach intelligent policies
 resource "aws_autoscaling_group" "botletics" {
   name                 = "botletics"
   launch_configuration = var.launch_configuration_name
