@@ -1,5 +1,5 @@
 import { CssBaseline } from '@mui/material'
-import { BrowserRouter, Switch } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from './components/ErrorFallback'
@@ -14,9 +14,7 @@ export const App = () => {
 				<BrowserRouter>
 					<CssBaseline />
 
-					<Switch>
-						<Routes />
-					</Switch>
+					<Routes />
 				</BrowserRouter>
 			</QueryClientProvider>
 		</ErrorBoundary>

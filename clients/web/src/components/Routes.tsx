@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Layout } from '../layouts/Layout'
 import { BotPage } from '../pages/BotPage'
 import { BotsNewPage } from '../pages/BotsNewPage'
@@ -12,33 +12,35 @@ import { ProtectedRoute } from './ProtectedRoute'
 export const Routes = () => {
 	return (
 		<Layout>
-			<ProtectedRoute path="/bots" exact>
-				<BotsPage />
-			</ProtectedRoute>
+			<Switch>
+				<ProtectedRoute path="/bots" exact>
+					<BotsPage />
+				</ProtectedRoute>
 
-			<ProtectedRoute path="/bots/new" exact>
-				<BotsNewPage />
-			</ProtectedRoute>
+				<ProtectedRoute path="/bots/new" exact>
+					<BotsNewPage />
+				</ProtectedRoute>
 
-			<ProtectedRoute path="/bots/:id" exact>
-				<BotPage />
-			</ProtectedRoute>
+				<ProtectedRoute path="/bots/:id" exact>
+					<BotPage />
+				</ProtectedRoute>
 
-			<ProtectedRoute path="/games/:id" exact>
-				<GamePage />
-			</ProtectedRoute>
+				<ProtectedRoute path="/games/:id" exact>
+					<GamePage />
+				</ProtectedRoute>
 
-			<Route path="/signin" exact>
-				<SignInPage />
-			</Route>
+				<Route path="/signin" exact>
+					<SignInPage />
+				</Route>
 
-			<Route path="/signup" exact>
-				<SignUpPage />
-			</Route>
+				<Route path="/signup" exact>
+					<SignUpPage />
+				</Route>
 
-			<Route path="/" exact>
-				<HomePage />
-			</Route>
+				<Route path="/" exact>
+					<HomePage />
+				</Route>
+			</Switch>
 		</Layout>
 	)
 }
