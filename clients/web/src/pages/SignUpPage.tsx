@@ -31,7 +31,7 @@ export const SignUpPage: FC<Props> = ({ setTitle }) => {
 						{ email, password },
 						{
 							onSuccess: () => {
-								queryClient.invalidateQueries('users')
+								queryClient.invalidateQueries('currentUser')
 								history.push('/')
 							},
 						},

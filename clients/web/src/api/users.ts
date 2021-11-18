@@ -1,6 +1,4 @@
-import { AxiosResponse } from 'axios'
 import { axios } from '../clients/axios'
-import { User } from '@models'
 import { Credentials } from '../types/types'
 import { UserCreateResponse, UserCurrentResponse } from '@responses'
 

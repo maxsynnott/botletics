@@ -25,7 +25,7 @@ export const SignInPage: FC<Props> = ({ setTitle }) => {
 			{ email, password },
 			{
 				onSuccess: () => {
-					queryClient.invalidateQueries('users')
+					queryClient.invalidateQueries('currentUser')
 					history.push('/')
 				},
 			},

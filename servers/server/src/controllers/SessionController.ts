@@ -1,6 +1,9 @@
 import { Request, Response } from 'express'
 import { UnauthenticatedException } from '../exceptions/UnauthenticatedException'
-import { SessionCreateResponse } from '../types/responses'
+import {
+	SessionCreateResponse,
+	SessionDeleteResponse,
+} from '../types/responses'
 
 export class SessionController {
 	static create = (req: Request, res: Response) => {
@@ -8,5 +11,12 @@ export class SessionController {
 
 		const response: SessionCreateResponse = req.user
 		res.status(201).json(response)
+	}
+
+	static delete = (req: Request, res: Response) => {
+		req.logOut()
+
+		const response: SessionDeleteResponse = null
+		res.status(204).json(response)
 	}
 }

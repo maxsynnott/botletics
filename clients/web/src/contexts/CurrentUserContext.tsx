@@ -16,11 +16,7 @@ export const CurrentUserContext =
 export const CurrentUserProvider: FC = ({ children }) => {
 	const [currentUser, setCurrentUser] =
 		useState<_CurrentUserContext>(INITIAL_VALUE)
-	const { data: user, isLoading } = useQuery(
-		['users', 'current'],
-		getCurrentUser,
-		{ retry: false },
-	)
+	const { data: user, isLoading } = useQuery(['currentUser'], getCurrentUser)
 
 	useEffect(
 		() => setCurrentUser({ currentUser: user ?? null, isLoading }),

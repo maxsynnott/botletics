@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { UnauthenticatedException } from '../exceptions/UnauthenticatedException'
 import { UserService } from '../services/UserService'
 import { UserCreateResponse, UserCurrentResponse } from '../types/responses'
 
@@ -14,9 +13,7 @@ export class UserController {
 	}
 
 	static current = async (req: Request, res: Response) => {
-		if (!req.user) throw new UnauthenticatedException()
-
-		const response: UserCurrentResponse = req.user
+		const response: UserCurrentResponse = req.user ?? null
 		res.status(200).json(response)
 	}
 }

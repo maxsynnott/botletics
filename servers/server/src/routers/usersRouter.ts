@@ -8,7 +8,6 @@ const routes: Route[] = [
 		method: 'get',
 		path: '/users/current',
 		handlers: [UserController.current],
-		ensureAuthenticated: true,
 	},
 	{
 		method: 'post',

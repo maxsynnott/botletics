@@ -11,6 +11,12 @@ const routes: Route[] = [
 		handlers: [passport.authenticate('local'), SessionController.create],
 		validationSchema: postSessionsSchema,
 	},
+	{
+		method: 'delete',
+		path: '/sessions',
+		handlers: [SessionController.delete],
+		ensureAuthenticated: true,
+	},
 ]
 
 export const sessionsRouter = createRouter(routes)

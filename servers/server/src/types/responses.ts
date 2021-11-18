@@ -15,6 +15,7 @@ export type HealthCheckResponse = {
 }
 
 export type SessionCreateResponse = User
+export type SessionDeleteResponse = null
 
 export type UserCreateResponse = User
-export type UserCurrentResponse = User
+export type UserCurrentResponse = User | null

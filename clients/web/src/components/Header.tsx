@@ -3,6 +3,9 @@ import { FC } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useCurrentUser } from '../hooks/queries/useCurrentUser'
 import { Link } from 'react-router-dom'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import { useDeleteSession } from '../hooks/mutations/useDeleteSession'
+import { useQueryClient } from 'react-query'
 
 interface Props {
 	largeScreen: boolean
@@ -16,6 +19,16 @@ export const Header: FC<Props> = ({
 	title,
 }) => {
 	const { currentUser } = useCurrentUser()
+	const { deleteSession } = useDeleteSession()
+	const queryClient = useQueryClient()
+
+	const handleSignOut = () => {
+		deleteSession(undefined, {
+			onSuccess: () => {
+				queryClient.invalidateQueries('currentUser')
+			},
+		})
+	}
 
 	return (
 		<AppBar
@@ -34,7 +47,12 @@ export const Header: FC<Props> = ({
 				</Box>
 
 				{currentUser ? (
-					<Typography>{currentUser.email}</Typography>
+					<Box sx={{ display: 'flex', alignItems: 'center' }}>
+						<Typography>{currentUser.email}</Typography>
+						<IconButton color="inherit" onClick={handleSignOut}>
+							<ExitToAppIcon />
+						</IconButton>
+					</Box>
 				) : (
 					<Link to="/signin">Sign in</Link>
 				)}
