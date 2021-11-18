@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, IconButton, Typography, Box } from '@mui/material'
 import { FC } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
-import { useCurrentUser } from '../hooks/queries/useCurrentUser'
+import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
 import { Link } from 'react-router-dom'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import { useDeleteSession } from '../hooks/mutations/useDeleteSession'

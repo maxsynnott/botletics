@@ -1,5 +1,5 @@
 import { Redirect, Route, RouteProps } from 'react-router-dom'
-import { useCurrentUser } from '../hooks/queries/useCurrentUser'
+import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
 import { LoadingPage } from '../pages/LoadingPage'
 
 export const ProtectedRoute = ({
