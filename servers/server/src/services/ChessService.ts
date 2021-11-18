@@ -13,28 +13,24 @@ export class ChessService {
 	static runGame = async (id: string): Promise<void> => {
 		// TODO: Fix
 		const game = (await GameService.getOneById(id, {
-			include: { activeBot: true, passiveBot: true },
-		})) as (Game & { activeBot: Bot; passiveBot: Bot }) | null
+			include: { whiteBot: true, blackBot: true },
+		})) as (Game & { whiteBot: Bot; blackBot: Bot }) | null
 		if (!game) throw new ResourceNotFoundException('Game not found')
 		if (game.history.length) throw new HttpException('Game already started')
-
-		const [whiteBot, blackBot] =
-			game.whiteBotType === 'active'
-				? [game.activeBot, game.passiveBot]
-				: [game.passiveBot, game.activeBot]
+		const { whiteBot, blackBot } = game
 
 		const chess = new Chess()
 		while (!chess.game_over()) {
 			const botIdToPlay = chess.turn() === 'w' ? whiteBot.id : blackBot.id
 			const move = await BotService.getMove({
 				botId: botIdToPlay,
-				gameId: game.id,
+				gameId: id,
 				fen: chess.fen(),
 			})
 
 			if (chess.move(move)) {
 				await db.game.update({
-					where: { id: game.id },
+					where: { id: id },
 					data: { history: chess.history() },
 				})
 			} else {
@@ -43,7 +39,7 @@ export class ChessService {
 		}
 
 		await db.game.update({
-			where: { id: game.id },
+			where: { id: id },
 			data: { history: chess.history() },
 		})
 

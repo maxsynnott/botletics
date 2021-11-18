@@ -28,6 +28,7 @@
 		"express-session": "^1.17.2",
 		"joi": "^17.4.2",
 		"just-random": "^3.0.1",
+		"just-shuffle": "^4.0.1",
 		"morgan": "^1.10.0",
 		"passport": "^0.5.0",
 		"passport-local": "^1.0.0"

@@ -17,7 +17,7 @@ export class BotController {
 	static show = async (req: Request, res: Response) => {
 		const { id } = req.params
 		const bot = await BotService.getOneById(id, {
-			include: { activeGames: true, passiveGames: true },
+			include: { gamesAsWhite: true, gamesAsBlack: true },
 		})
 
 		res.status(200).json(bot)

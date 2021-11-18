@@ -7,23 +7,30 @@ import {
 } from '@mui/x-data-grid'
 import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Game } from '../types/models'
+import { Bot, Game } from '../types/models'
 
 const columns: GridColDef[] = [
-	{ field: 'history', headerName: 'Moves', flex: 1 },
-	{ field: 'passiveBotId', headerName: 'Opponent id', flex: 1 },
+	{ field: 'numOfMoves', headerName: 'Moves', flex: 1 },
+	{ field: 'whiteBotName', headerName: 'White bot', flex: 1 },
+	{ field: 'blackBotName', headerName: 'Black bot', flex: 1 },
 ]
 
-const gameToRow = ({ id, history, passiveBotId }: Game): GridRowModel => ({
+const gameToRow = ({
 	id,
 	history,
-	passiveBotId,
+	whiteBot,
+	blackBot,
+}: Game & { whiteBot: Bot; blackBot: Bot }): GridRowModel => ({
+	id,
+	numOfMoves: history.length,
+	whiteBotName: whiteBot.name,
+	blackBotName: blackBot.name,
 })
 
 const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 
 interface Props {
-	games: Game[]
+	games: (Game & { whiteBot: Bot; blackBot: Bot })[]
 }
 
 export const GamesDataGrid: FC<Props> = ({ games }) => {

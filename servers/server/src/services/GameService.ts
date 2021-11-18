@@ -1,6 +1,6 @@
 import { Bot, Game } from '.prisma/client'
 import { Prisma } from '@prisma/client'
-import random from 'just-random'
+import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
 import { HttpException } from '../exceptions/HttpException'
 import { runGameQueue } from '../queues/runGameQueue'
@@ -21,13 +21,11 @@ export class GameService {
 		return game
 	}
 
-	static create = async (bots: [Bot, Bot]) => {
-		const whiteBotType = random(['active', 'passive'])
+	static create = async (whiteBot: Bot, blackBot: Bot) => {
 		const game = await db.game.create({
 			data: {
-				whiteBotType,
-				activeBot: { connect: { id: bots[0].id } },
-				passiveBot: { connect: { id: bots[1].id } },
+				whiteBot: { connect: { id: whiteBot.id } },
+				blackBot: { connect: { id: blackBot.id } },
 			},
 		})
 		return game
@@ -37,16 +35,17 @@ export class GameService {
 		const bots = await BotService.getAllHealthy()
 
 		for (let i = 0; i < bots.length; i += 2) {
-			const activeBot = bots[i]
-			let passiveBot = bots[i + 1]
+			const gameBots = bots.slice(i, i + 2)
 
-			if (!passiveBot) {
+			if (gameBots.length === 1) {
 				const fallbackBot = await BotService.getFallbackBot()
 				if (!fallbackBot)
 					throw new HttpException('No fallback bot found')
-				passiveBot = fallbackBot
+				gameBots.push(fallbackBot)
 			}
-			const game = await this.create([activeBot, passiveBot])
+
+			const [whiteBot, blackBot] = shuffle(gameBots)
+			const game = await this.create(whiteBot, blackBot)
 			await this.start(game)
 		}
 	}

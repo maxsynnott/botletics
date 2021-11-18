@@ -14,10 +14,12 @@ export const BotPage: FC = () => {
 	const { data: bot } = useBot(id)
 	if (!bot) return null
 
+	const games = [...bot.gamesAsWhite, ...bot.gamesAsBlack]
+
 	return (
 		<Box>
 			<Typography>{bot.name}</Typography>
-			<GamesDataGrid games={bot.activeGames} />
+			<GamesDataGrid games={games} />
 		</Box>
 	)
 }
