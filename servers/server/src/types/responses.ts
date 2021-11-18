@@ -1,5 +1,12 @@
 import { Bot, Game, User } from '@prisma/client'
+import { ValidationErrorItem } from 'joi'
 import { BotWithGames, GameWithBots } from './modelsWith'
+
+export type ErrorResponse = {
+	status: number
+	error: { name: string; message: string }
+	validationErrors?: Pick<ValidationErrorItem, 'path' | 'message' | 'type'>[]
+}
 
 export type BotIndexResponse = Bot[]
 export type BotShowResponse = BotWithGames

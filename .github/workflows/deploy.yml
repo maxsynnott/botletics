@@ -204,7 +204,7 @@ jobs:
 
       - name: Generate server types
         working-directory: ./servers/server
-        run: npx prisma generate
+        run: npm ci
 
       - name: Compile production build
         working-directory: ./clients/web
