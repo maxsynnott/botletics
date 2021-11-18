@@ -17,7 +17,7 @@ export const GamePage: FC<Props> = ({ setTitle }) => {
 	useEffect(() => setTitle('Game'), [])
 
 	const { id } = useParams<Params>()
-	const { data: game, isLoading } = useGame(id)
+	const { game, isLoading } = useGame(id)
 	if (isLoading) return <LoadingPage />
 	if (!game) throw new Error('Game not found')
 

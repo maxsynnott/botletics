@@ -17,8 +17,8 @@ interface Props {
 
 export const BotPage: FC<Props> = ({ setTitle }) => {
 	const { id } = useParams<Params>()
-	const { data: bot, isLoading: botIsLoading } = useBot(id)
-	const { data: games, isLoading: gamesAreLoading } = useBotGames(id)
+	const { bot, isLoading: botIsLoading } = useBot(id)
+	const { games, isLoading: gamesAreLoading } = useBotGames(id)
 	useEffect(() => setTitle(bot?.name ?? 'Bot'), [bot])
 
 	if (botIsLoading || gamesAreLoading) return <LoadingPage />

@@ -6,5 +6,6 @@ export const useGame = (
 	id: string,
 	options?: UseQueryOptions<Game, Error, Game, string[]>,
 ) => {
-	return useQuery(['games', id], () => getGame(id), options)
+	const result = useQuery(['games', id], () => getGame(id), options)
+	return { ...result, game: result.data }
 }

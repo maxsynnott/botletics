@@ -5,5 +5,6 @@ import { Bot } from '@models'
 export const useBots = (
 	options?: UseQueryOptions<Bot[], Error, Bot[], string[]>,
 ) => {
-	return useQuery(['bots'], getBots, options)
+	const result = useQuery(['bots'], getBots, options)
+	return { ...result, bots: result.data }
 }

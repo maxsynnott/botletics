@@ -11,5 +11,6 @@ export const useBot = (
 		string[]
 	>,
 ) => {
-	return useQuery(['bots', id], () => getBot(id), options)
+	const result = useQuery(['bots', id], () => getBot(id), options)
+	return { ...result, bot: result.data }
 }

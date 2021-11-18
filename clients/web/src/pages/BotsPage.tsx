@@ -14,7 +14,7 @@ interface Props {
 export const BotsPage: FC<Props> = ({ setTitle }) => {
 	useEffect(() => setTitle('Bots'), [])
 
-	const { data: bots, isLoading } = useBots()
+	const { bots, isLoading } = useBots()
 	if (isLoading) return <LoadingPage />
 	if (!bots) throw new Error('Bots not found')
 

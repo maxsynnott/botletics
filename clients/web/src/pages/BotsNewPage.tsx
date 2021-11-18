@@ -17,7 +17,7 @@ export const BotsNewPage: FC<Props> = ({ setTitle }) => {
 	const queryClient = useQueryClient()
 	const history = useHistory()
 
-	const { mutate: createBot } = useCreateBot()
+	const { createBot } = useCreateBot()
 
 	const handleSubmit = () => {
 		createBot(

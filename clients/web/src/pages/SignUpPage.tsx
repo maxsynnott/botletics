@@ -19,8 +19,8 @@ export const SignUpPage: FC<Props> = ({ setTitle }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	const { mutate: createUser } = useCreateUser()
-	const { mutate: createSession } = useCreateSession()
+	const { createUser } = useCreateUser()
+	const { createSession } = useCreateSession()
 
 	const handleSubmit = () => {
 		createUser(
