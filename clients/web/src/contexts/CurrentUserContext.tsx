@@ -19,6 +19,7 @@ export const CurrentUserProvider: FC = ({ children }) => {
 	const { data: user, isLoading } = useQuery(
 		['users', 'current'],
 		getCurrentUser,
+		{ retry: false },
 	)
 
 	useEffect(
@@ -27,8 +28,6 @@ export const CurrentUserProvider: FC = ({ children }) => {
 	)
 
 	return (
-		<CurrentUserContext.Provider value={currentUser}>
-			{children}
-		</CurrentUserContext.Provider>
+		<CurrentUserContext.Provider value={currentUser} children={children} />
 	)
 }

@@ -1,11 +1,4 @@
-import {
-	Divider,
-	Drawer,
-	List,
-	ListItem,
-	ListItemText,
-	Toolbar,
-} from '@mui/material'
+import { Drawer, List, ListItem, ListItemText, Toolbar } from '@mui/material'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -26,12 +19,11 @@ export const Sidebar: FC<Props> = ({ largeScreen, open }) => {
 				sx={{ width: DRAWER_WIDTH }}
 				open={open}
 			>
-				<Toolbar /> {/* This is for padding under App Bar */}
+				{/* ?: Should this be dynamically set according to app bar height? */}
+				{/* This is just to position drawer under App Bar */}
+				<Toolbar />
+
 				<List disablePadding sx={{ width: DRAWER_WIDTH }}>
-					<ListItem component={Link} to="/signin">
-						<ListItemText>Sign in</ListItemText>
-					</ListItem>
-					<Divider />
 					<ListItem component={Link} to="/">
 						<ListItemText>Home</ListItemText>
 					</ListItem>
