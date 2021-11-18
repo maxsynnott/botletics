@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import dns from 'dns'
+import { HealthCheckResponse } from '../types/responses'
 
 export class HealthCheckController {
 	static healthCheck = async (req: Request, res: Response) => {
@@ -19,9 +20,7 @@ export class HealthCheckController {
 
 		const statusCode = status === 'Healthy' ? 200 : 500
 
-		res.status(statusCode).json({
-			status,
-			statuses,
-		})
+		const response: HealthCheckResponse = { status, statuses }
+		res.status(statusCode).json(response)
 	}
 }

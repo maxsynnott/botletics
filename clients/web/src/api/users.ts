@@ -1,10 +1,13 @@
 import { AxiosResponse } from 'axios'
 import { axios } from '../clients/axios'
-import { User } from '@prisma/client'
+import { User } from '@models'
 import { Credentials } from '../types/types'
+import { UserCreateResponse, UserCurrentResponse } from '@responses'
 
 export const getCurrentUser = async () => {
-	const { status, data } = await axios.get('/users/current')
+	const { status, data } = await axios.get<UserCurrentResponse>(
+		'/users/current',
+	)
 
 	switch (status) {
 		case 200:
@@ -15,10 +18,10 @@ export const getCurrentUser = async () => {
 	}
 }
 
-export const postUser = async (credentials: Credentials) => {
-	const { status, data } = await axios.post<Credentials, AxiosResponse<User>>(
+export const postUser = async (body: Credentials) => {
+	const { status, data } = await axios.post<UserCreateResponse>(
 		'/users',
-		credentials,
+		body,
 	)
 
 	switch (status) {

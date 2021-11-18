@@ -7,7 +7,7 @@ import {
 } from '@mui/x-data-grid'
 import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Bot, Game } from '@prisma/client'
+import { Bot, Game } from '@models'
 
 const columns: GridColDef[] = [
 	{ field: 'numOfMoves', headerName: 'Moves', flex: 1 },

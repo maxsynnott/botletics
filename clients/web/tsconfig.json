@@ -18,9 +18,8 @@
 		"noEmit": true,
 		"jsx": "react-jsx",
 		"paths": {
-			"@prisma/client": [
-				"../../servers/server/node_modules/@prisma/client"
-			]
+			"@models": ["../../servers/server/node_modules/@prisma/client"],
+			"@responses": ["../../servers/server/src/types/responses.ts"]
 		}
 	},
 	"skipLibCheck": true,

@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getCurrentUser } from '../../api/users'
-import { User } from '../@prisma/client'
+import { User } from '@models'
 
 export const useCurrentUser = (
 	options?: UseQueryOptions<User, Error, User, string[]>,

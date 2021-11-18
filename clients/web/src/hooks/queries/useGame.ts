@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getGame } from '../../api/games'
-import { Game } from '@prisma/client'
+import { Game } from '@models'
 
 export const useGame = (
 	id: string,

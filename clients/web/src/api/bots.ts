@@ -1,9 +1,13 @@
 import { axios } from '../clients/axios'
 import { PostBotBody } from '../types/bodies'
-import { GetBotResponse } from '../types/responses'
+import {
+	BotCreateResponse,
+	BotIndexResponse,
+	BotShowResponse,
+} from '@responses'
 
 export const getBots = async () => {
-	const { status, data } = await axios.get('/bots')
+	const { status, data } = await axios.get<BotIndexResponse>('/bots')
 
 	switch (status) {
 		case 200:
@@ -15,9 +19,7 @@ export const getBots = async () => {
 }
 
 export const getBot = async (id: string) => {
-	const { status, data } = await axios.get<null, GetBotResponse>(
-		`/bots/${id}`,
-	)
+	const { status, data } = await axios.get<BotShowResponse>(`/bots/${id}`)
 
 	switch (status) {
 		case 200:
@@ -29,7 +31,7 @@ export const getBot = async (id: string) => {
 }
 
 export const postBot = async (body: PostBotBody) => {
-	const { status, data } = await axios.post('/bots', body)
+	const { status, data } = await axios.post<BotCreateResponse>('/bots', body)
 
 	switch (status) {
 		case 201:

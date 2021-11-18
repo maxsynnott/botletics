@@ -1,3 +1,3 @@
-import { Bot } from '@prisma/client'
+import { Bot } from '@models'
 
 export type PostBotBody = Pick<Bot, 'endpoint' | 'name' | 'type'>

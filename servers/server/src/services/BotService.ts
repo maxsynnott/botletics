@@ -1,4 +1,4 @@
-import { Bot, Prisma } from '@prisma/client'
+import { Bot } from '@prisma/client'
 import axios from 'axios'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
@@ -29,13 +29,11 @@ export class BotService {
 		return bot
 	}
 
-	// TODO: Improve typing to know what was included
-	static getOneById = async (
-		id: string,
-		optionalArgs?: Partial<Prisma.BotFindUniqueArgs>,
-	) => {
-		const findUniqueArgs = { where: { id }, ...optionalArgs }
-		const bot = await db.bot.findUnique(findUniqueArgs)
+	static getOneByIdWithGames = async (id: string) => {
+		const bot = await db.bot.findUnique({
+			where: { id },
+			include: { gamesAsWhite: true, gamesAsBlack: true },
+		})
 		if (!bot) throw new ResourceNotFoundException()
 		return bot
 	}
@@ -59,12 +57,11 @@ export class BotService {
 		}
 	}
 
-	static getAllByUserId = async (
-		userId: string,
-		args?: Prisma.BotFindManyArgs,
-	) => {
-		const findManyArgs = { where: { userId }, ...args }
-		const bots = await db.bot.findMany(findManyArgs)
+	static getAllByUserId = async (userId: string) => {
+		const bots = await db.bot.findMany({
+			where: { userId },
+			orderBy: { createdAt: 'desc' },
+		})
 		return bots
 	}
 

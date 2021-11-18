@@ -1,4 +1,3 @@
-import { Bot, Game } from '@prisma/client'
 import { Chess } from 'chess.js'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
@@ -12,9 +11,7 @@ import { calculateNewElo } from '../helpers/calculateNewElo'
 export class ChessService {
 	static runGame = async (id: string): Promise<void> => {
 		// TODO: Fix
-		const game = (await GameService.getOneById(id, {
-			include: { whiteBot: true, blackBot: true },
-		})) as (Game & { whiteBot: Bot; blackBot: Bot }) | null
+		const game = await GameService.getOneByIdWithBots(id)
 		if (!game) throw new ResourceNotFoundException('Game not found')
 		if (game.history.length) throw new HttpException('Game already started')
 		const { whiteBot, blackBot } = game

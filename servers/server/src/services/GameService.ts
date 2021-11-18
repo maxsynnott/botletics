@@ -1,8 +1,8 @@
-import { Bot, Game } from '.prisma/client'
-import { Prisma } from '@prisma/client'
+import { Bot, Game } from '@prisma/client'
 import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
 import { HttpException } from '../exceptions/HttpException'
+import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
 import { runGameQueue } from '../queues/runGameQueue'
 import { BotService } from './BotService'
 
@@ -11,13 +11,18 @@ export class GameService {
 		await runGameQueue.add('runGame', { gameId: game.id })
 	}
 
-	// TODO: Improve typing to know what was included
-	static getOneById = async (
-		id: string,
-		optionalArgs?: Partial<Prisma.GameFindUniqueArgs>,
-	) => {
-		const findUniqueArgs = { where: { id }, ...optionalArgs }
-		const game = await db.game.findUnique(findUniqueArgs)
+	static getOneById = async (id: string) => {
+		const game = await db.game.findUnique({ where: { id } })
+		if (!game) throw new ResourceNotFoundException()
+		return game
+	}
+
+	static getOneByIdWithBots = async (id: string) => {
+		const game = await db.game.findUnique({
+			where: { id },
+			include: { whiteBot: true, blackBot: true },
+		})
+		if (!game) throw new ResourceNotFoundException()
 		return game
 	}
 
