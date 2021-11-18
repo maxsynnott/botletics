@@ -3,10 +3,12 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { BotsDataGrid } from '../components/BotsDataGrid'
 import { useBots } from '../hooks/queries/useBots'
+import { LoadingPage } from './LoadingPage'
 
 export const BotsPage: FC = () => {
-	const { data: bots } = useBots()
-	if (!bots) return null
+	const { data: bots, isLoading } = useBots()
+	if (isLoading) return <LoadingPage />
+	if (!bots) throw new Error('Bots not found')
 
 	return (
 		<Box>
