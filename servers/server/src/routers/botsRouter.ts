@@ -17,6 +17,12 @@ const routes: Route[] = [
 		ensureAuthenticated: true,
 	},
 	{
+		method: 'get',
+		path: '/bots/:id/games',
+		handlers: [BotController.games],
+		ensureAuthenticated: true,
+	},
+	{
 		method: 'post',
 		path: '/bots',
 		handlers: [BotController.create],

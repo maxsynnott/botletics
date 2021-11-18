@@ -4,6 +4,7 @@ import { FC } from 'react'
 import { useParams } from 'react-router'
 import { GamesDataGrid } from '../components/GamesDataGrid'
 import { useBot } from '../hooks/queries/useBot'
+import { useBotGames } from '../hooks/queries/useBotGames'
 
 interface Params {
 	id: string
@@ -12,9 +13,8 @@ interface Params {
 export const BotPage: FC = () => {
 	const { id } = useParams<Params>()
 	const { data: bot } = useBot(id)
-	if (!bot) return null
-
-	const games = [...bot.gamesAsWhite, ...bot.gamesAsBlack]
+	const { data: games } = useBotGames(id)
+	if (!bot || !games) return null
 
 	return (
 		<Box>

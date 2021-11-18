@@ -2,6 +2,7 @@ import { axios } from '../clients/axios'
 import { PostBotBody } from '../types/bodies'
 import {
 	BotCreateResponse,
+	BotGamesResponse,
 	BotIndexResponse,
 	BotShowResponse,
 } from '@responses'
@@ -20,6 +21,20 @@ export const getBots = async () => {
 
 export const getBot = async (id: string) => {
 	const { status, data } = await axios.get<BotShowResponse>(`/bots/${id}`)
+
+	switch (status) {
+		case 200:
+			return data
+
+		default:
+			throw new Error()
+	}
+}
+
+export const getBotGames = async (id: string) => {
+	const { status, data } = await axios.get<BotGamesResponse>(
+		`/bots/${id}/games`,
+	)
 
 	switch (status) {
 		case 200:

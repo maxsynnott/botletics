@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { UnauthenticatedException } from '../exceptions/UnauthenticatedException'
 import { BotService } from '../services/BotService'
+import { GameService } from '../services/GameService'
 import {
 	BotCreateResponse,
+	BotGamesResponse,
 	BotIndexResponse,
 	BotShowResponse,
 } from '../types/responses'
@@ -23,6 +25,14 @@ export class BotController {
 		const bot = await BotService.getOneByIdWithGames(id)
 
 		const response: BotShowResponse = bot
+		res.status(200).json(response)
+	}
+
+	static games = async (req: Request, res: Response) => {
+		const { id } = req.params
+		const bots = await GameService.getAllByBotIdWithBots(id)
+
+		const response: BotGamesResponse = bots
 		res.status(200).json(response)
 	}
 

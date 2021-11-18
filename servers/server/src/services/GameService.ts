@@ -26,6 +26,14 @@ export class GameService {
 		return game
 	}
 
+	static getAllByBotIdWithBots = async (botId: string) => {
+		const games = await db.game.findMany({
+			where: { OR: [{ whiteBotId: botId }, { blackBotId: botId }] },
+			include: { whiteBot: true, blackBot: true },
+		})
+		return games
+	}
+
 	static create = async (whiteBot: Bot, blackBot: Bot) => {
 		const game = await db.game.create({
 			data: {
