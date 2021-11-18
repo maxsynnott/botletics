@@ -1,20 +1,12 @@
 import { ChessInstance } from 'chess.js'
-
-export enum ChessResult {
-	WHITE_WIN = '1-0',
-	BLACK_WIN = '0-1',
-	DRAW = '1/2-1/2',
-	ONGOING = '*',
-}
+import { ChessResult } from '../types/types'
 
 export const getChessGameResult = (chess: ChessInstance): ChessResult => {
-	if (chess.in_draw()) return ChessResult.DRAW
+	if (chess.in_draw()) return 0.5
 
 	if (chess.in_checkmate()) {
-		return chess.turn() === 'w'
-			? ChessResult.BLACK_WIN
-			: ChessResult.WHITE_WIN
+		return chess.turn() === 'w' ? 0 : 1
 	}
 
-	return ChessResult.ONGOING
+	return -1
 }

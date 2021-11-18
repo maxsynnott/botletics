@@ -1,6 +1,6 @@
 import { Queue, Worker, Job } from 'bullmq'
 import { redis as connection } from '../clients/redis'
-import { ChessService } from '../services/ChessService'
+import { GameService } from '../services/GameService'
 
 interface JobData {
 	gameId: string
@@ -14,7 +14,7 @@ const processJob = async (job: Job<JobData>) => {
 	try {
 		console.log('Running job: ' + name)
 		const { gameId } = job.data
-		await ChessService.runGame(gameId)
+		await GameService.run(gameId)
 	} catch (e) {
 		console.error(e)
 	}

@@ -10,3 +10,9 @@ export interface Route {
 	ensureAuthenticated?: boolean
 	validationSchema?: Schema
 }
+
+export type ChessResult =
+	| 1 // White win
+	| 0 // Black win
+	| 0.5 // Draw
+	| -1 // Ongoing

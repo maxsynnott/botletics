@@ -1,8 +1,11 @@
 import { Bot, Game } from '@prisma/client'
+import { Chess } from 'chess.js'
 import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
 import { HttpException } from '../exceptions/HttpException'
+import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
+import { getChessGameResult } from '../helpers/getChessGameResult'
 import { runGameQueue } from '../queues/runGameQueue'
 import { BotService } from './BotService'
 
@@ -61,5 +64,37 @@ export class GameService {
 			const game = await this.create(whiteBot, blackBot)
 			await this.start(game)
 		}
+	}
+
+	static updateHistory = async (id: string, history: string[]) => {
+		await db.game.update({ where: { id }, data: { history } })
+	}
+
+	static run = async (id: string) => {
+		const game = await this.getOneByIdWithBots(id)
+		if (!game) throw new ResourceNotFoundException('Game not found')
+		if (game.history.length) throw new HttpException('Game already started')
+		const { whiteBot, blackBot } = game
+
+		const chess = new Chess()
+		while (!chess.game_over()) {
+			const botIdToPlay = chess.turn() === 'w' ? whiteBot.id : blackBot.id
+			const move = await BotService.getMove({
+				botId: botIdToPlay,
+				gameId: id,
+				fen: chess.fen(),
+			})
+
+			if (chess.move(move)) {
+				await this.updateHistory(id, chess.history())
+			} else {
+				throw new InvalidBotResponse('Illegal move')
+			}
+		}
+
+		await this.updateHistory(id, chess.history())
+
+		const result = getChessGameResult(chess)
+		await BotService.updateElos(whiteBot.id, blackBot.id, result)
 	}
 }

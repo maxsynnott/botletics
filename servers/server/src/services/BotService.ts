@@ -6,6 +6,8 @@ import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundExcepti
 import random from 'just-random'
 import { HttpException } from '../exceptions/HttpException'
 import { ConflictException } from '../exceptions/ConflictException'
+import { getEloAdjustment } from '../helpers/getEloAdjustment'
+import { ChessResult } from '../types/types'
 
 const BOT_LIMIT = 3
 
@@ -116,5 +118,34 @@ export class BotService {
 	static getFallbackBot = async () => {
 		const bot = await db.bot.findFirst({ where: { fallback: true } })
 		return bot
+	}
+
+	static updateElo = async (id: string, adjustment: number) => {
+		const bot = await db.bot.findUnique({ where: { id } })
+		if (!bot) throw new ResourceNotFoundException('Bot not found')
+		await db.bot.update({
+			where: { id },
+			data: { elo: bot.elo + adjustment },
+		})
+	}
+
+	static updateElos = async (
+		whiteBotId: string,
+		blackBotId: string,
+		result: ChessResult,
+	) => {
+		if (result === -1) throw new HttpException('Game is still ongoing')
+		const [whiteBot, blackBot] = await Promise.all([
+			db.bot.findUnique({ where: { id: whiteBotId } }),
+			db.bot.findUnique({ where: { id: blackBotId } }),
+		])
+		if (!whiteBot || !blackBot)
+			throw new ResourceNotFoundException('One or more bots not found')
+
+		const eloChange = getEloAdjustment(whiteBot.elo, blackBot.elo, result)
+		await Promise.all([
+			this.updateElo(whiteBotId, eloChange),
+			this.updateElo(blackBotId, eloChange * -1),
+		])
 	}
 }
