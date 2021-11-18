@@ -77,6 +77,7 @@ export class BotService {
 	}
 
 	static runHealthCheck = async ({ id, endpoint }: Bot) => {
+		// TODO: Handle axios throwing error
 		const { status } = await axios.get(`${endpoint}/healthcheck`)
 		await db.bot.update({
 			where: { id },

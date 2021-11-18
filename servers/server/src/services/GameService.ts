@@ -11,19 +11,6 @@ export class GameService {
 		await runGameQueue.add('runGame', { gameId: game.id })
 	}
 
-	static createRandom = async (bot: Bot) => {
-		const opponent = await BotService.getOpponent(bot)
-		const whiteBotType = random(['active', 'passive'])
-		const game = await db.game.create({
-			data: {
-				whiteBotType,
-				activeBot: { connect: { id: bot.id } },
-				passiveBot: { connect: { id: opponent.id } },
-			},
-		})
-		return game
-	}
-
 	// TODO: Improve typing to know what was included
 	static getOneById = async (
 		id: string,
