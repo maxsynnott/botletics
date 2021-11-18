@@ -5,6 +5,9 @@ import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
 import random from 'just-random'
 import { HttpException } from '../exceptions/HttpException'
+import { ConflictException } from '../exceptions/ConflictException'
+
+const BOT_LIMIT = 3
 
 interface CreateArgs {
 	userId: string
@@ -20,6 +23,11 @@ interface GetMoveArgs {
 
 export class BotService {
 	static create = async (data: CreateArgs) => {
+		const botCount = await db.bot.count({ where: { userId: data.userId } })
+		if (botCount >= BOT_LIMIT)
+			throw new ConflictException(
+				`User cannot have more than ${BOT_LIMIT} bots`,
+			)
 		const bot = await db.bot.create({
 			// Trims final / from endpoint
 			data: { ...data, endpoint: data.endpoint.replace(/\/$/, '') },

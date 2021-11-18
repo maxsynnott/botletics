@@ -5,6 +5,8 @@ import { BotsDataGrid } from '../components/BotsDataGrid'
 import { useBots } from '../hooks/queries/useBots'
 import { LoadingPage } from './LoadingPage'
 
+const BOT_LIMIT = 3
+
 export const BotsPage: FC = () => {
 	const { data: bots, isLoading } = useBots()
 	if (isLoading) return <LoadingPage />
@@ -12,7 +14,8 @@ export const BotsPage: FC = () => {
 
 	return (
 		<Box>
-			<Link to="/bots/new">Create bot</Link>
+			{bots.length < BOT_LIMIT && <Link to="/bots/new">Create bot</Link>}
+
 			<BotsDataGrid bots={bots} />
 		</Box>
 	)
