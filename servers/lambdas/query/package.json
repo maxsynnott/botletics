@@ -1,0 +1,19 @@
+{
+	"name": "query",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@prisma/client": "^3.5.0"
+	},
+	"devDependencies": {
+		"typescript": "^4.5.2",
+		"prisma": "^3.5.0"
+	}
+}
