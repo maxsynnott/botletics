@@ -22,7 +22,14 @@ export const GamePage: FC<Props> = ({ setTitle }) => {
 	if (!game) throw new Error('Game not found')
 
 	return (
-		<Box>
+		<Box
+			sx={{
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				height: '100%',
+			}}
+		>
 			<Chessboard history={game.history} />
 		</Box>
 	)

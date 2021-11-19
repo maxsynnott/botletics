@@ -15,14 +15,14 @@ export const Layout: FC<Props> = ({ title, children }) => {
 	const toggleSidebarOpen = () => setSidebarOpen(!sidebarOpen)
 
 	return (
-		<Box>
+		<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
 			<Header
 				title={title}
 				largeScreen={largeScreen}
 				toggleSidebarOpen={toggleSidebarOpen}
 			/>
 
-			<Box sx={{ display: 'flex', height: '100%' }}>
+			<Box sx={{ display: 'flex', flexGrow: 1 }}>
 				<Sidebar largeScreen={largeScreen} open={sidebarOpen} />
 				<Box sx={{ flexGrow: 1, overflow: 'auto' }}>{children}</Box>
 			</Box>

@@ -1,10 +1,11 @@
-import { Button, Typography } from '@mui/material'
+import { Button, IconButton, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import { Chess } from 'chess.js'
 import { FC, useState } from 'react'
 import { boardToPositionedPieces } from '../helpers/boardToPositionedPieces'
 import { ChessPiece } from './ChessPiece'
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 
 interface Props {
 	history: string[]
@@ -32,6 +33,7 @@ const useStyle = makeStyles({
 			${BOARD_SIZE / 8}px ${BOARD_SIZE / 8}px
 		`,
 		position: 'relative',
+		borderRadius: '5px',
 	},
 })
 
@@ -62,18 +64,34 @@ export const Chessboard: FC<Props> = ({ history }) => {
 	}
 
 	return (
-		<>
+		<Box
+			sx={{
+				backgroundColor: '#555352',
+				p: 1,
+				pb: 0,
+				borderRadius: '5px',
+			}}
+		>
 			<Box className={classes.board}>
 				{positionedPieces.map(({ piece, square }) => (
 					<ChessPiece key={square} piece={piece} square={square} />
 				))}
 				{/* <Button onClick={handlePrevious}>previous</Button> */}
 			</Box>
-			<Button onClick={handlePrevious}>previous</Button>
-			<Button onClick={handleNext}>next</Button>
-			<Typography>
-				Move: {historyIndex}/{history.length}
-			</Typography>
-		</>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					backgroundColor: '#555352',
+				}}
+			>
+				<IconButton onClick={handlePrevious} sx={{ color: 'white' }}>
+					<MdChevronLeft />
+				</IconButton>
+				<IconButton onClick={handleNext} sx={{ color: 'white' }}>
+					<MdChevronRight />
+				</IconButton>
+			</Box>
+		</Box>
 	)
 }
