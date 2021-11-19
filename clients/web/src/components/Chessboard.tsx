@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material'
+import { IconButton, Slider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import { Chess } from 'chess.js'
@@ -10,6 +10,7 @@ import {
 	MdChevronRight,
 	MdPlayArrow,
 	MdPause,
+	MdSettings,
 } from 'react-icons/md'
 import { BiReset } from 'react-icons/bi'
 
@@ -17,7 +18,10 @@ interface Props {
 	history: string[]
 }
 
-const AUTOPLAY_SPEED = 500
+const AUTOPLAY_LEVELS = [
+	0, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000,
+].reverse()
+const DEFAULT_AUTOPLAY_LEVEL = AUTOPLAY_LEVELS.indexOf(1000)
 const BOARD_SIZE = 400
 const LIGHT_SQUARE_COLOR = '#EEEED2'
 const DARK_SQUARE_COLOR = '#769656'
@@ -47,18 +51,20 @@ const useStyle = makeStyles({
 export const Chessboard: FC<Props> = ({ history }) => {
 	const classes = useStyle()
 
+	const [autoplayLevel, setAutoplayLevel] = useState(DEFAULT_AUTOPLAY_LEVEL)
 	const [historyIndex, setHistoryIndex] = useState(0)
 	const [chess, setChess] = useState(new Chess())
 	const [autoPlayEnabled, setAutoPlayEnabled] = useState(false)
+	const [settingsOpen, setSettingsOpen] = useState(false)
 
 	const positionedPieces = boardToPositionedPieces(chess.board())
 
 	const changeHistoryIndex = (amount: 1 | -1) => {
-		if (
-			(amount === 1 && historyIndex === history.length) ||
-			(amount === -1 && historyIndex === 0)
-		)
+		if (amount === 1 && historyIndex === history.length) {
+			setAutoPlayEnabled(false)
 			return
+		}
+		if (amount === -1 && historyIndex === 0) return
 
 		const chessClone = new Chess()
 		chessClone.load_pgn(chess.pgn())
@@ -79,7 +85,12 @@ export const Chessboard: FC<Props> = ({ history }) => {
 		changeHistoryIndex(-1)
 	}
 
-	const handleToggleAutoPlay = () => setAutoPlayEnabled(!autoPlayEnabled)
+	const toggleAutoPlay = () => {
+		if (historyIndex === history.length) handleReset()
+		setAutoPlayEnabled(!autoPlayEnabled)
+	}
+
+	const toggleSettingsOpen = () => setSettingsOpen(!settingsOpen)
 
 	const handleReset = () => {
 		setAutoPlayEnabled(false)
@@ -94,13 +105,13 @@ export const Chessboard: FC<Props> = ({ history }) => {
 		if (autoPlayEnabled) {
 			interval = setInterval(() => {
 				if (autoPlayEnabled) changeHistoryIndex(1)
-			}, AUTOPLAY_SPEED)
+			}, AUTOPLAY_LEVELS[autoplayLevel])
 		}
 
 		return () => {
 			if (interval) clearInterval(interval)
 		}
-	}, [autoPlayEnabled, historyIndex, history, chess])
+	}, [autoPlayEnabled, historyIndex, history, chess, autoplayLevel])
 
 	return (
 		<Box
@@ -135,17 +146,53 @@ export const Chessboard: FC<Props> = ({ history }) => {
 					<MdChevronLeft />
 				</IconButton>
 
-				<IconButton
-					onClick={handleToggleAutoPlay}
-					sx={{ color: 'white' }}
-				>
+				<IconButton onClick={toggleAutoPlay} sx={{ color: 'white' }}>
 					{autoPlayEnabled ? <MdPause /> : <MdPlayArrow />}
 				</IconButton>
 
 				<IconButton onClick={handleNext} sx={{ color: 'white' }}>
 					<MdChevronRight />
 				</IconButton>
+
+				<Box sx={{ position: 'absolute', right: 0 }}>
+					<IconButton
+						onClick={toggleSettingsOpen}
+						sx={{ color: 'white' }}
+					>
+						<MdSettings />
+					</IconButton>
+				</Box>
 			</Box>
+			{settingsOpen && (
+				<Box
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						pb: 1,
+						pl: 1,
+						pr: 2,
+					}}
+				>
+					<Typography
+						variant="caption"
+						sx={{ color: 'white', whiteSpace: 'nowrap', mr: 2 }}
+					>
+						Autoplay speed
+					</Typography>
+					<Slider
+						size="small"
+						value={autoplayLevel}
+						onChange={(_, value) =>
+							setAutoplayLevel(value as number)
+						}
+						step={1}
+						max={AUTOPLAY_LEVELS.length - 1}
+						min={0}
+						valueLabelDisplay="auto"
+						sx={{ color: 'white' }}
+					/>
+				</Box>
+			)}
 		</Box>
 	)
 }
