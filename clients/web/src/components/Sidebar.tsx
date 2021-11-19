@@ -1,6 +1,9 @@
-import { Drawer, List, ListItem, ListItemText, Toolbar } from '@mui/material'
+import { Drawer, List, Toolbar } from '@mui/material'
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { SidebarListItem } from './SidebarListItem'
+import { MdHome } from 'react-icons/md'
+import { FaRobot } from 'react-icons/fa'
+import { useLocation } from 'react-router'
 
 const DRAWER_WIDTH = 280
 
@@ -9,8 +12,19 @@ interface Props {
 	open: boolean
 }
 
+const listItems = [
+	{
+		text: 'Home',
+		path: '/',
+		Icon: MdHome,
+	},
+	{ text: 'Bots', path: '/bots', Icon: FaRobot },
+]
+
 export const Sidebar: FC<Props> = ({ largeScreen, open }) => {
-	// TODO: Provide mobile support by setting variant to temporary and making toggleable
+	const { pathname } = useLocation()
+	const focusedPath = pathname?.match(/^(\/\w*)\/?/)?.[1]
+
 	return (
 		<>
 			<Drawer
@@ -24,12 +38,15 @@ export const Sidebar: FC<Props> = ({ largeScreen, open }) => {
 				<Toolbar />
 
 				<List disablePadding sx={{ width: DRAWER_WIDTH }}>
-					<ListItem component={Link} to="/">
-						<ListItemText>Home</ListItemText>
-					</ListItem>
-					<ListItem component={Link} to="/bots">
-						<ListItemText>Bots</ListItemText>
-					</ListItem>
+					{listItems.map(({ text, path, Icon }) => (
+						<SidebarListItem
+							key={path}
+							text={text}
+							path={path}
+							Icon={Icon}
+							focused={focusedPath === path}
+						/>
+					))}
 				</List>
 			</Drawer>
 		</>

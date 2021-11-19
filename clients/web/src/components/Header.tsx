@@ -1,11 +1,10 @@
 import { AppBar, Toolbar, IconButton, Typography, Box } from '@mui/material'
 import { FC } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
 import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
 import { Link } from 'react-router-dom'
-import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import { useDeleteSession } from '../hooks/mutations/useDeleteSession'
 import { useQueryClient } from 'react-query'
+import { MdLogout, MdMenu } from 'react-icons/md'
 
 interface Props {
 	largeScreen: boolean
@@ -33,13 +32,16 @@ export const Header: FC<Props> = ({
 	return (
 		<AppBar
 			position="sticky"
-			sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+			sx={{
+				zIndex: (theme) => theme.zIndex.drawer + 1,
+				backgroundColor: (theme) => theme.palette.primary.light,
+			}}
 		>
 			<Toolbar sx={{ justifyContent: 'space-between' }}>
 				<Box sx={{ display: 'flex', alignItems: 'center' }}>
 					{!largeScreen && (
 						<IconButton color="inherit" onClick={toggleSidebarOpen}>
-							<MenuIcon />
+							<MdMenu />
 						</IconButton>
 					)}
 
@@ -50,7 +52,7 @@ export const Header: FC<Props> = ({
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
 						<Typography>{currentUser.email}</Typography>
 						<IconButton color="inherit" onClick={handleSignOut}>
-							<ExitToAppIcon />
+							<MdLogout />
 						</IconButton>
 					</Box>
 				) : (
