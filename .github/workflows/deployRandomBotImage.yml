@@ -1,6 +1,6 @@
 # TODO: This should be replaced either by server endpoint or code
 
-name: Deploy random bot image
+name: Deploy random bot
 
 on:
   workflow_dispatch:
@@ -57,9 +57,9 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-  updateLambdaImage:
+  updateLambdaImageUri:
     needs: buildAndPush
-    uses: maxsynnott/botletics/.github/workflows/updateLambdaImage.yml@master
+    uses: maxsynnott/botletics/.github/workflows/updateLambdaImageUri.yml@master
     with:
       repositoryName: random-bot
       functionName: random-bot
