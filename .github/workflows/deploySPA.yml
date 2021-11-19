@@ -1,11 +1,13 @@
 name: Deploy SPA
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - master
     paths:
-      - clients/web/**/*
+      - clients/web/**
 
 env:
   AWS_REGION: ap-southeast-1

@@ -1,5 +1,4 @@
-// Currently Prisma doesn't support programmatically migrating which is why we have to use the cli commands
-// TODO: Check if Prisma has added support for this
+// TODO: Check if Prisma has added support yet for programmatically running migrating
 import execa from 'execa'
 
 export const handler = async () => {

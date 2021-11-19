@@ -1,0 +1,50 @@
+name: Update lambda function image
+
+on:
+  workflow_call:
+    inputs:
+      awsRegion:
+        type: string
+        required: false
+        default: ap-southeast-1
+      repositoryName:
+        type: string
+        required: true
+      functionName:
+        type: string
+        required: true
+    secrets:
+      awsAccessKeyId:
+        required: true
+      awsSecretKey:
+        required: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  updateImage:
+    name: Build and push image to ECR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.awsAccessKeyId }}
+          aws-secret-access-key: ${{ secrets.awsSecretKey }}
+          aws-region: ${{ inputs.awsRegion }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+
+      - name: Fetch image digest
+        id: fetch-image-digest
+        run: echo "::set-output name=digest::$(aws ecr describe-images --repository-name ${{ inputs.repositoryName }} --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text)"
+
+      - name: Update lambda image
+        run: |
+          aws lambda update-function-code --function-name ${{ inputs.functionName }} --image-uri ${{ steps.login-ecr.outputs.registry }}/${{ inputs.repositoryName }}@${{ steps.fetch-image-digest.outputs.digest }}
+          aws lambda wait function-updated --function-name ${{ inputs.functionName }}
