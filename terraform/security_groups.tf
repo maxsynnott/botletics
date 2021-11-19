@@ -92,6 +92,22 @@ resource "aws_security_group_rule" "migrator_allow_postgres_out" {
   ]
 }
 
+resource "aws_security_group" "query" {
+  name   = "botletics-query"
+  vpc_id = aws_vpc.botletics.id
+}
+
+resource "aws_security_group_rule" "query_allow_postgres_out" {
+  security_group_id = aws_security_group.query.id
+  type              = "egress"
+  protocol          = "tcp"
+  from_port         = 5432
+  to_port           = 5432
+  cidr_blocks = [
+    "0.0.0.0/0"
+  ]
+}
+
 resource "aws_security_group" "load_balancer" {
   name   = "load-balancer"
   vpc_id = aws_vpc.botletics.id

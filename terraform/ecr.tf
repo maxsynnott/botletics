@@ -94,3 +94,35 @@ data "aws_ecr_image" "random_bot" {
   repository_name = aws_ecr_repository.random_bot.name
   image_tag       = "latest"
 }
+
+resource "aws_ecr_repository" "query" {
+  name = "botletics-db-query"
+}
+
+resource "aws_ecr_lifecycle_policy" "query" {
+  repository = aws_ecr_repository.query.name
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Only keep one untagged image",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "imageCountMoreThan",
+                "countNumber": 1
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
+data "aws_ecr_image" "query" {
+  repository_name = aws_ecr_repository.query.name
+  image_tag       = "latest"
+}
