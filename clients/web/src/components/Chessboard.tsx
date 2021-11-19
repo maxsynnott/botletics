@@ -1,16 +1,23 @@
-import { Button, IconButton, Typography } from '@mui/material'
+import { IconButton } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import { Chess } from 'chess.js'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { boardToPositionedPieces } from '../helpers/boardToPositionedPieces'
 import { ChessPiece } from './ChessPiece'
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
+import {
+	MdChevronLeft,
+	MdChevronRight,
+	MdPlayArrow,
+	MdPause,
+} from 'react-icons/md'
+import { BiReset } from 'react-icons/bi'
 
 interface Props {
 	history: string[]
 }
 
+const AUTOPLAY_SPEED = 500
 const BOARD_SIZE = 400
 const LIGHT_SQUARE_COLOR = '#EEEED2'
 const DARK_SQUARE_COLOR = '#769656'
@@ -42,26 +49,58 @@ export const Chessboard: FC<Props> = ({ history }) => {
 
 	const [historyIndex, setHistoryIndex] = useState(0)
 	const [chess, setChess] = useState(new Chess())
+	const [autoPlayEnabled, setAutoPlayEnabled] = useState(false)
 
 	const positionedPieces = boardToPositionedPieces(chess.board())
 
-	const handleNext = () => {
-		if (historyIndex === history.length) return
+	const changeHistoryIndex = (amount: 1 | -1) => {
+		if (
+			(amount === 1 && historyIndex === history.length) ||
+			(amount === -1 && historyIndex === 0)
+		)
+			return
+
 		const chessClone = new Chess()
 		chessClone.load_pgn(chess.pgn())
-		chessClone.move(history[historyIndex])
+		amount === 1
+			? chessClone.move(history[historyIndex])
+			: chessClone.undo()
 		setChess(chessClone)
-		setHistoryIndex(historyIndex + 1)
+		setHistoryIndex(historyIndex + amount)
+	}
+
+	const handleNext = () => {
+		setAutoPlayEnabled(false)
+		changeHistoryIndex(1)
 	}
 
 	const handlePrevious = () => {
-		if (historyIndex === 0) return
-		const chessClone = new Chess()
-		chessClone.load_pgn(chess.pgn())
-		chessClone.undo()
-		setChess(chessClone)
-		setHistoryIndex(historyIndex - 1)
+		setAutoPlayEnabled(false)
+		changeHistoryIndex(-1)
 	}
+
+	const handleToggleAutoPlay = () => setAutoPlayEnabled(!autoPlayEnabled)
+
+	const handleReset = () => {
+		setAutoPlayEnabled(false)
+		const chessClone = new Chess()
+		setChess(chessClone)
+		setHistoryIndex(0)
+	}
+
+	useEffect(() => {
+		let interval: NodeJS.Timer | undefined
+
+		if (autoPlayEnabled) {
+			interval = setInterval(() => {
+				if (autoPlayEnabled) changeHistoryIndex(1)
+			}, AUTOPLAY_SPEED)
+		}
+
+		return () => {
+			if (interval) clearInterval(interval)
+		}
+	}, [autoPlayEnabled, historyIndex, history, chess])
 
 	return (
 		<Box
@@ -83,11 +122,26 @@ export const Chessboard: FC<Props> = ({ history }) => {
 					display: 'flex',
 					justifyContent: 'center',
 					backgroundColor: '#555352',
+					position: 'relative',
 				}}
 			>
+				<Box sx={{ position: 'absolute', left: 0 }}>
+					<IconButton onClick={handleReset} sx={{ color: 'white' }}>
+						<BiReset />
+					</IconButton>
+				</Box>
+
 				<IconButton onClick={handlePrevious} sx={{ color: 'white' }}>
 					<MdChevronLeft />
 				</IconButton>
+
+				<IconButton
+					onClick={handleToggleAutoPlay}
+					sx={{ color: 'white' }}
+				>
+					{autoPlayEnabled ? <MdPause /> : <MdPlayArrow />}
+				</IconButton>
+
 				<IconButton onClick={handleNext} sx={{ color: 'white' }}>
 					<MdChevronRight />
 				</IconButton>
