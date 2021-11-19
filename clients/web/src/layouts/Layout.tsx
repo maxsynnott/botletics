@@ -1,4 +1,4 @@
-import { useMediaQuery } from '@mui/material'
+import { Toolbar, useMediaQuery } from '@mui/material'
 import { Box } from '@mui/system'
 import { FC, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
@@ -21,7 +21,7 @@ export const Layout: FC<Props> = ({ title, children }) => {
 				largeScreen={largeScreen}
 				toggleSidebarOpen={toggleSidebarOpen}
 			/>
-
+			<Toolbar /> {/* Padding */}
 			<Box sx={{ display: 'flex', flexGrow: 1 }}>
 				<Sidebar largeScreen={largeScreen} open={sidebarOpen} />
 				<Box sx={{ flexGrow: 1, overflow: 'auto' }}>{children}</Box>

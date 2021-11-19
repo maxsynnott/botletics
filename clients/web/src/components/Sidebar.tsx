@@ -33,10 +33,7 @@ export const Sidebar: FC<Props> = ({ largeScreen, open }) => {
 				sx={{ width: DRAWER_WIDTH }}
 				open={open}
 			>
-				{/* ?: Should this be dynamically set according to app bar height? */}
-				{/* This is just to position drawer under App Bar */}
-				<Toolbar />
-
+				<Toolbar /> {/* Padding */}
 				<List disablePadding sx={{ width: DRAWER_WIDTH }}>
 					{listItems.map(({ text, path, Icon }) => (
 						<SidebarListItem

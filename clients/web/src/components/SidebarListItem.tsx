@@ -29,15 +29,13 @@ export const SidebarListItem: FC<Props> = ({ text, path, Icon, focused }) => {
 			disablePadding
 			sx={{
 				backgroundColor: focused
-					? 'rgba(66, 165, 245, 0.2)'
+					? 'rgba(66, 165, 245, 0.2)' // TODO: Replace with custom palette color
 					: 'inherit',
 			}}
 		>
-			<ListItemButton onClick={handleClick}>
+			<ListItemButton onClick={handleClick} sx={{ py: 2, px: 4 }}>
 				<ListItemIcon
 					sx={{
-						py: 1,
-						px: 2,
 						color: (theme) =>
 							focused ? theme.palette.primary.light : '',
 					}}

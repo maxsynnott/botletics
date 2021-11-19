@@ -31,7 +31,7 @@ export const Header: FC<Props> = ({
 
 	return (
 		<AppBar
-			position="sticky"
+			position="fixed"
 			sx={{
 				zIndex: (theme) => theme.zIndex.drawer + 1,
 				backgroundColor: (theme) => theme.palette.primary.light,
