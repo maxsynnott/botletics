@@ -32,7 +32,7 @@ data "aws_ecr_image" "botletics_migrator" {
 
 
 resource "aws_ecr_repository" "botletics_migrator" {
-  name = "botletics-db-migrator"
+  name = "db-migrator"
 }
 
 resource "aws_ecr_lifecycle_policy" "migrator" {
@@ -96,7 +96,7 @@ data "aws_ecr_image" "random_bot" {
 }
 
 resource "aws_ecr_repository" "query" {
-  name = "botletics-db-query"
+  name = "db-query"
 }
 
 resource "aws_ecr_lifecycle_policy" "query" {

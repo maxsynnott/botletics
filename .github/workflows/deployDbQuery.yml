@@ -1,4 +1,4 @@
-name: Deploy query
+name: Deploy db-query
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
     branches:
       - master
     paths:
-      - servers/lambdas/query/**
+      - servers/lambdas/db-query/**
       - servers/server/prisma/**
 
 defaults:
@@ -18,8 +18,8 @@ jobs:
   buildAndPushImage:
     uses: maxsynnott/botletics/.github/workflows/buildAndPushImage.yml@master
     with:
-      ecrRepositoryName: botletics-db-query
-      directoryPath: ./servers/lambdas/query
+      ecrRepositoryName: db-query
+      directoryPath: ./servers/lambdas/db-query
       copyPrismaDirectory: true
     secrets:
       awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -31,8 +31,8 @@ jobs:
     needs: buildAndPushImage
     uses: maxsynnott/botletics/.github/workflows/updateLambdaImageUri.yml@master
     with:
-      ecrRepositoryName: botletics-db-query
-      lambdaFunctionName: query
+      ecrRepositoryName: db-query
+      lambdaFunctionName: db-query
     secrets:
       awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
       awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}

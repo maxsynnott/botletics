@@ -24,7 +24,7 @@ defaults:
     shell: bash
 
 jobs:
-  updateImage:
+  updateLambdaImageUri:
     name: Update lambda function image URI
     runs-on: ubuntu-latest
 

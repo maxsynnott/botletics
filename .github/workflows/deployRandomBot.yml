@@ -1,4 +1,6 @@
-name: Deploy migrator
+# TODO: This should be replaced either by server endpoint or code
+
+name: Deploy random-bot
 
 on:
   workflow_dispatch:
@@ -7,8 +9,7 @@ on:
     branches:
       - master
     paths:
-      - servers/lambdas/migrator/**
-      - servers/server/prisma/**
+      - bots/chess/random/**
 
 defaults:
   run:
@@ -18,9 +19,8 @@ jobs:
   buildAndPushImage:
     uses: maxsynnott/botletics/.github/workflows/buildAndPushImage.yml@master
     with:
-      ecrRepositoryName: botletics-db-migrator
-      directoryPath: ./servers/lambdas/migrator
-      copyPrismaDirectory: true
+      ecrRepositoryName: random-bot
+      directoryPath: ./bots/chess/random
     secrets:
       awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
       awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}
@@ -31,8 +31,8 @@ jobs:
     needs: buildAndPushImage
     uses: maxsynnott/botletics/.github/workflows/updateLambdaImageUri.yml@master
     with:
-      ecrRepositoryName: botletics-db-migrator
-      lambdaFunctionName: botletics-migrator
+      ecrRepositoryName: random-bot
+      lambdaFunctionName: random-bot
     secrets:
       awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
       awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}

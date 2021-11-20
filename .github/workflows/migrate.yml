@@ -2,7 +2,7 @@ name: Migrate
 
 on:
   workflow_run:
-    workflows: ["Deploy migrator"]
+    workflows: ["Deploy db-migrator"]
     types:
       - completed
 
@@ -27,4 +27,4 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Migrate
-        run: aws lambda invoke --function-name botletics-migrator /dev/stdout
+        run: aws lambda invoke --function-name db-migrator /dev/stdout

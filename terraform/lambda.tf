@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "botletics_migrator" {
-  function_name = "botletics-migrator"
+  function_name = "db-migrator"
   role          = aws_iam_role.lambda.arn
   package_type  = "Image"
   image_uri     = local.migrator_image_uri
@@ -46,7 +46,7 @@ resource "aws_lambda_permission" "lb_random_bot" {
 
 // This is extremely dangerous and should be replaced by an admin dashboard ASAP
 resource "aws_lambda_function" "query" {
-  function_name = "query"
+  function_name = "db-query"
   role          = aws_iam_role.lambda.arn
   package_type  = "Image"
   image_uri     = local.query_image_uri
