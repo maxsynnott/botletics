@@ -1,0 +1,26 @@
+name: Deploy server
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    paths:
+      - servers/server/**
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  buildAndPushImage:
+    uses: maxsynnott/botletics/.github/workflows/buildAndPushImage.yml@master
+    with:
+      ecrRepositoryName: botletics-server-production
+      directoryPath: ./servers/server
+    secrets:
+      awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}
+      dockerHubUsername: ${{ secrets.DOCKER_HUB_USERNAME }}
+      dockerHubAccessToken: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}

@@ -1,8 +1,6 @@
 name: Migrate
 
 on:
-  workflow_dispatch:
-
   workflow_run:
     workflows: ["Deploy migrator"]
     types:

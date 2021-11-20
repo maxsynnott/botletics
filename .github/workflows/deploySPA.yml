@@ -20,6 +20,7 @@ jobs:
   pushSPAToS3:
     name: Push SPA to S3
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2

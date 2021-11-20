@@ -7,10 +7,10 @@ on:
         type: string
         required: false
         default: ap-southeast-1
-      repositoryName:
+      ecrRepositoryName:
         type: string
         required: true
-      functionName:
+      lambdaFunctionName:
         type: string
         required: true
     secrets:
@@ -25,7 +25,7 @@ defaults:
 
 jobs:
   updateImage:
-    name: Build and push image to ECR
+    name: Update lambda function image URI
     runs-on: ubuntu-latest
 
     steps:
@@ -42,9 +42,9 @@ jobs:
 
       - name: Fetch image digest
         id: fetch-image-digest
-        run: echo "::set-output name=digest::$(aws ecr describe-images --repository-name ${{ inputs.repositoryName }} --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text)"
+        run: echo "::set-output name=digest::$(aws ecr describe-images --repository-name ${{ inputs.ecrRepositoryName }} --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text)"
 
       - name: Update lambda image
         run: |
-          aws lambda update-function-code --function-name ${{ inputs.functionName }} --image-uri ${{ steps.login-ecr.outputs.registry }}/${{ inputs.repositoryName }}@${{ steps.fetch-image-digest.outputs.digest }}
-          aws lambda wait function-updated --function-name ${{ inputs.functionName }}
+          aws lambda update-function-code --function-name ${{ inputs.lambdaFunctionName }} --image-uri ${{ steps.login-ecr.outputs.registry }}/${{ inputs.ecrRepositoryName }}@${{ steps.fetch-image-digest.outputs.digest }}
+          aws lambda wait function-updated --function-name ${{ inputs.lambdaFunctionName }}
