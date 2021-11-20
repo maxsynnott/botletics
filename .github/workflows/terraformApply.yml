@@ -1,18 +1,17 @@
-name: Apply terraform
+name: Terraform apply
 
 on:
-  workflow_dispatch:
-
-  workflow_run:
-    workflows: ["Deploy server"]
-    types:
-      - completed
-
-  push:
-    branches:
-      - master
-    paths:
-      - terraform/**
+  workflow_call:
+    inputs:
+      awsRegion:
+        type: string
+        required: false
+        default: ap-southeast-1
+    secrets:
+      awsAccessKeyId:
+        required: true
+      awsSecretKey:
+        required: true
 
 env:
   IMAGE_TAG: latest
@@ -23,7 +22,7 @@ defaults:
     shell: bash
 
 jobs:
-  terraform:
+  terraformApply:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,9 +32,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.awsAccessKeyId }}
+          aws-secret-access-key: ${{ secrets.awsSecretKey }}
+          aws-region: ${{ inputs.awsRegion }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
