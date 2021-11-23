@@ -7,16 +7,11 @@ import { useQueryClient } from 'react-query'
 import { MdLogout, MdMenu } from 'react-icons/md'
 
 interface Props {
-	largeScreen: boolean
 	toggleSidebarOpen: () => void
 	title: string
 }
 
-export const Header: FC<Props> = ({
-	largeScreen,
-	toggleSidebarOpen,
-	title,
-}) => {
+export const Header: FC<Props> = ({ toggleSidebarOpen, title }) => {
 	const { currentUser } = useCurrentUser()
 	const { deleteSession } = useDeleteSession()
 	const queryClient = useQueryClient()
@@ -34,18 +29,16 @@ export const Header: FC<Props> = ({
 			position="fixed"
 			sx={{
 				zIndex: (theme) => theme.zIndex.drawer + 1,
-				backgroundColor: (theme) => theme.palette.primary.light,
+				backgroundColor: (theme) => theme.palette.primary.main,
 			}}
 		>
-			<Toolbar sx={{ justifyContent: 'space-between' }}>
+			<Toolbar variant="dense" sx={{ justifyContent: 'space-between' }}>
 				<Box sx={{ display: 'flex', alignItems: 'center' }}>
-					{!largeScreen && (
-						<IconButton color="inherit" onClick={toggleSidebarOpen}>
-							<MdMenu />
-						</IconButton>
-					)}
+					<IconButton color="inherit" onClick={toggleSidebarOpen}>
+						<MdMenu />
+					</IconButton>
 
-					<Typography variant="h5">{title}</Typography>
+					<Typography variant="h5">Botletics</Typography>
 				</Box>
 
 				{currentUser ? (

@@ -8,7 +8,6 @@ import { useLocation } from 'react-router'
 const DRAWER_WIDTH = 280
 
 interface Props {
-	largeScreen: boolean
 	open: boolean
 }
 
@@ -21,19 +20,19 @@ const listItems = [
 	{ text: 'Bots', path: '/bots', Icon: FaRobot },
 ]
 
-export const Sidebar: FC<Props> = ({ largeScreen, open }) => {
+export const Sidebar: FC<Props> = ({ open }) => {
 	const { pathname } = useLocation()
 	const focusedPath = pathname?.match(/^(\/\w*)\/?/)?.[1]
 
 	return (
 		<>
 			<Drawer
-				variant={largeScreen ? 'permanent' : 'temporary'}
+				variant={'temporary'}
 				anchor="left"
 				sx={{ width: DRAWER_WIDTH }}
 				open={open}
 			>
-				<Toolbar /> {/* Padding */}
+				<Toolbar variant="dense" /> {/* Padding */}
 				<List disablePadding sx={{ width: DRAWER_WIDTH }}>
 					{listItems.map(({ text, path, Icon }) => (
 						<SidebarListItem

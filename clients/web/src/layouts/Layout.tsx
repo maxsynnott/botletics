@@ -1,4 +1,4 @@
-import { Toolbar, useMediaQuery } from '@mui/material'
+import { Toolbar } from '@mui/material'
 import { Box } from '@mui/system'
 import { FC, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
@@ -9,21 +9,16 @@ interface Props {
 }
 
 export const Layout: FC<Props> = ({ title, children }) => {
-	const largeScreen = useMediaQuery('(min-width:992px)')
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	const toggleSidebarOpen = () => setSidebarOpen(!sidebarOpen)
 
 	return (
 		<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-			<Header
-				title={title}
-				largeScreen={largeScreen}
-				toggleSidebarOpen={toggleSidebarOpen}
-			/>
-			<Toolbar /> {/* Padding */}
+			<Header title={title} toggleSidebarOpen={toggleSidebarOpen} />
+			<Toolbar variant="dense" /> {/* Padding */}
 			<Box sx={{ display: 'flex', flexGrow: 1 }}>
-				<Sidebar largeScreen={largeScreen} open={sidebarOpen} />
+				<Sidebar open={sidebarOpen} />
 				<Box sx={{ flexGrow: 1, overflow: 'auto' }}>{children}</Box>
 			</Box>
 		</Box>

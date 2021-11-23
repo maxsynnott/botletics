@@ -14,7 +14,7 @@ defaults:
     shell: bash
 
 jobs:
-  terraformApply:
+  provision:
     uses: maxsynnott/botletics/.github/workflows/terraformApply.yml@master
     secrets:
       awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
