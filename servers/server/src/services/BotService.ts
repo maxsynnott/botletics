@@ -1,4 +1,4 @@
-import { Bot } from '@prisma/client'
+import { Bot, Prisma } from '@prisma/client'
 import axios from 'axios'
 import { db } from '../clients/db'
 import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'

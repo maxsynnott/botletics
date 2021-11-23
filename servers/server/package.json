@@ -28,6 +28,7 @@
 		"express-session": "^1.17.2",
 		"joi": "^17.4.2",
 		"joi-password-complexity": "^5.1.0",
+		"just-omit": "^2.0.1",
 		"just-random": "^3.0.1",
 		"just-shuffle": "^4.0.1",
 		"morgan": "^1.10.0",

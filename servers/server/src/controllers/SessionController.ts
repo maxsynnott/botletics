@@ -9,7 +9,8 @@ export class SessionController {
 	static create = (req: Request, res: Response) => {
 		if (!req.user) throw new UnauthenticatedException()
 
-		const response: SessionCreateResponse = req.user
+		const { passwordHash, ...otherFields } = req.user
+		const response: SessionCreateResponse = otherFields
 		res.status(201).json(response)
 	}
 

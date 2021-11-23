@@ -13,12 +13,12 @@ import {
 	MdSettings,
 } from 'react-icons/md'
 import { BiReset } from 'react-icons/bi'
-import { GameWithBots } from '@modelsWith'
+import { GameShowResponse } from '@responses'
 import { FaChessPawn } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 interface Props {
-	game: GameWithBots
+	game: GameShowResponse
 }
 
 const AUTOPLAY_LEVELS = [

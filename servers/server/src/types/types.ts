@@ -1,6 +1,9 @@
 import { RequestHandler } from 'express'
 import { Schema } from 'joi'
 
+export type ForcefullyOmit<T, U extends keyof T> = Omit<T, U> &
+	Partial<Record<U, never>>
+
 type HttpMethod = 'get' | 'post' | 'patch' | 'put' | 'delete'
 
 export interface Route {

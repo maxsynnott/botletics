@@ -1,6 +1,6 @@
-import { Bot, User } from '@prisma/client'
+import { Game } from '@prisma/client'
 import { ValidationErrorItem } from 'joi'
-import { BotWithGames, GameWithBots } from './modelsWith'
+import { BotWithoutEndpoint, UserWithoutPasswordHash } from './customModels'
 
 export type ErrorResponse = {
 	status: number
@@ -8,13 +8,22 @@ export type ErrorResponse = {
 	validationErrors?: Pick<ValidationErrorItem, 'path' | 'message' | 'type'>[]
 }
 
-export type BotIndexResponse = Bot[]
-export type BotShowResponse = BotWithGames
-export type BotCreateResponse = Bot
-export type BotGamesResponse = GameWithBots[]
-export type BotLeaderboardResponse = Bot[]
+export type BotIndexResponse = BotWithoutEndpoint[]
+export type BotShowResponse = BotWithoutEndpoint & {
+	gamesAsWhite: Game[]
+	gamesAsBlack: Game[]
+}
+export type BotCreateResponse = BotWithoutEndpoint
+export type BotGamesResponse = (Game & {
+	whiteBot: BotWithoutEndpoint
+	blackBot: BotWithoutEndpoint
+})[]
+export type BotLeaderboardResponse = BotWithoutEndpoint[]
 
-export type GameShowResponse = GameWithBots
+export type GameShowResponse = Game & {
+	whiteBot: BotWithoutEndpoint
+	blackBot: BotWithoutEndpoint
+}
 
 type StatusResponse = 'Healthy' | 'Unhealthy'
 export type HealthCheckResponse = {
@@ -22,8 +31,8 @@ export type HealthCheckResponse = {
 	statuses: Record<string, StatusResponse>
 }
 
-export type SessionCreateResponse = User
+export type SessionCreateResponse = UserWithoutPasswordHash
 export type SessionDeleteResponse = null
 
-export type UserCreateResponse = User
-export type UserCurrentResponse = User | null
+export type UserCreateResponse = UserWithoutPasswordHash
+export type UserCurrentResponse = UserWithoutPasswordHash | null

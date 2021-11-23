@@ -19,7 +19,6 @@
 		"jsx": "react-jsx",
 		"paths": {
 			"@models": ["../../servers/server/node_modules/@prisma/client"],
-			"@modelsWith": ["../../servers/server/src/types/modelsWith.ts"],
 			"@responses": ["../../servers/server/src/types/responses.ts"]
 		}
 	},

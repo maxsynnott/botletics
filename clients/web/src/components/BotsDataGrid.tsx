@@ -24,7 +24,6 @@ const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 const columns: GridColDef[] = [
 	{ field: 'name', headerName: 'Name', flex: 1 },
 	{ field: 'elo', headerName: 'Elo', flex: 1 },
-	{ field: 'endpoint', headerName: 'Endpoint', flex: 1 },
 	{
 		field: 'createdAt',
 		headerName: 'Created at',
@@ -42,17 +41,9 @@ const columns: GridColDef[] = [
 	},
 ]
 
-const botToRow = ({
+const botToRow = ({ id, name, createdAt, elo, status }: Bot): GridRowModel => ({
 	id,
 	name,
-	endpoint,
-	createdAt,
-	elo,
-	status,
-}: Bot): GridRowModel => ({
-	id,
-	name,
-	endpoint,
 	createdAt,
 	elo,
 	status,
