@@ -18,7 +18,7 @@ export const Routes = () => {
 	}, [title])
 
 	return (
-		<Layout title={title}>
+		<Layout>
 			<Switch>
 				<ProtectedRoute path="/bots" exact>
 					<BotsPage setTitle={setTitle} />

@@ -8,10 +8,9 @@ import { MdLogout, MdMenu } from 'react-icons/md'
 
 interface Props {
 	toggleSidebarOpen: () => void
-	title: string
 }
 
-export const Header: FC<Props> = ({ toggleSidebarOpen, title }) => {
+export const Header: FC<Props> = ({ toggleSidebarOpen }) => {
 	const { currentUser } = useCurrentUser()
 	const { deleteSession } = useDeleteSession()
 	const queryClient = useQueryClient()

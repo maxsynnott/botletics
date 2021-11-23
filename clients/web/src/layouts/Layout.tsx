@@ -4,18 +4,14 @@ import { FC, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 
-interface Props {
-	title: string
-}
-
-export const Layout: FC<Props> = ({ title, children }) => {
+export const Layout: FC = ({ children }) => {
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	const toggleSidebarOpen = () => setSidebarOpen(!sidebarOpen)
 
 	return (
 		<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-			<Header title={title} toggleSidebarOpen={toggleSidebarOpen} />
+			<Header toggleSidebarOpen={toggleSidebarOpen} />
 			<Toolbar variant="dense" /> {/* Padding */}
 			<Box sx={{ display: 'flex', flexGrow: 1 }}>
 				<Sidebar open={sidebarOpen} />
