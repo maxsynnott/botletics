@@ -11,13 +11,14 @@ import { ProtectedRoute } from './ProtectedRoute'
 
 export const Routes = () => {
 	const [title, setTitle] = useState('Botletics')
+	const pageTitle =
+		title === 'Botletics' ? 'Botletics' : `Botletics • ${title}`
 	useEffect(() => {
-		document.title =
-			title === 'Botletics' ? 'Botletics' : `Botletics • ${title}`
-	}, [title])
+		document.title = pageTitle
+	}, [pageTitle])
 
 	return (
-		<Layout>
+		<Layout title={pageTitle}>
 			<Switch>
 				<ProtectedRoute path="/bots" exact>
 					<BotsPage setTitle={setTitle} />
