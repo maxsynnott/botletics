@@ -1,4 +1,4 @@
-import { Bot, Game, User } from '@prisma/client'
+import { Bot, User } from '@prisma/client'
 import { ValidationErrorItem } from 'joi'
 import { BotWithGames, GameWithBots } from './modelsWith'
 
@@ -13,7 +13,7 @@ export type BotShowResponse = BotWithGames
 export type BotCreateResponse = Bot
 export type BotGamesResponse = GameWithBots[]
 
-export type GameShowResponse = Game
+export type GameShowResponse = GameWithBots
 
 type StatusResponse = 'Healthy' | 'Unhealthy'
 export type HealthCheckResponse = {

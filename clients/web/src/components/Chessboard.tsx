@@ -1,4 +1,4 @@
-import { IconButton, Slider, Typography } from '@mui/material'
+import { Button, Divider, IconButton, Slider, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import { Chess } from 'chess.js'
@@ -13,9 +13,12 @@ import {
 	MdSettings,
 } from 'react-icons/md'
 import { BiReset } from 'react-icons/bi'
+import { GameWithBots } from '@modelsWith'
+import { FaChessPawn } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 interface Props {
-	history: string[]
+	game: GameWithBots
 }
 
 const AUTOPLAY_LEVELS = [
@@ -48,7 +51,9 @@ const useStyle = makeStyles({
 	},
 })
 
-export const Chessboard: FC<Props> = ({ history }) => {
+export const Chessboard: FC<Props> = ({
+	game: { history, blackBot, whiteBot },
+}) => {
 	const classes = useStyle()
 
 	const [autoplayLevel, setAutoplayLevel] = useState(DEFAULT_AUTOPLAY_LEVEL)
@@ -122,6 +127,49 @@ export const Chessboard: FC<Props> = ({ history }) => {
 				borderRadius: '5px',
 			}}
 		>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+				}}
+			>
+				<Button
+					component={Link}
+					to={`/bots/${whiteBot.id}`}
+					variant="contained"
+					endIcon={<FaChessPawn size={14} color={'white'} />}
+					sx={{
+						textTransform: 'none',
+						backgroundColor: DARK_SQUARE_COLOR,
+						color: 'white',
+						':hover': { backgroundColor: DARK_SQUARE_COLOR },
+					}}
+				>
+					{whiteBot.name}
+				</Button>
+				<Button
+					component={Link}
+					to={`/bots/${blackBot.id}`}
+					variant="contained"
+					startIcon={<FaChessPawn size={14} color={'black'} />}
+					sx={{
+						textTransform: 'none',
+						backgroundColor: DARK_SQUARE_COLOR,
+						color: 'black',
+						':hover': { backgroundColor: DARK_SQUARE_COLOR },
+					}}
+				>
+					{blackBot.name}
+				</Button>
+			</Box>
+			<Divider
+				sx={{
+					my: 1,
+					backgroundColor: LIGHT_SQUARE_COLOR,
+					opacity: 0.25,
+				}}
+			/>
 			<Box className={classes.board}>
 				{positionedPieces.map(({ piece, square }) => (
 					<ChessPiece key={square} piece={piece} square={square} />
@@ -132,7 +180,6 @@ export const Chessboard: FC<Props> = ({ history }) => {
 				sx={{
 					display: 'flex',
 					justifyContent: 'center',
-					backgroundColor: '#555352',
 					position: 'relative',
 				}}
 			>

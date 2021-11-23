@@ -30,7 +30,7 @@ export const GamePage: FC<Props> = ({ setTitle }) => {
 				height: '100%',
 			}}
 		>
-			<Chessboard history={game.history} />
+			<Chessboard game={game} />
 		</Box>
 	)
 }
