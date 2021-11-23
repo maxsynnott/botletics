@@ -12,6 +12,7 @@ export type BotIndexResponse = Bot[]
 export type BotShowResponse = BotWithGames
 export type BotCreateResponse = Bot
 export type BotGamesResponse = GameWithBots[]
+export type BotLeaderboardResponse = Bot[]
 
 export type GameShowResponse = GameWithBots
 

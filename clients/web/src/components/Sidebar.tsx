@@ -2,7 +2,7 @@ import { Drawer, List, Toolbar } from '@mui/material'
 import { FC } from 'react'
 import { SidebarListItem } from './SidebarListItem'
 import { MdHome } from 'react-icons/md'
-import { FaRobot } from 'react-icons/fa'
+import { FaRobot, FaTrophy } from 'react-icons/fa'
 import { useLocation } from 'react-router'
 
 const DRAWER_WIDTH = 280
@@ -19,6 +19,7 @@ const listItems = [
 		Icon: MdHome,
 	},
 	{ text: 'Bots', path: '/bots', Icon: FaRobot },
+	{ text: 'Leaderboard', path: '/leaderboard', Icon: FaTrophy },
 ]
 
 export const Sidebar: FC<Props> = ({ open, setOpen }) => {

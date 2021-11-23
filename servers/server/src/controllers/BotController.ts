@@ -6,6 +6,7 @@ import {
 	BotCreateResponse,
 	BotGamesResponse,
 	BotIndexResponse,
+	BotLeaderboardResponse,
 	BotShowResponse,
 } from '../types/responses'
 
@@ -51,5 +52,12 @@ export class BotController {
 
 		const response: BotCreateResponse = bot
 		res.status(201).json(response)
+	}
+
+	static leaderboard = async (req: Request, res: Response) => {
+		const bots = await BotService.getTop100Bots()
+
+		const response: BotLeaderboardResponse = bots
+		res.status(200).json(response)
 	}
 }

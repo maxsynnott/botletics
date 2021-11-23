@@ -4,6 +4,7 @@ import {
 	BotCreateResponse,
 	BotGamesResponse,
 	BotIndexResponse,
+	BotLeaderboardResponse,
 	BotShowResponse,
 } from '@responses'
 
@@ -50,6 +51,20 @@ export const postBot = async (body: PostBotBody) => {
 
 	switch (status) {
 		case 201:
+			return data
+
+		default:
+			throw new Error()
+	}
+}
+
+export const getBotLeaderboard = async () => {
+	const { status, data } = await axios.get<BotLeaderboardResponse>(
+		'/bots/leaderboard',
+	)
+
+	switch (status) {
+		case 200:
 			return data
 
 		default:

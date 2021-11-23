@@ -148,4 +148,12 @@ export class BotService {
 			this.updateElo(blackBotId, eloChange * -1),
 		])
 	}
+
+	static getTop100Bots = async () => {
+		const bots = await db.bot.findMany({
+			orderBy: { elo: 'desc' },
+			take: 100,
+		})
+		return bots
+	}
 }

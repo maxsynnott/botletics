@@ -12,6 +12,11 @@ const routes: Route[] = [
 	},
 	{
 		method: 'get',
+		path: '/bots/leaderboard',
+		handlers: [BotController.leaderboard],
+	},
+	{
+		method: 'get',
 		path: '/bots/:id',
 		handlers: [BotController.show],
 		ensureAuthenticated: true,

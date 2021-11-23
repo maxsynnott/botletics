@@ -8,6 +8,7 @@ import { GamePage } from '../pages/GamePage'
 import { HomePage } from '../pages/HomePage'
 import { AuthPage } from '../pages/AuthPage'
 import { ProtectedRoute } from './ProtectedRoute'
+import { BotsLeaderboardPage } from '../pages/BotsLeaderboardPage'
 
 export const Routes = () => {
 	const [title, setTitle] = useState('Botletics')
@@ -20,6 +21,9 @@ export const Routes = () => {
 	return (
 		<Layout title={pageTitle}>
 			<Switch>
+				<Route path="/leaderboard" exact>
+					<BotsLeaderboardPage />
+				</Route>
 				<ProtectedRoute path="/bots" exact>
 					<BotsPage setTitle={setTitle} />
 				</ProtectedRoute>
