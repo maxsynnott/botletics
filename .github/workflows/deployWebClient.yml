@@ -46,19 +46,19 @@ jobs:
         working-directory: ./clients/web
         run: aws s3 sync ./build/ s3://botletics-spa
 
-    invalidateCloudfrontCache:
-      name: Invalidate Cloudfront cache
-      needs: pushSPAToS3
-      runs-on: ubuntu-latest
+  invalidateCloudfrontCache:
+    name: Invalidate Cloudfront cache
+    needs: pushSPAToS3
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Configure AWS credentials
-          uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-            aws-region: ${{ env.AWS_REGION }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-        - name: Invalidate cache
-          # TODO: Replace hard coded distribution id
-          run: aws cloudfront create-invalidation --distribution-id E30E35QWKIJAWC --paths "/*"
+      - name: Invalidate cache
+        # TODO: Replace hard coded distribution id
+        run: aws cloudfront create-invalidation --distribution-id E30E35QWKIJAWC --paths "/*"
