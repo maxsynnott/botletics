@@ -31,6 +31,7 @@ export const AuthPage: FC<Props> = ({ setTitle }) => {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [username, setUsername] = useState('')
 
 	const { createSession } = useCreateSession()
 	const { createUser } = useCreateUser()
@@ -49,9 +50,12 @@ export const AuthPage: FC<Props> = ({ setTitle }) => {
 
 	const signUp = () => {
 		createUser(
-			{ email, password },
+			{ email, password, username },
 			{
-				onSuccess: signIn,
+				onSuccess: () => {
+					queryClient.invalidateQueries('currentUser')
+					history.push('/')
+				},
 			},
 		)
 	}
@@ -76,6 +80,13 @@ export const AuthPage: FC<Props> = ({ setTitle }) => {
 			</Box>
 
 			<Stack spacing={1}>
+				{formType === 'signUp' && (
+					<TextField
+						label="Username"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+					/>
+				)}
 				<TextField
 					label="Email"
 					value={email}

@@ -10,4 +10,5 @@ export const postUsersSchema = Joi.object({
 		upperCase: 0,
 		symbol: 0,
 	}).required(),
+	username: Joi.string().min(3).max(16).required(),
 })

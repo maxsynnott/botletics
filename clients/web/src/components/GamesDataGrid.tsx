@@ -16,6 +16,7 @@ import { displayGameStatus } from '../helpers/displayGameStatus'
 import { User } from '@models'
 import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
 import { FaCircle } from 'react-icons/fa'
+import { CircularProgress } from '@mui/material'
 
 const SORTING_ORDER: GridSortDirection[] = ['asc', 'desc']
 const SORT_MODEL: GridSortModel = [{ field: 'createdAt', sort: 'desc' }]
@@ -39,7 +40,7 @@ const columns: GridColDef[] = [
 			if (value === 'draw') color = 'gray'
 			if (value === 'win') color = 'green'
 			if (value === 'loss') color = 'red'
-			if (!color) return 'ongoing'
+			if (!color) return <CircularProgress size={16} />
 			return <FaCircle color={color} />
 		},
 	},

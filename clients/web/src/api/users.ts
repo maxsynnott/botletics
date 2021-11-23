@@ -1,6 +1,6 @@
 import { axios } from '../clients/axios'
-import { Credentials } from '../types/types'
 import { UserCreateResponse, UserCurrentResponse } from '@responses'
+import { PostUserBody } from '../types/bodies'
 
 export const getCurrentUser = async () => {
 	const { status, data } = await axios.get<UserCurrentResponse>(
@@ -16,7 +16,7 @@ export const getCurrentUser = async () => {
 	}
 }
 
-export const postUser = async (body: Credentials) => {
+export const postUser = async (body: PostUserBody) => {
 	const { status, data } = await axios.post<UserCreateResponse>(
 		'/users',
 		body,

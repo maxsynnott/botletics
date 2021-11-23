@@ -1,11 +1,11 @@
-import { Credentials } from '../types/types'
 import { axios } from '../clients/axios'
 import { SessionCreateResponse, SessionDeleteResponse } from '@responses'
+import { PostSessionBody } from '../types/bodies'
 
-export const postSession = async (credentials: Credentials) => {
+export const postSession = async (body: PostSessionBody) => {
 	const { status, data } = await axios.post<SessionCreateResponse>(
 		'/sessions',
-		credentials,
+		body,
 	)
 
 	switch (status) {

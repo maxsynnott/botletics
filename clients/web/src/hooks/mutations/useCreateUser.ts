@@ -1,8 +1,8 @@
 import { useMutation } from 'react-query'
 import { postUser } from '../../api/users'
-import { Credentials } from '../../types/types'
+import { PostUserBody } from '../../types/bodies'
 
 export const useCreateUser = () => {
-	const result = useMutation((body: Credentials) => postUser(body))
+	const result = useMutation((body: PostUserBody) => postUser(body))
 	return { ...result, createUser: result.mutate }
 }

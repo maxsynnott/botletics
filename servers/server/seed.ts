@@ -8,6 +8,7 @@ const stockfishBotAttributes = {
 
 const userAttributes = [
 	{
+		username: 'admin',
 		email: 'admin@botletics.live',
 		passwordHash: hashPassword('123456'),
 		bots: {
@@ -19,6 +20,7 @@ const userAttributes = [
 		},
 	},
 	{
+		username: 'user1',
 		email: 'user1@gmail.com',
 		passwordHash: hashPassword('123456'),
 		bots: {
@@ -26,6 +28,7 @@ const userAttributes = [
 		},
 	},
 	{
+		username: 'user2',
 		email: 'user2@gmail.com',
 		passwordHash: hashPassword('123456'),
 		bots: {
@@ -33,6 +36,7 @@ const userAttributes = [
 		},
 	},
 	{
+		username: 'user3',
 		email: 'user3@gmail.com',
 		passwordHash: hashPassword('123456'),
 		bots: {
