@@ -31,7 +31,11 @@ export const Header: FC<Props> = ({ toggleSidebarOpen }) => {
 				backgroundColor: (theme) => theme.palette.primary.main,
 			}}
 		>
-			<Toolbar variant="dense" sx={{ justifyContent: 'space-between' }}>
+			<Toolbar
+				variant="dense"
+				disableGutters
+				sx={{ justifyContent: 'space-between', px: 1 }}
+			>
 				<Box sx={{ display: 'flex', alignItems: 'center' }}>
 					<IconButton color="inherit" onClick={toggleSidebarOpen}>
 						<MdMenu />

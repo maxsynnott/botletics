@@ -14,14 +14,22 @@ interface Props {
 	path: string
 	Icon: IconType
 	focused: boolean
+	setSidebarOpen: (value: boolean) => void
 }
 
-export const SidebarListItem: FC<Props> = ({ text, path, Icon, focused }) => {
+export const SidebarListItem: FC<Props> = ({
+	text,
+	path,
+	Icon,
+	focused,
+	setSidebarOpen,
+}) => {
 	const history = useHistory()
 
-	const handleClick = () => history.push(path)
-
-	console.log(focused)
+	const handleClick = () => {
+		history.push(path)
+		setSidebarOpen(false)
+	}
 
 	return (
 		<ListItem

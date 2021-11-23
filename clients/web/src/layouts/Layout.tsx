@@ -14,7 +14,7 @@ export const Layout: FC = ({ children }) => {
 			<Header toggleSidebarOpen={toggleSidebarOpen} />
 			<Toolbar variant="dense" /> {/* Padding */}
 			<Box sx={{ display: 'flex', flexGrow: 1 }}>
-				<Sidebar open={sidebarOpen} />
+				<Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 				<Box sx={{ flexGrow: 1, overflow: 'auto' }}>{children}</Box>
 			</Box>
 		</Box>

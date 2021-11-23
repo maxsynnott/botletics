@@ -9,6 +9,7 @@ const DRAWER_WIDTH = 280
 
 interface Props {
 	open: boolean
+	setOpen: (value: boolean) => void
 }
 
 const listItems = [
@@ -20,7 +21,7 @@ const listItems = [
 	{ text: 'Bots', path: '/bots', Icon: FaRobot },
 ]
 
-export const Sidebar: FC<Props> = ({ open }) => {
+export const Sidebar: FC<Props> = ({ open, setOpen }) => {
 	const { pathname } = useLocation()
 	const focusedPath = pathname?.match(/^(\/\w*)\/?/)?.[1]
 
@@ -31,6 +32,7 @@ export const Sidebar: FC<Props> = ({ open }) => {
 				anchor="left"
 				sx={{ width: DRAWER_WIDTH }}
 				open={open}
+				onClose={() => setOpen(false)}
 			>
 				<Toolbar variant="dense" /> {/* Padding */}
 				<List disablePadding sx={{ width: DRAWER_WIDTH }}>
@@ -41,6 +43,7 @@ export const Sidebar: FC<Props> = ({ open }) => {
 							path={path}
 							Icon={Icon}
 							focused={focusedPath === path}
+							setSidebarOpen={setOpen}
 						/>
 					))}
 				</List>
