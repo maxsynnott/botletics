@@ -5,11 +5,13 @@ import {
 	GridRowModel,
 	GridRowParams,
 	GridSortDirection,
+	GridFooterContainer,
 } from '@mui/x-data-grid'
 import moment from 'moment'
 import { FC } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Bot } from '@models'
+import { Box, Button } from '@mui/material'
 
 const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 
@@ -37,6 +39,8 @@ const botToRow = ({
 	health: status === 'healthy' ? 'Healthy' : 'Unhealthy',
 })
 
+const BOT_LIMIT = 5
+
 interface Props {
 	bots: Bot[]
 }
@@ -51,6 +55,18 @@ export const BotsDataGrid: FC<Props> = ({ bots }) => {
 
 	const rows = bots.map(botToRow)
 
+	const footer = (
+		<GridFooterContainer>
+			<Box sx={{ pl: 1 }}>
+				{bots.length < BOT_LIMIT && (
+					<Button variant="text" to="/bots/new" component={Link}>
+						Create new bot
+					</Button>
+				)}
+			</Box>
+		</GridFooterContainer>
+	)
+
 	return (
 		<DataGrid
 			disableSelectionOnClick
@@ -61,6 +77,9 @@ export const BotsDataGrid: FC<Props> = ({ bots }) => {
 			onRowClick={onRowClick}
 			getRowClassName={getRowClassName}
 			sortingOrder={sortingOrder}
+			components={{
+				Footer: () => footer,
+			}}
 		/>
 	)
 }

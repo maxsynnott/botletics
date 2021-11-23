@@ -59,9 +59,9 @@ export const Header: FC<Props> = ({ toggleSidebarOpen }) => {
 						</IconButton>
 					</Box>
 				) : (
-					<Link to="/auth" component={Button} color="inherit">
+					<Button to="/auth" component={Link} color="inherit">
 						Sign in
-					</Link>
+					</Button>
 				)}
 			</Toolbar>
 		</AppBar>

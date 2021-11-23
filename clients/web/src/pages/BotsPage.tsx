@@ -1,11 +1,8 @@
-import { Box } from '@mui/system'
+import { Container } from '@mui/material'
 import { FC, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { BotsDataGrid } from '../components/BotsDataGrid'
 import { useBots } from '../hooks/queries/useBots'
 import { LoadingPage } from './LoadingPage'
-
-const BOT_LIMIT = 3
 
 interface Props {
 	setTitle: (title: string) => void
@@ -19,10 +16,8 @@ export const BotsPage: FC<Props> = ({ setTitle }) => {
 	if (!bots) throw new Error('Bots not found')
 
 	return (
-		<Box>
-			{bots.length < BOT_LIMIT && <Link to="/bots/new">Create bot</Link>}
-
+		<Container maxWidth="lg" sx={{ mt: 3 }}>
 			<BotsDataGrid bots={bots} />
-		</Box>
+		</Container>
 	)
 }
