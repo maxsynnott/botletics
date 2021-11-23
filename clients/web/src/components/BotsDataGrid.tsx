@@ -34,7 +34,7 @@ const columns: GridColDef[] = [
 	{
 		field: 'status',
 		headerName: 'Health',
-		flex: 0.5,
+		flex: 1,
 		renderCell: ({ value }: GridRenderCellParams<string>) => {
 			const color = value === 'healthy' ? 'green' : 'red'
 			return <FaCircle color={color} />

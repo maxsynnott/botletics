@@ -2,6 +2,7 @@ import { makeStyles } from '@mui/styles'
 import {
 	DataGrid,
 	GridColDef,
+	GridRenderCellParams,
 	GridRowModel,
 	GridRowParams,
 	GridSortDirection,
@@ -11,6 +12,10 @@ import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
 import { GameWithBots } from '@modelsWith'
 import moment from 'moment'
+import { displayGameStatus } from '../helpers/displayGameStatus'
+import { User } from '@models'
+import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
+import { FaCircle } from 'react-icons/fa'
 
 const SORTING_ORDER: GridSortDirection[] = ['asc', 'desc']
 const SORT_MODEL: GridSortModel = [{ field: 'createdAt', sort: 'desc' }]
@@ -25,33 +30,52 @@ const columns: GridColDef[] = [
 		flex: 1,
 		valueFormatter: ({ value }) => moment(value as string).calendar(),
 	},
+	{
+		field: 'status',
+		headerName: 'Result',
+		flex: 1,
+		renderCell: ({ value }: GridRenderCellParams<string>) => {
+			let color
+			if (value === 'draw') color = 'gray'
+			if (value === 'win') color = 'green'
+			if (value === 'loss') color = 'red'
+			if (!color) return 'ongoing'
+			return <FaCircle color={color} />
+		},
+	},
 ]
 
-const gameToRow = ({
-	id,
-	history,
-	whiteBot,
-	blackBot,
-	createdAt,
-}: GameWithBots): GridRowModel => ({
-	id,
-	createdAt,
-	numOfMoves: history.length,
-	whiteBotName: whiteBot.name,
-	blackBotName: blackBot.name,
-})
+const gameToRow = (
+	{ id, history, whiteBot, blackBot, createdAt, status }: GameWithBots,
+	{ id: userId }: User,
+): GridRowModel => {
+	const currentUserColor = userId === whiteBot.id ? 'white' : 'black'
+	return {
+		id,
+		createdAt,
+		numOfMoves: history.length,
+		whiteBotName: whiteBot.name,
+		blackBotName: blackBot.name,
+		status: displayGameStatus(status, currentUserColor),
+	}
+}
 
-const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
+const useStyles = makeStyles(() => ({
+	row: { cursor: 'pointer' },
+}))
 
 interface Props {
 	games: GameWithBots[]
 }
 
 export const GamesDataGrid: FC<Props> = ({ games }) => {
+	const { currentUser } = useCurrentUser()
+	if (!currentUser) return null
+
 	const classes = useStyles()
 	const history = useHistory()
 
-	const rows = games.map(gameToRow)
+	const rows = games.map((game) => gameToRow(game, currentUser))
 	const onRowClick = ({ id }: GridRowParams) => history.push(`/games/${id}`)
 	const getRowClassName = () => classes.row
 
