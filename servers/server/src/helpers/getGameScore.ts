@@ -3,9 +3,9 @@ import { GameScore, GameStatus } from '../types/types'
 export const getGameScore = (status: GameStatus): GameScore => {
 	const [result] = status.split(':')
 	switch (result) {
-		case 'white':
+		case 'whiteWin':
 			return 1
-		case 'black':
+		case 'blackWin':
 			return -1
 		case 'draw':
 			return 0.5
