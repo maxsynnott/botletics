@@ -1,4 +1,11 @@
-import { AppBar, Toolbar, IconButton, Typography, Box } from '@mui/material'
+import {
+	AppBar,
+	Toolbar,
+	IconButton,
+	Typography,
+	Box,
+	Button,
+} from '@mui/material'
 import { FC } from 'react'
 import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
 import { Link } from 'react-router-dom'
@@ -34,7 +41,7 @@ export const Header: FC<Props> = ({ toggleSidebarOpen }) => {
 			<Toolbar
 				variant="dense"
 				disableGutters
-				sx={{ justifyContent: 'space-between', px: 1 }}
+				sx={{ justifyContent: 'space-between', pl: 1, pr: 2 }}
 			>
 				<Box sx={{ display: 'flex', alignItems: 'center' }}>
 					<IconButton color="inherit" onClick={toggleSidebarOpen}>
@@ -52,7 +59,9 @@ export const Header: FC<Props> = ({ toggleSidebarOpen }) => {
 						</IconButton>
 					</Box>
 				) : (
-					<Link to="/signin">Sign in</Link>
+					<Link to="/auth" component={Button} color="inherit">
+						Sign in
+					</Link>
 				)}
 			</Toolbar>
 		</AppBar>

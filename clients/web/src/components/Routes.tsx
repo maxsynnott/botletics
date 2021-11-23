@@ -6,8 +6,7 @@ import { BotsNewPage } from '../pages/BotsNewPage'
 import { BotsPage } from '../pages/BotsPage'
 import { GamePage } from '../pages/GamePage'
 import { HomePage } from '../pages/HomePage'
-import { SignInPage } from '../pages/SignInPage'
-import { SignUpPage } from '../pages/SignUpPage'
+import { AuthPage } from '../pages/AuthPage'
 import { ProtectedRoute } from './ProtectedRoute'
 
 export const Routes = () => {
@@ -36,12 +35,8 @@ export const Routes = () => {
 					<GamePage setTitle={setTitle} />
 				</ProtectedRoute>
 
-				<Route path="/signin" exact>
-					<SignInPage setTitle={setTitle} />
-				</Route>
-
-				<Route path="/signup" exact>
-					<SignUpPage setTitle={setTitle} />
+				<Route path="/auth" exact>
+					<AuthPage setTitle={setTitle} />
 				</Route>
 
 				<Route path="/" exact>

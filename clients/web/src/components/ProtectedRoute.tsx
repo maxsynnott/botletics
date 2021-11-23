@@ -11,7 +11,7 @@ export const ProtectedRoute = ({
 
 	return (
 		<Route {...restOfProps}>
-			{currentUser ? children : <Redirect to="/signin" />}
+			{currentUser ? children : <Redirect to="/auth" />}
 		</Route>
 	)
 }
