@@ -3,15 +3,28 @@ import { Chess } from 'chess.js'
 import shuffle from 'just-shuffle'
 import { db } from '../clients/db'
 import { HttpException } from '../exceptions/HttpException'
-import { InvalidBotResponse } from '../exceptions/InvalidBotResponse'
 import { ResourceNotFoundException } from '../exceptions/ResourceNotFoundException'
-import { getChessGameResult } from '../helpers/getChessGameResult'
+import { getGameStatusFromChess } from '../helpers/getGameStatusFromChess'
+import { getGameScore } from '../helpers/getGameScore'
 import { runGameQueue } from '../queues/runGameQueue'
+import { GameStatus } from '../types/types'
 import { BotService } from './BotService'
 
 export class GameService {
-	static start = async (game: Game) => {
-		await runGameQueue.add('runGame', { gameId: game.id })
+	static addToQueue = async (game: Game) => {
+		try {
+			await db.game.update({
+				where: { id: game.id },
+				data: { status: 'queued' },
+			})
+			await runGameQueue.add('runGame', { gameId: game.id })
+		} catch (error) {
+			await db.game.update({
+				where: { id: game.id },
+				data: { status: 'error' },
+			})
+			throw error
+		}
 	}
 
 	static getOneById = async (id: string) => {
@@ -62,7 +75,7 @@ export class GameService {
 
 			const [whiteBot, blackBot] = shuffle(gameBots)
 			const game = await this.create(whiteBot, blackBot)
-			await this.start(game)
+			await this.addToQueue(game)
 		}
 	}
 
@@ -70,31 +83,64 @@ export class GameService {
 		await db.game.update({ where: { id }, data: { history } })
 	}
 
-	static run = async (id: string) => {
-		const game = await this.getOneByIdWithBots(id)
+	static updateStatus = async (id: string, status: GameStatus) => {
+		await db.game.update({ where: { id }, data: { status } })
+	}
+
+	// TODO: Cleaner method for refreshing of entity
+	static start = async (id: string) => {
+		let game = await this.getOneByIdWithBots(id)
 		if (!game) throw new ResourceNotFoundException('Game not found')
-		if (game.history.length) throw new HttpException('Game already started')
+		if (game.status !== 'queued')
+			throw new HttpException('Game has unexpected status')
+
+		await this.updateStatus(id, 'started')
+
 		const { whiteBot, blackBot } = game
+		const botIds = {
+			w: whiteBot.id,
+			b: blackBot.id,
+		}
 
 		const chess = new Chess()
+		let newStatus: GameStatus | null = null
 		while (!chess.game_over()) {
-			const botIdToPlay = chess.turn() === 'w' ? whiteBot.id : blackBot.id
-			const move = await BotService.getMove({
-				botId: botIdToPlay,
-				gameId: id,
-				fen: chess.fen(),
-			})
+			const botIdToPlay = botIds[chess.turn()]
+
+			let move
+			try {
+				move = await BotService.getMove({
+					botId: botIdToPlay,
+					gameId: id,
+					fen: chess.fen(),
+				})
+			} catch (error) {
+				newStatus =
+					chess.turn() === 'w'
+						? 'blackWin:invalidResponse'
+						: 'whiteWin:invalidResponse'
+
+				break
+			}
 
 			if (chess.move(move)) {
 				await this.updateHistory(id, chess.history())
 			} else {
-				throw new InvalidBotResponse('Illegal move')
+				newStatus =
+					chess.turn() === 'w'
+						? 'blackWin:illegalMove'
+						: 'whiteWin:illegalMove'
+
+				break
 			}
 		}
 
 		await this.updateHistory(id, chess.history())
 
-		const result = getChessGameResult(chess)
-		await BotService.updateElos(whiteBot.id, blackBot.id, result)
+		if (!newStatus) newStatus = getGameStatusFromChess(chess)
+		await this.updateStatus(id, newStatus)
+
+		const score = getGameScore(newStatus)
+		await BotService.updateElos(whiteBot.id, blackBot.id, score)
 	}
 }

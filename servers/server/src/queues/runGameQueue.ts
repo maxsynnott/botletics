@@ -14,7 +14,7 @@ const processJob = async (job: Job<JobData>) => {
 	try {
 		console.log('Running job: ' + name)
 		const { gameId } = job.data
-		await GameService.run(gameId)
+		await GameService.start(gameId)
 	} catch (e) {
 		console.error(e)
 	}

@@ -19,6 +19,7 @@ model Game {
     whiteBotId String
     blackBot   Bot      @relation("gamesAsBlack", fields: [blackBotId], references: [id])
     blackBotId String
+    status     String   @default("created")
 }
 
 model User {

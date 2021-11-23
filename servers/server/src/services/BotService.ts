@@ -7,7 +7,7 @@ import random from 'just-random'
 import { HttpException } from '../exceptions/HttpException'
 import { ConflictException } from '../exceptions/ConflictException'
 import { getEloAdjustment } from '../helpers/getEloAdjustment'
-import { ChessResult } from '../types/types'
+import { GameScore } from '../types/types'
 
 const BOT_LIMIT = 3
 
@@ -132,9 +132,9 @@ export class BotService {
 	static updateElos = async (
 		whiteBotId: string,
 		blackBotId: string,
-		result: ChessResult,
+		score: GameScore,
 	) => {
-		if (result === -1) throw new HttpException('Game is still ongoing')
+		if (score === -1) throw new HttpException('Game is still ongoing')
 		const [whiteBot, blackBot] = await Promise.all([
 			db.bot.findUnique({ where: { id: whiteBotId } }),
 			db.bot.findUnique({ where: { id: blackBotId } }),
@@ -142,7 +142,7 @@ export class BotService {
 		if (!whiteBot || !blackBot)
 			throw new ResourceNotFoundException('One or more bots not found')
 
-		const eloChange = getEloAdjustment(whiteBot.elo, blackBot.elo, result)
+		const eloChange = getEloAdjustment(whiteBot.elo, blackBot.elo, score)
 		await Promise.all([
 			this.updateElo(whiteBotId, eloChange),
 			this.updateElo(blackBotId, eloChange * -1),
