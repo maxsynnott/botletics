@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Container } from '@mui/material'
 import { FC, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { GamesDataGrid } from '../components/GamesDataGrid'
@@ -26,9 +25,8 @@ export const BotPage: FC<Props> = ({ setTitle }) => {
 	if (!games) throw new Error('Games not found')
 
 	return (
-		<Box>
-			<Typography>{bot.name}</Typography>
+		<Container sx={{ mt: 3 }}>
 			<GamesDataGrid games={games} />
-		</Box>
+		</Container>
 	)
 }
