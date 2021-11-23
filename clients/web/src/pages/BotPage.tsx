@@ -25,7 +25,7 @@ export const BotPage: FC<Props> = ({ setTitle }) => {
 	if (!games) throw new Error('Games not found')
 
 	return (
-		<Container sx={{ mt: 3 }}>
+		<Container sx={{ py: 3, height: '100%' }}>
 			<GamesDataGrid games={games} />
 		</Container>
 	)

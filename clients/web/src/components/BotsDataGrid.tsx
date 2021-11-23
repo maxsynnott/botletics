@@ -6,12 +6,18 @@ import {
 	GridRowParams,
 	GridSortDirection,
 	GridFooterContainer,
+	GridRenderCellParams,
+	GridSortModel,
 } from '@mui/x-data-grid'
 import moment from 'moment'
 import { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Bot } from '@models'
 import { Box, Button } from '@mui/material'
+import { FaCircle } from 'react-icons/fa'
+
+const SORTING_ORDER: GridSortDirection[] = ['asc', 'desc']
+const SORT_MODEL: GridSortModel = [{ field: 'createdAt', sort: 'desc' }]
 
 const useStyles = makeStyles(() => ({ row: { cursor: 'pointer' } }))
 
@@ -19,8 +25,21 @@ const columns: GridColDef[] = [
 	{ field: 'name', headerName: 'Name', flex: 1 },
 	{ field: 'elo', headerName: 'Elo', flex: 1 },
 	{ field: 'endpoint', headerName: 'Endpoint', flex: 1 },
-	{ field: 'createdAt', headerName: 'Created at', flex: 1 },
-	{ field: 'health', headerName: 'Health', flex: 1 },
+	{
+		field: 'createdAt',
+		headerName: 'Created at',
+		flex: 1,
+		valueFormatter: ({ value }) => moment(value as string).calendar(),
+	},
+	{
+		field: 'status',
+		headerName: 'Health',
+		flex: 0.5,
+		renderCell: ({ value }: GridRenderCellParams<string>) => {
+			const color = value === 'healthy' ? 'green' : 'red'
+			return <FaCircle color={color} />
+		},
+	},
 ]
 
 const botToRow = ({
@@ -34,12 +53,12 @@ const botToRow = ({
 	id,
 	name,
 	endpoint,
-	createdAt: moment(createdAt).calendar(),
+	createdAt,
 	elo,
-	health: status === 'healthy' ? 'Healthy' : 'Unhealthy',
+	status,
 })
 
-const BOT_LIMIT = 5
+const BOT_LIMIT = 3
 
 interface Props {
 	bots: Bot[]
@@ -51,7 +70,6 @@ export const BotsDataGrid: FC<Props> = ({ bots }) => {
 
 	const onRowClick = ({ id }: GridRowParams) => history.push(`/bots/${id}`)
 	const getRowClassName = () => classes.row
-	const sortingOrder: GridSortDirection[] = ['asc', 'desc']
 
 	const rows = bots.map(botToRow)
 
@@ -76,10 +94,11 @@ export const BotsDataGrid: FC<Props> = ({ bots }) => {
 			rows={rows}
 			onRowClick={onRowClick}
 			getRowClassName={getRowClassName}
-			sortingOrder={sortingOrder}
 			components={{
 				Footer: () => footer,
 			}}
+			sortingOrder={SORTING_ORDER}
+			sortModel={SORT_MODEL}
 		/>
 	)
 }

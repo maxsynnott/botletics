@@ -63,7 +63,7 @@ export const AuthPage: FC<Props> = ({ setTitle }) => {
 	}
 
 	return (
-		<Container maxWidth="sm">
+		<Container maxWidth="sm" sx={{ py: 3 }}>
 			<Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
 				<Tabs
 					value={formType}

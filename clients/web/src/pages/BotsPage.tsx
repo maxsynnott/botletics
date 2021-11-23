@@ -16,7 +16,7 @@ export const BotsPage: FC<Props> = ({ setTitle }) => {
 	if (!bots) throw new Error('Bots not found')
 
 	return (
-		<Container sx={{ mt: 3 }}>
+		<Container sx={{ py: 3 }}>
 			<BotsDataGrid bots={bots} />
 		</Container>
 	)
