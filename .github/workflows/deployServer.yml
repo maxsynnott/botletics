@@ -26,6 +26,7 @@ jobs:
       dockerHubAccessToken: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
   terraformApply:
+    needs: buildAndPushImage
     uses: maxsynnott/botletics/.github/workflows/terraformApply.yml@master
     secrets:
       awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
