@@ -12,7 +12,7 @@ import {
 import moment from 'moment'
 import { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { Bot } from '@models'
+import { Bot } from '../types/models'
 import { Box, Button } from '@mui/material'
 import { FaCircle } from 'react-icons/fa'
 

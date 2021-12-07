@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { User } from '@models'
+import { User } from '../types/models'
 import { useQuery } from 'react-query'
 import { getCurrentUser } from '../api/users'
 

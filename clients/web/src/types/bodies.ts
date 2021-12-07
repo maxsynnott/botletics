@@ -1,8 +1,7 @@
-import { Bot, User } from '@models'
+import { Bot, User } from '../types/models'
 
-export type PostBotBody = Pick<Bot, 'endpoint' | 'name'>
-export type PostUserBody = Pick<User, 'email'> & {
+export type PostBotBody = Pick<Bot, 'name'> & { endpoint: string }
+export type PostUserBody = Pick<User, 'email' | 'username'> & {
 	password: string
-	username: string
 }
 export type PostSessionBody = Pick<User, 'email'> & { password: string }

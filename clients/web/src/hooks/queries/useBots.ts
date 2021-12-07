@@ -1,6 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { getBots } from '../../api/bots'
-import { Bot } from '@models'
 import { BotIndexResponse } from '@responses'
 
 export const useBots = (

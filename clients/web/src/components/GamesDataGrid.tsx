@@ -10,13 +10,13 @@ import {
 } from '@mui/x-data-grid'
 import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
-import { GameWithBots } from '@modelsWith'
 import moment from 'moment'
 import { displayGameStatus } from '../helpers/displayGameStatus'
-import { User } from '@models'
+import { User } from '../types/models'
 import { useCurrentUser } from '../hooks/contexts/useCurrentUser'
 import { FaCircle } from 'react-icons/fa'
 import { CircularProgress } from '@mui/material'
+import { GameWithBots } from '../types/customModels'
 
 const SORTING_ORDER: GridSortDirection[] = ['asc', 'desc']
 const SORT_MODEL: GridSortModel = [{ field: 'createdAt', sort: 'desc' }]

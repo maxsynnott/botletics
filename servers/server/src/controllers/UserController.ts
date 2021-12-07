@@ -5,9 +5,9 @@ import omit from 'just-omit'
 
 export class UserController {
 	static create = async (req: Request, res: Response) => {
-		const { email, password } = req.body
+		const { email, password, username } = req.body
 
-		const user = await UserService.create(email, password)
+		const user = await UserService.create({ email, password, username })
 		req.logIn(user, (error) => {
 			if (error) throw error
 		})

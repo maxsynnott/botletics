@@ -1,6 +1,9 @@
-import { Game } from '@prisma/client'
+import { Bot, Game, User } from '@prisma/client'
 import { ValidationErrorItem } from 'joi'
-import { BotWithoutEndpoint, UserWithoutPasswordHash } from './customModels'
+import { ForcefullyOmit } from './types'
+
+type BotWithoutEndpoint = ForcefullyOmit<Bot, 'endpoint'>
+type UserWithoutPasswordHash = ForcefullyOmit<User, 'passwordHash'>
 
 export type ErrorResponse = {
 	status: number

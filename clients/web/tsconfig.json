@@ -18,7 +18,7 @@
 		"noEmit": true,
 		"jsx": "react-jsx",
 		"paths": {
-			"@models": ["../../servers/server/node_modules/@prisma/client"],
+			"@prisma": ["../../servers/server/node_modules/@prisma/client"],
 			"@responses": ["../../servers/server/src/types/responses.ts"]
 		}
 	},
