@@ -4,8 +4,6 @@
 		"useDefineForClassFields": true,
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"allowJs": false,
-		// ! This ignores all .d.ts files
-		// * currently needed due to error in @mui/x-data-grid
 		"skipLibCheck": true,
 		"esModuleInterop": false,
 		"allowSyntheticDefaultImports": true,
