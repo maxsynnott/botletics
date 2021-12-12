@@ -16,7 +16,10 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@adminjs/express": "^4.0.1",
+		"@adminjs/prisma": "^1.0.2",
 		"@prisma/client": "^3.5.0",
+		"adminjs": "^5.3.3",
 		"axios": "^0.24.0",
 		"bcrypt": "^5.0.1",
 		"bullmq": "^1.52.1",
