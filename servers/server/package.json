@@ -28,6 +28,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
+		"express-formidable": "^1.2.0",
 		"express-session": "^1.17.2",
 		"joi": "^17.4.2",
 		"joi-password-complexity": "^5.1.0",
@@ -36,7 +37,8 @@
 		"just-shuffle": "^4.0.1",
 		"morgan": "^1.10.0",
 		"passport": "^0.5.0",
-		"passport-local": "^1.0.0"
+		"passport-local": "^1.0.0",
+		"tslib": "^2.3.1"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.0",
