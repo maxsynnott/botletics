@@ -47,10 +47,3 @@ model Bot {
   status       String   @default("unhealthy")
   fallback     Boolean  @default(false)
 }
-
-model Session {
-  id        String   @id
-  sid       String   @unique
-  data      String
-  expiresAt DateTime
-}
