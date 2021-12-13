@@ -27,6 +27,10 @@ export type GameShowResponse = Game & {
 	whiteBot: BotWithoutEndpoint
 	blackBot: BotWithoutEndpoint
 }
+export type GameRandomResponse = Game & {
+	whiteBot: BotWithoutEndpoint
+	blackBot: BotWithoutEndpoint
+}
 
 type StatusResponse = 'Healthy' | 'Unhealthy'
 export type HealthCheckResponse = {

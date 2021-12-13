@@ -37,6 +37,13 @@ export class BotService {
 		return bot
 	}
 
+	static getOneById = async (id: string) => {
+		const bot = await db.bot.findUnique({ where: { id } })
+		if (!bot) throw new ResourceNotFoundException()
+
+		return bot
+	}
+
 	static getOneByIdWithGames = async (id: string) => {
 		const bot = await db.bot.findUnique({
 			where: { id },

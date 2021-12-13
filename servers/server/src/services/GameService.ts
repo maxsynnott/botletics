@@ -143,4 +143,14 @@ export class GameService {
 		const score = getGameScore(newStatus)
 		await BotService.updateElos(whiteBot.id, blackBot.id, score)
 	}
+
+	static async getRandomFinished() {
+		const bots = await db.$queryRawUnsafe<Game[]>(
+			`select * from "Game" where status not in ('created', 'queued', 'started', 'error') order by random() limit 1`,
+		)
+		const bot = bots[0]
+		const whiteBot = await BotService.getOneById(bot.whiteBotId)
+		const blackBot = await BotService.getOneById(bot.blackBotId)
+		return { ...bot, whiteBot, blackBot }
+	}
 }
