@@ -109,6 +109,11 @@ export class BotService {
 	}
 
 	static getAll = async () => {
+		const bots = await db.bot.findMany()
+		return bots
+	}
+
+	static getAllExceptFallback = async () => {
 		const bots = await db.bot.findMany({
 			where: { fallback: false },
 		})
