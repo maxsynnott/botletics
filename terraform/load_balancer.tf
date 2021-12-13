@@ -51,7 +51,7 @@ resource "aws_lb_listener_rule" "lambda" {
 
   condition {
     path_pattern {
-      values = ["/bots/chess/random"]
+      values = ["/bots/chess/random", "/bots/chess/random/healthcheck"]
     }
   }
 }

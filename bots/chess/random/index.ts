@@ -11,7 +11,7 @@ const defaultResponse = {
 
 export const handler = async (event: any) => {
 	console.log(event)
-	if (event.path === '/healthcheck') return defaultResponse
+	if (event.path.endsWith('/healthcheck')) return defaultResponse
 	const body = JSON.parse(event.body)
 	const fen = body.payload.fen
 	const chess = new Chess(fen)
